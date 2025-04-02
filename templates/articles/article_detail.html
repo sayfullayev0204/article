@@ -1,0 +1,248 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Articles</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="author" content="">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'icomoon/icomoon.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/vendor.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <style>
+        /* Umumiy messages konteyneri uchun stil */
+.messages {
+    list-style: none; /* Nuqtali ro‘yxat belgisini olib tashlash */
+    padding: 0;
+    margin: 10px 0;
+    width: 100%;
+    max-width: 600px; /* Maksimal kenglik */
+    font-family: Arial, sans-serif;
+}
+
+/* Har bir xabar (li elementlari) uchun umumiy stil */
+.messages li {
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Engil soya */
+}
+
+/* Django message tags ga asoslangan ranglar */
+.messages .success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.messages .error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.messages .warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.messages .info {
+    background-color: #cce5ff;
+    color: #004085;
+    border: 1px solid #b8daff;
+}
+    </style>
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#header" tabindex="0">
+
+	<div id="header-wrap">
+
+
+		{% include "header.html" %}
+
+
+</div><!--header-wrap-->
+<section class="py-5 my-=0">
+    <div class="container">
+        <div class="messages">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <h1>{{ article.title }}</h1>
+        <div>
+            {% if article.created_by == user and article.status == 'draft' %}
+                <a href="{% url 'edit_article' article.pk %}" class="btn btn-outline-secondary">Tahrirlash</a>
+                <a href="{% url 'submit_article' article.pk %}" class="btn btn-primary">Ko‘rib chiqishga yuborish</a>
+            {% endif %}
+            <a href="{% url 'profile' %}?tab=business" class="btn save-later-btn">Ro‘yxatga qaytish</a>
+        </div>
+    </div>
+</section>
+<section id="featured-books" class="py-5 my-1">
+    <div class="container">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Maqola haqida ma’lumot</h5>
+                <span class="badge {% if article.status == 'draft' %}badge bg-primary{% elif article.status == 'submitted' %}bg-info{% elif article.status == 'under_review' %}bg-warning{% elif article.status == 'accepted' %}bg-success{% elif article.status == 'rejected' %}bg-danger{% elif article.status == 'published' %}bg-primary{% endif %}">
+                    {% if article.status == 'draft' %}Qoralama{% elif article.status == 'submitted' %}Yuborilgan{% elif article.status == 'under_review' %}Ko‘rib chiqilmoqda{% elif article.status == 'accepted' %}Qabul qilingan{% elif article.status == 'rejected' %}Rad etilgan{% elif article.status == 'published' %}Nashr qilingan{% endif %}
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Boshlanish sanasi:</strong> {{ article.start_date }}</p>
+                        <p><strong>Tugash sanasi:</strong> {{ article.end_date|default:"Ko‘rsatilmagan" }}</p>
+                        <p><strong>Yaratilgan:</strong> {{ article.created_at|date:"d.m.Y H:i" }}</p>
+                        <p><strong>Oxirgi yangilanish:</strong> {{ article.updated_at|date:"d.m.Y H:i" }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Yaratuvchi:</strong> {{ article.created_by.username }}</p>
+                        {% if article.submitted_at %}
+                            <p><strong>Yuborilgan sana:</strong> {{ article.submitted_at|date:"d.m.Y H:i" }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="featured-books" >
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Annotatsiya</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>{{ article.abstract|linebreaks }}</p>
+                    </div>
+                </div>
+
+                {% if article.references %}
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0">Havolalar</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>{{ article.references|linebreaks }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if article.cover_letter or article.special_instructions %}
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0">Tahrirchilar uchun</h5>
+                        </div>
+                        <div class="card-body">
+                            {% if article.cover_letter %}
+                                <h6>Qo‘shma xat:</h6>
+                                <p>{{ article.cover_letter|linebreaks }}</p>
+                            {% endif %}
+                            
+                            {% if article.special_instructions %}
+                                <h6>Maxsus ko‘rsatmalar:</h6>
+                                <p>{{ article.special_instructions|linebreaks }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Kalit so‘zlar</h5>
+                    </div>
+                    <div class="card-body">
+                        {% for keyword in article.keywords.split %}
+                            <span class="badge bg-light text-dark me-1 mb-1">{{ keyword }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Mualliflar</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if article.authors.exists %}
+                            <ul class="list-group list-group-flush">
+                                {% for article_author in article.articleauthor_set.all %}
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong>{{ article_author.author.given_name }} {{ article_author.author.family_name }}</strong>
+                                                {% if article_author.is_primary %}
+                                                    <span class="badge bg-primary">Asosiy</span>
+                                                {% endif %}
+                                            </div>
+                                            <span class="badge bg-light text-dark">{{ article_author.get_role_display }}</span>
+                                        </div>
+                                        <div class="text-muted small">{{ article_author.author.email }}</div>
+                                        {% if article_author.author.affiliation %}
+                                            <div class="text-muted small">{{ article_author.author.affiliation }}</div>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="text-muted">Mualliflar qo‘shilmagan</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Fayllar</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if article.files.exists %}
+                            <ul class="list-group list-group-flush">
+                                {% for file in article.files.all %}
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <a href="{{ file.file.url }}" target="_blank">{{ file.file_name }}</a>
+                                            </div>
+                                            <span class="badge bg-light text-dark">{{ file.get_file_type_display }}</span>
+                                        </div>
+                                        {% if file.description %}
+                                            <div class="text-muted small">{{ file.description }}</div>
+                                        {% endif %}
+                                        <div class="text-muted small">Yuklangan: {{ file.uploaded_at|date:"d.m.Y H:i" }}</div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="text-muted">Fayllar yuklanmagan</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

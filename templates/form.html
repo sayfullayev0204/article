@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make a Submission</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Make a Submission: <span id="current-step-title">Details</span></h1>
+            <div class="header-buttons">
+                <button id="view-submissions-btn" class="view-submissions-btn">View All Submissions</button>
+                <button id="save-later-top" class="save-later-btn">Save for Later</button>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="step active" data-step="1">
+                <div class="step-circle">
+                    <span class="checkmark">✓</span>
+                    <span class="step-number">1</span>
+                </div>
+                <div class="step-text">Details</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="2">
+                <div class="step-circle">
+                    <span class="step-number">2</span>
+                </div>
+                <div class="step-text">Upload Files</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="3">
+                <div class="step-circle">
+                    <span class="step-number">3</span>
+                </div>
+                <div class="step-text">Contributors</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="4">
+                <div class="step-circle">
+                    <span class="step-number">4</span>
+                </div>
+                <div class="step-text">For the Editors</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="5">
+                <div class="step-circle">
+                    <span class="step-number">5</span>
+                </div>
+                <div class="step-text">Review</div>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <!-- Step 1: Details -->
+            <div class="form-step active" id="step-1">
+                <h2>Details</h2>
+                <div class="form-group">
+                    <label for="title">Title*</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="abstract">Abstract*</label>
+                    <textarea id="abstract" name="abstract" rows="5" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="keywords">Keywords </label>
+                    <input type="text" id="keywords" name="keywords" >
+                </div>
+            </div>
+
+            <!-- Step 2: Upload Files -->
+            <div class="form-step" id="step-2">
+                <div class="upload-section">
+                    <div class="upload-info">
+                        <h2>Upload Files</h2>
+                        <p>Provide any files our editorial team may need to evaluate your submission. In addition to the main work, you may wish to submit data sets, conflict of interest statements, or other supplementary files if these will be helpful for our editors.</p>
+                    </div>
+                    <div class="upload-area">
+                        <h3>Files</h3>
+                        <div id="file-list">
+                            <!-- Files will be listed here -->
+                        </div>
+                        <button id="add-file-btn" class="add-file-btn">Add File</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Contributors -->
+            <div class="form-step" id="step-3">
+                <div class="contributors-section">
+                    <div class="contributors-info">
+                        <h2>Contributors</h2>
+                        <p>Add all contributors who have made a significant contribution to this submission. If a contributor is not listed, the submitter takes full responsibility for the submission on their behalf. All contributors should have agreed to the submission and to being listed as a contributor. For more information about authorship, see the guidelines about authorship at a later stage.</p>
+                    </div>
+                    <div class="contributors-area">
+                        <div id="contributors-list">
+                            <!-- Contributors will be listed here -->
+                        </div>
+                        <button id="add-contributor-btn" class="add-contributor-btn">Add Contributor</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: For the Editors -->
+            <div class="form-step" id="step-4">
+                <h2>For the Editors</h2>
+                <div class="form-group">
+                    <label for="cover-letter">Subjects</label>
+                    <p>Subjects will be keywords, key phrases or classification codes that describe a topic of the submission.</p>
+                    <textarea id="cover-letter" name="cover-letter" rows="6"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="special-instructions">Comments for the Editor</label>
+                    <p>Add any information that you think our editorial staff should know when evaluating your submission.</p>
+                    <textarea id="special-instructions" name="special-instructions" rows="4"></textarea>
+                </div>
+            </div>
+
+            <!-- Step 5: Review -->
+            <div class="form-step" id="step-5">
+                <h2>Review and Submit</h2>
+                <p class="review-intro">
+                    This is a summary of the information you have entered before you complete your submission. You can change any of the details displayed here by clicking the edit button at the top of each section.
+                </p>
+                <p class="review-intro">
+                    Once you complete your submission, a member of our editorial team will be assigned to review it. Please ensure the details you have entered here are as accurate as possible.
+                </p>
+
+                <div id="review-errors" class="error-message" style="display: none;">
+                    <span class="error-icon">⚠</span> There are one or more problems that need to be fixed before you can submit. Please review the information below and make the requested changes.
+                </div>
+
+                <div class="review-section">
+                    <div class="review-header">
+                        <h3>Details</h3>
+                        <button class="edit-btn" data-section="1">Edit</button>
+                    </div>
+                    <div class="review-content" id="review-details">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="review-section">
+                    <div class="review-header">
+                        <h3>Files</h3>
+                        <button class="edit-btn" data-section="2">Edit</button>
+                    </div>
+                    <div class="review-content" id="review-files">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="review-section">
+                    <div class="review-header">
+                        <h3>Contributors</h3>
+                        <button class="edit-btn" data-section="3">Edit</button>
+                    </div>
+                    <div class="review-content" id="review-contributors">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="review-section">
+                    <div class="review-header">
+                        <h3>For the Editors</h3>
+                        <button class="edit-btn" data-section="4">Edit</button>
+                    </div>
+                    <div class="review-content" id="review-editors">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-navigation">
+            <button id="back-btn" class="back-btn">Back</button>
+            <div class="right-buttons">
+                <span id="last-saved">Last saved: Never</span>
+                <button id="save-later-bottom" class="save-later-btn">Save for Later</button>
+                <button id="continue-btn" class="continue-btn">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Contributor Modal -->
+    <div id="contributor-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Contributor</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="contributor-form">
+                    <div class="form-group">
+                        <label for="given-name">Given Name <span class="required">*</span></label>
+                        <input type="text" id="given-name" name="given-name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="family-name">Family Name</label>
+                        <input type="text" id="family-name" name="family-name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="preferred-name">Preferred Public Name</label>
+                        <p class="field-description">Please provide the full name as the author should be identified on the published work. Example: Dr. Alan P. Mwandenga</p>
+                        <input type="text" id="preferred-name" name="preferred-name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contributor-email">Email address <span class="required">*</span></label>
+                        <input type="email" id="contributor-email" name="contributor-email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="country">Country <span class="required">*</span></label>
+                        <select id="country" name="country" required>
+                            <option value="">Select a country</option>
+                            <option value="AF">Afghanistan</option>
+                            <option value="AL">Albania</option>
+                            <option value="DZ">Algeria</option>
+                            <option value="US">United States</option>
+                            <option value="GB">United Kingdom</option>
+                            <!-- Add more countries as needed -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="homepage">Homepage URL</label>
+                        <input type="url" id="homepage" name="homepage">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="orcid">ORCID ID</label>
+                        <input type="text" id="orcid" name="orcid">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bio">Bio Statement (e.g., department and rank)</label>
+                        <div class="text-editor-toolbar">
+                            <button type="button" class="toolbar-btn bold-btn">B</button>
+                            <button type="button" class="toolbar-btn italic-btn">I</button>
+                            <button type="button" class="toolbar-btn superscript-btn">x²</button>
+                            <button type="button" class="toolbar-btn subscript-btn">x₂</button>
+                            <button type="button" class="toolbar-btn link-btn">🔗</button>
+                        </div>
+                        <textarea id="bio" name="bio" rows="5"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="affiliation">Affiliation</label>
+                        <input type="text" id="affiliation" name="affiliation">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Contributor's role</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="role" value="author" checked> Author
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="role" value="translator"> Translator
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Publication Lists</label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="include-in-lists" name="include-in-lists" checked>
+                            Include this contributor when identifying authors in lists of publications.
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="save-contributor-btn" class="save-btn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<style>
+    /* General styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Header styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Progress bar styles */
+.progress-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+}
+
+.step-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 2;
+}
+
+.step.active .step-circle {
+    border-color: #0077b6;
+    color: #0077b6;
+}
+
+.step.completed .step-circle {
+    background-color: #0077b6;
+    border-color: #0077b6;
+    color: #fff;
+}
+
+.step-number {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.step.completed .step-number {
+    display: none;
+}
+
+.checkmark {
+    display: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.step.completed .checkmark {
+    display: block;
+}
+
+.step-text {
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+}
+
+.step.active .step-text {
+    color: #0077b6;
+    font-weight: bold;
+}
+
+.step-line {
+    flex: 1;
+    height: 2px;
+    background-color: #ccc;
+    position: relative;
+    z-index: 1;
+}
+
+/* Form styles */
+.form-container {
+    margin-bottom: 30px;
+}
+
+.form-step {
+    display: none;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-step.active {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="url"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.required {
+    color: #e74c3c;
+}
+
+.field-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.radio-group,
+.checkbox-label {
+    margin-top: 5px;
+}
+
+.radio-label {
+    margin-right: 20px;
+    font-weight: normal;
+}
+
+/* Upload section styles */
+.upload-section {
+    display: flex;
+    gap: 30px;
+}
+
+.upload-info {
+    flex: 1;
+}
+
+.upload-area {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.file-name {
+    flex: 1;
+}
+
+.remove-file-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.upload-btn,
+.add-file-btn {
+    background-color: #0077b6;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Contributors section styles */
+.contributors-section {
+    display: flex;
+    gap: 30px;
+}
+
+.contributors-info {
+    flex: 1;
+}
+
+.contributors-area {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.contributor-card {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.contributor-info {
+    margin-bottom: 10px;
+}
+
+.contributor-label {
+    font-weight: bold;
+}
+
+.add-contributor-btn {
+    background-color: #0077b6;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-contributor-btn {
+    background-color: #0077b6;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.remove-contributor {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #ff4d4d;
+    background: none;
+    border: 1px solid #ff4d4d;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.remove-contributor:hover {
+    background-color: #ffeeee;
+}
+
+/* Text editor toolbar */
+.text-editor-toolbar {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+
+.toolbar-btn {
+    width: 30px;
+    height: 30px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Form navigation styles */
+.form-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.back-btn {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.right-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#last-saved {
+    font-size: 14px;
+    color: #666;
+}
+
+.save-later-btn {
+    background-color: #fff;
+    border: 1px solid #0077b6;
+    color: #0077b6;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.continue-btn {
+    background-color: #0077b6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Review page styles */
+.review-intro {
+    margin-bottom: 15px;
+}
+
+.error-message {
+    background-color: #fff0f0;
+    border: 1px solid #ff4d4d;
+    color: #ff4d4d;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.error-icon {
+    color: #ff4d4d;
+    margin-right: 5px;
+}
+
+.review-section {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+}
+
+.review-header h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.edit-btn {
+    background-color: #fff;
+    border: 1px solid #0077b6;
+    color: #0077b6;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.review-content {
+    padding: 15px;
+}
+
+.review-item {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.review-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.review-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.review-value {
+    color: #333;
+}
+
+.error-value {
+    color: #ff4d4d;
+}
+
+.error-item {
+    background-color: #fff0f0;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+/* View submissions button */
+.view-submissions-btn {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 50px auto;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 4px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.close-modal {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    padding: 20px;
+    border-top: 1px solid #eee;
+    text-align: right;
+}
+
+.save-btn {
+    background-color: #0077b6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .header-buttons {
+        margin-top: 10px;
+    }
+    
+    .progress-bar {
+        overflow-x: auto;
+        padding-bottom: 5px;
+    }
+    
+    .step-text {
+        font-size: 10px;
+    }
+    
+    .upload-section,
+    .contributors-section {
+        flex-direction: column;
+    }
+    
+    .form-navigation {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .right-buttons {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+  // DOM elements
+  const steps = document.querySelectorAll(".step")
+  const formSteps = document.querySelectorAll(".form-step")
+  const backBtn = document.getElementById("back-btn")
+  const continueBtn = document.getElementById("continue-btn")
+  const saveLaterBtns = document.querySelectorAll(".save-later-btn")
+  const addFileBtn = document.getElementById("add-file-btn")
+  const fileList = document.getElementById("file-list")
+  const addContributorBtn = document.getElementById("add-contributor-btn")
+  const contributorsList = document.getElementById("contributors-list")
+  const currentStepTitle = document.getElementById("current-step-title")
+  const lastSavedSpan = document.getElementById("last-saved")
+  const viewSubmissionsBtn = document.getElementById("view-submissions-btn")
+
+  // Review page elements
+  const reviewDetailsSection = document.getElementById("review-details")
+  const reviewFilesSection = document.getElementById("review-files")
+  const reviewContributorsSection = document.getElementById("review-contributors")
+  const reviewEditorsSection = document.getElementById("review-editors")
+  const reviewErrorsSection = document.getElementById("review-errors")
+  const editButtons = document.querySelectorAll(".edit-btn")
+
+  // Modal elements
+  const contributorModal = document.getElementById("contributor-modal")
+  const closeModal = document.querySelector(".close-modal")
+  const saveContributorBtn = document.getElementById("save-contributor-btn")
+  const contributorForm = document.getElementById("contributor-form")
+
+  // Current step
+  let currentStep = 1
+
+  // Current submission index (if loading an existing submission)
+  let currentSubmissionIndex = localStorage.getItem("currentSubmissionIndex")
+
+  // Current contributor being edited (null for new contributor)
+  let currentContributorIndex = null
+
+  // Initialize form data object
+  let formData = {
+    id: Date.now(), // Unique ID for this submission
+    currentStep: 1,
+    completedSteps: [],
+    lastSaved: null,
+    details: {
+      title: "",
+      abstract: "",
+      keywords: "",
+    },
+    files: [],
+    contributors: [],
+    editors: {
+      coverLetter: "",
+      specialInstructions: "",
+    },
+  }
+
+  // Load saved data if exists
+  loadFormData()
+
+  // Update UI based on loaded data
+  updateUI()
+
+  // Event listeners
+  backBtn.addEventListener("click", goToPreviousStep)
+  continueBtn.addEventListener("click", goToNextStep)
+
+  saveLaterBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      saveFormData(true)
+    })
+  })
+
+  addFileBtn.addEventListener("click", addFile)
+
+  addContributorBtn.addEventListener("click", () => {
+    openContributorModal()
+  })
+
+  viewSubmissionsBtn.addEventListener("click", () => {
+    window.location.href = "submissions.html"
+  })
+
+  // Edit buttons in review page
+  editButtons.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      const sectionIndex = Number.parseInt(this.getAttribute("data-section"))
+      goToStep(sectionIndex)
+    })
+  })
+
+  // Modal event listeners
+  closeModal.addEventListener("click", closeContributorModal)
+
+  saveContributorBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    saveContributor()
+  })
+
+  // Close modal when clicking outside
+  window.addEventListener("click", (event) => {
+    if (event.target === contributorModal) {
+      closeContributorModal()
+    }
+  })
+
+  // Add input event listeners to all form fields
+  document.querySelectorAll("input, textarea").forEach((input) => {
+    input.addEventListener("input", () => {
+      updateFormData()
+    })
+  })
+
+  // Functions
+  function updateUI() {
+    // Update step indicators
+    steps.forEach((step, index) => {
+      const stepNumber = index + 1
+      if (stepNumber < currentStep) {
+        step.classList.add("completed")
+        step.classList.remove("active")
+      } else if (stepNumber === currentStep) {
+        step.classList.add("active")
+        step.classList.remove("completed")
+      } else {
+        step.classList.remove("active", "completed")
+      }
+    })
+
+    // Update form steps visibility
+    formSteps.forEach((formStep, index) => {
+      const stepNumber = index + 1
+      if (stepNumber === currentStep) {
+        formStep.classList.add("active")
+      } else {
+        formStep.classList.remove("active")
+      }
+    })
+
+    // Update step title
+    const stepTitles = ["Details", "Upload Files", "Contributors", "For the Editors", "Review"]
+    currentStepTitle.textContent = stepTitles[currentStep - 1]
+
+    // Update back button visibility
+    backBtn.style.visibility = currentStep === 1 ? "hidden" : "visible"
+
+    // Update continue button text
+    continueBtn.textContent = currentStep === 5 ? "Submit" : "Continue"
+
+    // Populate form fields with saved data
+    populateFormFields()
+
+    // If on review step, generate review content
+    if (currentStep === 5) {
+      generateReviewContent()
+    }
+
+    // Update last saved time display
+    if (formData.lastSaved) {
+      lastSavedSpan.textContent = `Last saved: ${formData.lastSaved}`
+    }
+  }
+
+  function populateFormFields() {
+    // Details
+    document.getElementById("title").value = formData.details.title || ""
+    document.getElementById("abstract").value = formData.details.abstract || ""
+    document.getElementById("keywords").value = formData.details.keywords || ""
+
+    // Files
+    renderFileList()
+
+    // Contributors
+    renderContributorsList()
+
+    // Editors
+    document.getElementById("cover-letter").value = formData.editors.coverLetter || ""
+    document.getElementById("special-instructions").value = formData.editors.specialInstructions || ""
+  }
+
+  function renderFileList() {
+    fileList.innerHTML = ""
+    if (!formData.files || formData.files.length === 0) {
+      const emptyMessage = document.createElement("p")
+      emptyMessage.textContent = "No files uploaded yet."
+      fileList.appendChild(emptyMessage)
+
+      const uploadBtn = document.createElement("button")
+      uploadBtn.id = "upload-file-btn"
+      uploadBtn.className = "upload-btn"
+      uploadBtn.textContent = "Upload File"
+      uploadBtn.addEventListener("click", () => {
+        // In a real application, this would open a file picker
+        // For this demo, we'll simulate adding a file
+        const fileName = prompt("Enter file name:")
+        if (fileName) {
+          if (!formData.files) formData.files = []
+          formData.files.push({
+            name: fileName,
+            id: Date.now(),
+          })
+          renderFileList()
+          saveFormData(false)
+        }
+      })
+      fileList.appendChild(uploadBtn)
+    } else {
+      formData.files.forEach((file, index) => {
+        const fileItem = document.createElement("div")
+        fileItem.className = "file-item"
+
+        const fileName = document.createElement("span")
+        fileName.className = "file-name"
+        fileName.textContent = file.name
+        fileItem.appendChild(fileName)
+
+        const removeButton = document.createElement("button")
+        removeButton.textContent = "Remove"
+        removeButton.className = "remove-file-btn"
+        removeButton.dataset.index = index
+        removeButton.addEventListener("click", function () {
+          removeFile(Number.parseInt(this.dataset.index))
+        })
+        fileItem.appendChild(removeButton)
+
+        fileList.appendChild(fileItem)
+      })
+
+      const uploadBtn = document.createElement("button")
+      uploadBtn.id = "upload-file-btn"
+      uploadBtn.className = "upload-btn"
+      uploadBtn.textContent = "Upload Another File"
+      uploadBtn.addEventListener("click", () => {
+        // In a real application, this would open a file picker
+        // For this demo, we'll simulate adding a file
+        const fileName = prompt("Enter file name:")
+        if (fileName) {
+          formData.files.push({
+            name: fileName,
+            id: Date.now(),
+          })
+          renderFileList()
+          saveFormData(false)
+        }
+      })
+      fileList.appendChild(uploadBtn)
+    }
+  }
+
+  function renderContributorsList() {
+    // Clear existing contributors list
+    contributorsList.innerHTML = ""
+
+    // Add saved contributors
+    if (!formData.contributors || formData.contributors.length === 0) {
+      const emptyMessage = document.createElement("p")
+      emptyMessage.textContent = 'No contributors added yet. Click "Add Contributor" to add a contributor.'
+      contributorsList.appendChild(emptyMessage)
+    } else {
+      formData.contributors.forEach((contributor, index) => {
+        const contributorCard = document.createElement("div")
+        contributorCard.className = "contributor-card"
+
+        const name = contributor.givenName + (contributor.familyName ? " " + contributor.familyName : "")
+        const displayName = contributor.preferredName || name
+
+        const heading = document.createElement("h3")
+        heading.textContent = index === 0 ? "Primary Contributor: " + displayName : displayName
+
+        const removeBtn = document.createElement("button")
+        removeBtn.className = "remove-contributor"
+        removeBtn.textContent = "Remove"
+        removeBtn.dataset.index = index
+        removeBtn.addEventListener("click", function () {
+          removeContributor(Number.parseInt(this.dataset.index))
+        })
+
+        const emailInfo = document.createElement("div")
+        emailInfo.className = "contributor-info"
+        emailInfo.innerHTML = '<span class="contributor-label">Email:</span> ' + contributor.email
+
+        const affiliationInfo = document.createElement("div")
+        affiliationInfo.className = "contributor-info"
+        affiliationInfo.innerHTML =
+          '<span class="contributor-label">Affiliation:</span> ' + (contributor.affiliation || "Not specified")
+
+        const roleInfo = document.createElement("div")
+        roleInfo.className = "contributor-info"
+        roleInfo.innerHTML =
+          '<span class="contributor-label">Role:</span> ' +
+          (contributor.role === "translator" ? "Translator" : "Author")
+
+        const editBtn = document.createElement("button")
+        editBtn.className = "edit-contributor-btn"
+        editBtn.textContent = "Edit"
+        editBtn.dataset.index = index
+        editBtn.addEventListener("click", function () {
+          editContributor(Number.parseInt(this.dataset.index))
+        })
+
+        contributorCard.appendChild(heading)
+        contributorCard.appendChild(removeBtn)
+        contributorCard.appendChild(emailInfo)
+        contributorCard.appendChild(affiliationInfo)
+        contributorCard.appendChild(roleInfo)
+        contributorCard.appendChild(editBtn)
+
+        contributorsList.appendChild(contributorCard)
+      })
+    }
+  }
+
+  function openContributorModal(index = null) {
+    currentContributorIndex = index
+
+    // Clear form fields
+    document.getElementById("given-name").value = ""
+    document.getElementById("family-name").value = ""
+    document.getElementById("preferred-name").value = ""
+    document.getElementById("contributor-email").value = ""
+    document.getElementById("country").value = ""
+    document.getElementById("homepage").value = ""
+    document.getElementById("orcid").value = ""
+    document.getElementById("bio").value = ""
+    document.getElementById("affiliation").value = ""
+    document.querySelector('input[name="role"][value="author"]').checked = true
+    document.getElementById("include-in-lists").checked = true
+
+    // If editing existing contributor, populate fields
+    if (index !== null && formData.contributors && formData.contributors[index]) {
+      const contributor = formData.contributors[index]
+      document.getElementById("given-name").value = contributor.givenName || ""
+      document.getElementById("family-name").value = contributor.familyName || ""
+      document.getElementById("preferred-name").value = contributor.preferredName || ""
+      document.getElementById("contributor-email").value = contributor.email || ""
+      document.getElementById("country").value = contributor.country || ""
+      document.getElementById("homepage").value = contributor.homepage || ""
+      document.getElementById("orcid").value = contributor.orcid || ""
+      document.getElementById("bio").value = contributor.bio || ""
+      document.getElementById("affiliation").value = contributor.affiliation || ""
+
+      if (contributor.role === "translator") {
+        document.querySelector('input[name="role"][value="translator"]').checked = true
+      } else {
+        document.querySelector('input[name="role"][value="author"]').checked = true
+      }
+
+      document.getElementById("include-in-lists").checked = contributor.includeInLists !== false
+    }
+
+    // Show modal
+    contributorModal.style.display = "block"
+  }
+
+  function closeContributorModal() {
+    contributorModal.style.display = "none"
+    currentContributorIndex = null
+  }
+
+  function saveContributor() {
+    // Validate required fields
+    const givenName = document.getElementById("given-name").value.trim()
+    const email = document.getElementById("contributor-email").value.trim()
+    const country = document.getElementById("country").value
+
+    if (!givenName) {
+      alert("Given Name is required.")
+      return
+    }
+
+    if (!email) {
+      alert("Email address is required.")
+      return
+    }
+
+    if (!validateEmail(email)) {
+      alert("Please enter a valid email address.")
+      return
+    }
+
+    if (!country) {
+      alert("Country is required.")
+      return
+    }
+
+    // Create contributor object
+    const contributor = {
+      givenName: givenName,
+      familyName: document.getElementById("family-name").value.trim(),
+      preferredName: document.getElementById("preferred-name").value.trim(),
+      email: email,
+      country: country,
+      homepage: document.getElementById("homepage").value.trim(),
+      orcid: document.getElementById("orcid").value.trim(),
+      bio: document.getElementById("bio").value.trim(),
+      affiliation: document.getElementById("affiliation").value.trim(),
+      role: document.querySelector('input[name="role"]:checked').value,
+      includeInLists: document.getElementById("include-in-lists").checked,
+    }
+
+    // Make sure contributors array exists
+    if (!formData.contributors) {
+      formData.contributors = []
+    }
+
+    // Add or update contributor
+    if (currentContributorIndex !== null) {
+      formData.contributors[currentContributorIndex] = contributor
+    } else {
+      formData.contributors.push(contributor)
+    }
+
+    // Save form data
+    saveFormData(false)
+
+    // Update UI
+    renderContributorsList()
+
+    // Close modal
+    closeContributorModal()
+
+    // Show confirmation
+    alert("Contributor saved successfully!")
+  }
+
+  function editContributor(index) {
+    openContributorModal(index)
+  }
+
+  function removeContributor(index) {
+    if (confirm("Are you sure you want to remove this contributor?")) {
+      formData.contributors.splice(index, 1)
+      renderContributorsList()
+      saveFormData(false)
+    }
+  }
+
+  function generateReviewContent() {
+    // Check for errors
+    let hasErrors = false
+
+    // Details section
+    reviewDetailsSection.innerHTML = ""
+
+    if (!formData.details.title) {
+      addReviewError(reviewDetailsSection, "Title is required.")
+      hasErrors = true
+    } else {
+      addReviewItem(reviewDetailsSection, "Title", formData.details.title)
+    }
+
+    if (!formData.details.keywords) {
+      addReviewItem(reviewDetailsSection, "Keywords", "None provided")
+    } else {
+      addReviewItem(reviewDetailsSection, "Keywords", formData.details.keywords)
+    }
+
+    if (!formData.details.abstract) {
+      addReviewError(reviewDetailsSection, "Abstract", "This field is required.")
+      hasErrors = true
+    } else {
+      addReviewItem(reviewDetailsSection, "Abstract", formData.details.abstract)
+    }
+
+    addReviewItem(reviewDetailsSection, "References", "None provided")
+
+    // Files section
+    reviewFilesSection.innerHTML = ""
+
+    if (!formData.files || formData.files.length === 0) {
+      addReviewError(reviewFilesSection, "You must upload at least one Article Text file.")
+      hasErrors = true
+    } else {
+      const filesList = document.createElement("ul")
+      formData.files.forEach((file) => {
+        const li = document.createElement("li")
+        li.textContent = file.name
+        filesList.appendChild(li)
+      })
+
+      const filesItem = document.createElement("div")
+      filesItem.className = "review-item"
+
+      const filesLabel = document.createElement("div")
+      filesLabel.className = "review-label"
+      filesLabel.textContent = "Uploaded Files"
+
+      const filesValue = document.createElement("div")
+      filesValue.className = "review-value"
+      filesValue.appendChild(filesList)
+
+      filesItem.appendChild(filesLabel)
+      filesItem.appendChild(filesValue)
+      reviewFilesSection.appendChild(filesItem)
+    }
+
+    // Contributors section
+    reviewContributorsSection.innerHTML = ""
+
+    if (!formData.contributors || formData.contributors.length === 0) {
+      addReviewError(reviewContributorsSection, "No contributors have been added for this submission.")
+      hasErrors = true
+    } else {
+      formData.contributors.forEach((contributor, index) => {
+        const contributorTitle = index === 0 ? "Primary Contributor" : `Additional Contributor ${index}`
+        const name = contributor.givenName + (contributor.familyName ? " " + contributor.familyName : "")
+        const displayName = contributor.preferredName || name
+
+        const contributorItem = document.createElement("div")
+        contributorItem.className = "review-item"
+
+        const contributorLabel = document.createElement("div")
+        contributorLabel.className = "review-label"
+        contributorLabel.textContent = contributorTitle
+
+        const contributorValue = document.createElement("div")
+        contributorValue.className = "review-value"
+
+        const contributorDetails = document.createElement("p")
+        contributorDetails.innerHTML = `
+                    <strong>Name:</strong> ${displayName}<br>
+                    <strong>Email:</strong> ${contributor.email}<br>
+                    <strong>Affiliation:</strong> ${contributor.affiliation || "Not specified"}<br>
+                    <strong>Role:</strong> ${contributor.role === "translator" ? "Translator" : "Author"}
+                `
+
+        contributorValue.appendChild(contributorDetails)
+        contributorItem.appendChild(contributorLabel)
+        contributorItem.appendChild(contributorValue)
+        reviewContributorsSection.appendChild(contributorItem)
+      })
+    }
+
+    // Editors section
+    reviewEditorsSection.innerHTML = ""
+
+    addReviewItem(reviewEditorsSection, "Subjects", "None provided")
+    addReviewItem(reviewEditorsSection, "Comments for the Editor", formData.editors.coverLetter || "None")
+
+    // Show/hide error message
+    if (hasErrors) {
+      reviewErrorsSection.style.display = "block"
+    } else {
+      reviewErrorsSection.style.display = "none"
+    }
+  }
+
+  function addReviewItem(parent, label, value) {
+    const item = document.createElement("div")
+    item.className = "review-item"
+
+    const labelDiv = document.createElement("div")
+    labelDiv.className = "review-label"
+    labelDiv.textContent = label
+
+    const valueDiv = document.createElement("div")
+    valueDiv.className = "review-value"
+    valueDiv.textContent = value
+
+    item.appendChild(labelDiv)
+    item.appendChild(valueDiv)
+    parent.appendChild(item)
+  }
+
+  function addReviewError(parent, message, label = null) {
+    if (label) {
+      // Error for a specific field
+      const item = document.createElement("div")
+      item.className = "review-item"
+
+      const labelDiv = document.createElement("div")
+      labelDiv.className = "review-label"
+      labelDiv.textContent = label
+
+      const valueDiv = document.createElement("div")
+      valueDiv.className = "review-value error-value"
+      valueDiv.innerHTML = `<span class="error-icon">⚠</span> ${message}`
+
+      item.appendChild(labelDiv)
+      item.appendChild(valueDiv)
+      parent.appendChild(item)
+    } else {
+      // General error
+      const errorItem = document.createElement("div")
+      errorItem.className = "review-item error-item"
+
+      const errorValue = document.createElement("div")
+      errorValue.className = "error-value"
+      errorValue.innerHTML = `<span class="error-icon">⚠</span> ${message}`
+
+      errorItem.appendChild(errorValue)
+      parent.appendChild(errorItem)
+    }
+  }
+
+  function goToStep(step) {
+    if (step >= 1 && step <= 5) {
+      currentStep = step
+      formData.currentStep = currentStep
+      updateUI()
+      saveFormData(false)
+    }
+  }
+
+  function goToPreviousStep() {
+    if (currentStep > 1) {
+      currentStep--
+      formData.currentStep = currentStep
+      updateUI()
+      saveFormData(false)
+    }
+  }
+
+  function goToNextStep() {
+    if (validateCurrentStep()) {
+      if (currentStep < 5) {
+        currentStep++
+        formData.currentStep = currentStep
+
+        // Add current step to completed steps if not already there
+        if (!formData.completedSteps.includes(currentStep - 1)) {
+          formData.completedSteps.push(currentStep - 1)
+        }
+
+        updateUI()
+        saveFormData(false)
+      } else {
+        // Check for errors in review
+        const errorItems = document.querySelectorAll(".error-item, .error-value")
+
+        if (errorItems.length > 0) {
+          alert("Please fix all errors before submitting.")
+        } else {
+          // Submit form
+          alert("Form submitted successfully!")
+          // In a real application, you would send the data to a server here
+
+          // Remove this submission from the list of in-progress submissions
+          removeCurrentSubmission()
+
+          // Redirect to the submissions list
+          window.location.href = "submissions.html"
+        }
+      }
+    }
+  }
+
+  function validateCurrentStep() {
+    // Simple validation for required fields
+    if (currentStep === 1) {
+      const title = document.getElementById("title").value.trim()
+      const abstract = document.getElementById("abstract").value.trim()
+      const keywords = document.getElementById("keywords").value.trim()
+
+      if (!title || !abstract ) {
+        alert("Please fill in all required fields.")
+        return false
+      }
+    } else if (currentStep === 3) {
+      if (!formData.contributors || formData.contributors.length === 0) {
+        alert("Please add at least one contributor.")
+        return false
+      }
+    }
+
+    return true
+  }
+
+  function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return re.test(email)
+  }
+
+  function updateFormData() {
+    // Update details
+    if (currentStep === 1) {
+      formData.details.title = document.getElementById("title").value
+      formData.details.abstract = document.getElementById("abstract").value
+      formData.details.keywords = document.getElementById("keywords").value
+    }
+
+    // Update editors
+    if (currentStep === 4) {
+      formData.editors.coverLetter = document.getElementById("cover-letter").value
+      formData.editors.specialInstructions = document.getElementById("special-instructions").value
+    }
+  }
+
+  function saveFormData(showAlert = true) {
+    // Update form data before saving
+    updateFormData()
+
+    // Update current step and last saved time
+    formData.currentStep = currentStep
+    const now = new Date()
+    const timeString = now.toLocaleTimeString()
+    formData.lastSaved = timeString
+
+    // Get all submissions
+    const allSubmissions = JSON.parse(localStorage.getItem("allSubmissions")) || []
+
+    // If editing an existing submission, update it
+    if (currentSubmissionIndex !== null && !isNaN(Number.parseInt(currentSubmissionIndex))) {
+      const index = Number.parseInt(currentSubmissionIndex)
+      allSubmissions[index] = formData
+    } else {
+      // Otherwise add as a new submission
+      allSubmissions.push(formData)
+      // Set the current index to the last item
+      currentSubmissionIndex = (allSubmissions.length - 1).toString()
+      localStorage.setItem("currentSubmissionIndex", currentSubmissionIndex)
+    }
+
+    // Save all submissions back to localStorage
+    localStorage.setItem("allSubmissions", JSON.stringify(allSubmissions))
+
+    // Update last saved display
+    lastSavedSpan.textContent = `Last saved: ${timeString}`
+
+    if (showAlert) {
+      alert("Your progress has been saved. You can return to this form later to continue.")
+    }
+  }
+
+  function loadFormData() {
+    // Get all submissions
+    const allSubmissions = JSON.parse(localStorage.getItem("allSubmissions")) || []
+
+    // If we have a current submission index, load that submission
+    if (currentSubmissionIndex !== null && allSubmissions[Number.parseInt(currentSubmissionIndex)]) {
+      formData = allSubmissions[Number.parseInt(currentSubmissionIndex)]
+      currentStep = formData.currentStep || 1
+
+      // Ensure contributors array exists
+      if (!formData.contributors) {
+        formData.contributors = []
+      }
+    } else {
+      // Otherwise create a new submission
+      formData = {
+        id: Date.now(), // Ensure unique ID
+        currentStep: 1,
+        completedSteps: [],
+        lastSaved: null,
+        details: {
+          title: "",
+          abstract: "",
+          keywords: "",
+        },
+        files: [],
+        contributors: [],
+        editors: {
+          coverLetter: "",
+          specialInstructions: "",
+        },
+      }
+      currentSubmissionIndex = null
+    }
+  }
+
+  function removeCurrentSubmission() {
+    if (currentSubmissionIndex !== null) {
+      const allSubmissions = JSON.parse(localStorage.getItem("allSubmissions")) || []
+      allSubmissions.splice(Number.parseInt(currentSubmissionIndex), 1)
+      localStorage.setItem("allSubmissions", JSON.stringify(allSubmissions))
+      localStorage.removeItem("currentSubmissionIndex")
+    }
+  }
+
+  function addFile() {
+    // In a real application, this would open a file picker
+    // For this demo, we'll simulate adding a file
+    const fileName = prompt("Enter file name:")
+    if (fileName) {
+      if (!formData.files) formData.files = []
+      formData.files.push({
+        name: fileName,
+        // In a real app, you would store the file object or its ID
+        id: Date.now(),
+      })
+      renderFileList()
+      saveFormData(false)
+    }
+  }
+
+  function removeFile(index) {
+    formData.files.splice(index, 1)
+    renderFileList()
+    saveFormData(false)
+  }
+
+  // Initialize the UI
+  updateUI()
+})
+
+
+</script>

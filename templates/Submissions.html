@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Articles</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="author" content="">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="icomoon/icomoon.css">
+	<link rel="stylesheet" type="text/css" href="css/vendor.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#header" tabindex="0">
+
+	<div id="header-wrap">
+
+		<div class="top-content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="social-links">
+							<!-- <ul>
+								<li>
+									<a href="#"><i class="icon icon-facebook"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="icon icon-twitter"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="icon icon-youtube-play"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="icon icon-behance-square"></i></a>
+								</li>
+							</ul> -->
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="right-element">
+							<a href="#" class="user-account for-buy"><span>Register</span></a>
+							<a href="#" class="cart for-buy"><span>Login</span></a>
+
+							<div class="action-menu">
+
+								<div class="search-bar">
+									<!-- <a href="#" class="search-button search-toggle" data-selector="#header-wrap">
+										<i class="icon icon-search"></i>
+									</a>
+									<form role="search" method="get" class="search-box">
+										<input class="search-field text search-input" placeholder="Search"
+											type="search">
+									</form> -->
+								</div>
+							</div>
+
+						</div><!--top-right-->
+					</div>
+
+				</div>
+			</div>
+		</div><!--top-content-->
+
+		<header id="header">
+			<div class="container-fluid">
+				<div class="row">
+
+					<div class="col-md-2">
+						<div class="main-logo">
+							<a href="index.html">Article</a>
+						</div>
+
+					</div>
+
+					<div class="col-md-10">
+
+						<nav id="navbar">
+							<div class="main-menu stellarnav">
+								<ul class="menu-list">
+									<li class="menu-item active"><a href="#home">Home</a></li>
+									<li class="menu-item"><a href="/static/current.html" class="nav-link">Current</a></li>
+									<li class="menu-item"><a href="/static/archive.html" class="nav-link">Archives</a></li>
+									<li class="menu-item"><a href="/static/team.html" class="nav-link">Editorial Team</a></li>
+									<li class="menu-item  has-sub"><a href="#pages" class="nav-link">News</a>
+
+										<ul>
+											<li class="menu-item"><a href="#latest-blog" class="nav-link">Announcements</a></li>
+											<li class="menu-item"><a href="" class="nav-link">Advertisement</a></li>
+										</ul>
+
+									</li>
+									<li class="menu-item"><a href="/static/police.html" class="nav-link">Policies</a></li>
+									<li class="menu-item has-sub">
+										<a href="#pages" class="nav-link">About</a>
+
+										<ul style="right: 1px;">
+											<li><a href="index.html" class="nav-link">About the Journal</a></li>
+											<li><a href="index.html" class="nav-link">Privacy Statement</a></li>
+											<li><a href="index.html" class="nav-link">Submissions</a></li>
+											<li><a href="index.html" class="nav-link">Contact</a></li>
+										</ul>
+
+									</li>
+								</ul>
+
+								<div class="hamburger">
+									<span class="bar"></span>
+									<span class="bar"></span>
+									<span class="bar"></span>
+								</div>
+
+							</div>
+						</nav>
+
+					</div>
+
+				</div>
+			</div>
+		</header>
+
+	</div><!--header-wrap-->
+    <div class="container">
+        <div class="header">
+            <h1>In-Progress Submissions</h1>
+            <button id="create-new-btn" class="create-new-btnn">Create New Submission</button>
+        </div>
+
+        <div class="submissions-list" id="submissions-list">
+            <!-- This will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const submissionsList = document.getElementById('submissions-list');
+            const createNewBtn = document.getElementById('create-new-btn');
+            
+            // Load all submissions from localStorage
+            function loadSubmissions() {
+                const allSubmissions = JSON.parse(localStorage.getItem('allSubmissions')) || [];
+                
+                if (allSubmissions.length === 0) {
+                    submissionsList.innerHTML = `
+                        <div class="no-submissions">
+                            <h3>No in-progress submissions found</h3>
+                            <p>Click "Create New Submission" to start a new submission.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                submissionsList.innerHTML = '';
+                
+                allSubmissions.forEach((submission, index) => {
+                    const submissionItem = document.createElement('div');
+                    submissionItem.className = 'submission-item';
+                    
+                    const title = submission.details.title || 'Untitled Submission';
+                    const lastSaved = submission.lastSaved || 'Unknown';
+                    const currentStep = submission.currentStep || 1;
+                    
+                    // Get step name
+                    const stepNames = ['Details', 'Upload Files', 'Contributors', 'For the Editors', 'Review'];
+                    const currentStepName = stepNames[currentStep - 1];
+                    
+                    submissionItem.innerHTML = `
+                        <div class="submission-info">
+                            <div class="submission-title">${title}</div>
+                            <div class="submission-meta">Last saved: ${lastSaved}</div>
+                            <div class="submission-progress">
+                                <div class="progress-indicator">
+                                    ${generateProgressSteps(currentStep)}
+                                </div>
+                                <div>Current step: ${currentStepName}</div>
+                            </div>
+                        </div>
+                        <div class="submission-actionss">
+                            <button class="continue-btnn" data-index="${index}">Continue</button>
+                            <button class="delete-btnn" style="border-radius: 4px" data-index="${index}">Delete</button>
+                        </div>
+                    `;
+                    
+                    submissionsList.appendChild(submissionItem);
+                });
+                
+                // Add event listeners to buttons
+                document.querySelectorAll('.continue-btnn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = this.dataset.index;
+                        localStorage.setItem('currentSubmissionIndex', index);
+                        window.location.href = 'form.html';
+                    });
+                });
+                
+                document.querySelectorAll('.delete-btnn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        if (confirm('Are you sure you want to delete this submission?')) {
+                            const index = this.dataset.index;
+                            const allSubmissions = JSON.parse(localStorage.getItem('allSubmissions')) || [];
+                            allSubmissions.splice(index, 1);
+                            localStorage.setItem('allSubmissions', JSON.stringify(allSubmissions));
+                            loadSubmissions(); // Refresh the list
+                        }
+                    });
+                });
+            }
+            
+            function generateProgressSteps(currentStep) {
+                let stepsHtml = '';
+                for (let i = 1; i <= 5; i++) {
+                    if (i < currentStep) {
+                        stepsHtml += `<div class="progress-step completed"></div>`;
+                    } else if (i === currentStep) {
+                        stepsHtml += `<div class="progress-step current"></div>`;
+                    } else {
+                        stepsHtml += `<div class="progress-step"></div>`;
+                    }
+                }
+                return stepsHtml;
+            }
+            
+            // Create new submission button
+            createNewBtn.addEventListener('click', function() {
+                localStorage.removeItem('currentSubmissionIndex');
+                window.location.href = 'form.html';
+            });
+            
+            // Load submissions when page loads
+            loadSubmissions();
+        });
+    </script>
+</body>
+</html>
+
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+h1 {
+    color: #333;
+    font-size: 28px;
+}
+
+.save-later-btn {
+    background-color: white;
+    color: #0077b6;
+    border: 1px solid #0077b6;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.view-submissions-btn {
+    background-color: white;
+    color: #0077b6;
+    border: 1px solid #0077b6;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.progress-bar {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    flex: 1;
+}
+
+.step-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+    border: 2px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.step.active .step-circle {
+    border-color: #0077b6;
+    background-color: #0077b6;
+    color: white;
+}
+
+.step.completed .step-circle {
+    border-color: #0077b6;
+    background-color: #0077b6;
+    color: white;
+}
+
+.step-number {
+    font-weight: bold;
+}
+
+.checkmark {
+    display: none;
+    color: white;
+    font-weight: bold;
+}
+
+.step.completed .checkmark {
+    display: block;
+}
+
+.step.completed .step-number {
+    display: none;
+}
+
+.step-text {
+    font-size: 14px;
+    color: #666;
+}
+
+.step.active .step-text {
+    color: #0077b6;
+    font-weight: bold;
+}
+
+.step-line {
+    flex: 1;
+    height: 2px;
+    background-color: #ccc;
+    position: relative;
+    z-index: 0;
+}
+
+.form-container {
+    background-color: white;
+    border-radius: 4px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.form-step {
+    display: none;
+}
+
+.form-step.active {
+    display: block;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.upload-section {
+    display: flex;
+    gap: 30px;
+}
+
+.upload-info {
+    flex: 1;
+}
+
+.upload-area {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.upload-btn {
+    color: #0077b6;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 16px;
+    margin-top: 10px;
+    display: block;
+}
+
+.add-file-btn, .add-contributor-btn {
+    background-color: white;
+    color: #0077b6;
+    border: 1px solid #0077b6;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.contributor {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.form-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.back-btn {
+    background-color: white;
+    color: #0077b6;
+    border: 1px solid #0077b6;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.right-buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#last-saved {
+    color: #666;
+    font-size: 14px;
+}
+
+.continue-btnn {
+    background-color: #0077b6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.file-item {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.file-name {
+    font-weight: bold;
+}
+
+.remove-btn {
+    color: #ff4d4d;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.additional-contributor {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.remove-contributor {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #ff4d4d;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.review-section {
+    margin-bottom: 30px;
+}
+
+.review-section h3 {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+.review-item {
+    margin-bottom: 15px;
+}
+
+.review-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.review-value {
+    padding-left: 15px;
+}
+
+/* Submissions list styles */
+.submissions-list {
+    background-color: white;
+    border-radius: 4px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.submission-item {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.submission-info {
+    flex: 1;
+}
+
+.submission-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.submission-meta {
+    color: #666;
+    font-size: 14px;
+}
+
+.submission-progress {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.progress-indicator {
+    display: flex;
+    margin-right: 15px;
+}
+
+.progress-step {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ddd;
+    margin-right: 5px;
+}
+
+.progress-step.completed {
+    background-color: #0077b6;
+}
+
+.progress-step.current {
+    background-color: #0077b6;
+    position: relative;
+}
+
+.progress-step.current:after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 2px solid #0077b6;
+    border-radius: 50%;
+}
+
+.submission-actionss {
+    display: flex;
+    gap: 10px;
+}
+
+.no-submissions {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.create-new-btnn {
+    background-color: #0077b6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .upload-section {
+        flex-direction: column;
+    }
+    
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .header-buttons {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .step-text {
+        font-size: 12px;
+    }
+    
+    .form-navigation {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .right-buttons {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+</style>

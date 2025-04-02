@@ -1,0 +1,1550 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Создание статьи{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Progress bar styles */
+    .progress-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 5px;
+        flex-direction: row;
+    }
+
+    .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+        position: relative;
+    }
+
+    .step-circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #fff;
+        border: 2px solid #ccc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .step.active .step-circle {
+        border-color: #0077b6;
+        color: #0077b6;
+    }
+
+    .step.completed .step-circle {
+        background-color: #0077b6;
+        border-color: #0077b6;
+        color: #fff;
+    }
+
+    .step-number {
+        display: block;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .step.completed .step-number {
+        display: none;
+    }
+
+    .checkmark {
+        display: none;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .step.completed .checkmark {
+        display: block;
+    }
+
+    .step-text {
+        font-size: 12px;
+        color: #666;
+        text-align: center;
+    }
+
+    .step.active .step-text {
+        color: #0077b6;
+        font-weight: bold;
+    }
+
+    .step-line {
+        flex: 1;
+        height: 2px;
+        background-color: #ccc;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Form styles */
+    .form-step {
+        display: none;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+    .form-step.active {
+        display: block;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .header-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .view-submissions-btn {
+        background-color: #f5f5f5;
+        border: 1px solid #ddd;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .save-later-btn {
+        background-color: #fff;
+        border: 1px solid #0077b6;
+        color: #0077b6;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .form-navigation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .back-btn {
+        background-color: #f5f5f5;
+        border: 1px solid #ddd;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .right-buttons {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    #last-saved {
+        font-size: 14px;
+        color: #666;
+    }
+
+    .continue-btn {
+        background-color: #0077b6;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    /* Upload section styles */
+    .upload-section {
+        display: flex;
+        gap: 30px;
+    }
+
+    .upload-info {
+        flex: 1;
+    }
+
+    .upload-area {
+        flex: 1;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 20px;
+    }
+
+    .file-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+
+    .file-name {
+        flex: 1;
+    }
+
+    .remove-file-btn {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .add-file-btn {
+        background-color: #0077b6;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    /* Contributors section styles */
+    .contributors-section {
+        display: flex;
+        gap: 30px;
+    }
+
+    .contributors-info {
+        flex: 1;
+    }
+
+    .contributors-area {
+        flex: 1;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 20px;
+    }
+
+    .contributor-card {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 20px;
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .contributor-info {
+        margin-bottom: 10px;
+    }
+
+    .contributor-label {
+        font-weight: bold;
+    }
+
+    .add-contributor-btn {
+        background-color: #0077b6;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .remove-contributor {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #ff4d4d;
+        background: none;
+        border: 1px solid #ff4d4d;
+        border-radius: 4px;
+        padding: 5px 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    /* Review page styles */
+    .review-section {
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .review-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+        background-color: #f9f9f9;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .review-header h3 {
+        margin: 0;
+        font-size: 16px;
+    }
+
+    .edit-btn {
+        background-color: #fff;
+        border: 1px solid #0077b6;
+        color: #0077b6;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .review-content {
+        padding: 15px;
+    }
+
+    .review-item {
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .review-label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+    .review-value {
+        color: #333;
+    }
+
+    .error-message {
+        background-color: #fff0f0;
+        border: 1px solid #ff4d4d;
+        color: #ff4d4d;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+    }
+
+    /* Modal styles */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+        background-color: #fff;
+        margin: 50px auto;
+        width: 80%;
+        max-width: 800px;
+        border-radius: 4px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .close-modal {
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .modal-body {
+        padding: 20px;
+    }
+
+    .modal-footer {
+        padding: 20px;
+        border-top: 1px solid #eee;
+        text-align: right;
+    }
+
+    .save-btn {
+        background-color: #0077b6;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        .header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .header-buttons {
+            margin-top: 10px;
+        }
+        
+        .progress-bar {
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+        
+        .step-text {
+            font-size: 10px;
+        }
+        
+        .upload-section,
+        .contributors-section {
+            flex-direction: column;
+        }
+        
+        .form-navigation {
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .right-buttons {
+            width: 100%;
+            justify-content: space-between;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="header">
+        <h1>Maqola yaratish: <span id="current-step-title">Tafsilotlar</span></h1>
+        <div class="header-buttons">
+            <a href="{% url 'article_list' %}" class="view-submissions-btn">Mening maqolalarim</a>
+            <button id="save-later-top" class="save-later-btn">Keyinroq saqlash</button>
+        </div>
+    </div>
+
+    <div class="progress-bar">
+        <div class="step active" data-step="1">
+            <div class="step-circle">
+                <span class="checkmark">✓</span>
+                <span class="step-number">1</span>
+            </div>
+            <div class="step-text">Tafsilotlar</div>
+        </div>
+        <div class="step" data-step="2">
+            <div class="step-circle">
+                <span class="checkmark">✓</span>
+                <span class="step-number">2</span>
+            </div>
+            <div class="step-text">Fayllar</div>
+        </div>
+        <div class="step" data-step="3">
+            <div class="step-circle">
+                <span class="checkmark">✓</span>
+                <span class="step-number">3</span>
+            </div>
+            <div class="step-text">Mualliflar</div>
+        </div>
+        <div class="step" data-step="4">
+            <div class="step-circle">
+                <span class="checkmark">✓</span>
+                <span class="step-number">4</span>
+            </div>
+            <div class="step-text">Tahrirchilar uchun</div>
+        </div>
+        <div class="step" data-step="5">
+            <div class="step-circle">
+                <span class="checkmark">✓</span>
+                <span class="step-number">5</span>
+            </div>
+            <div class="step-text">Ko‘rib chiqish</div>
+        </div>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" id="article-form">
+        {% csrf_token %}
+        
+        <div class="form-container">
+            <!-- 1-qadam: Tafsilotlar -->
+            <div class="form-step active" id="step-1">
+                <h2>Tafsilotlar</h2>
+                
+                {% if not conference %}
+                <div class="form-group">
+                    <label for="id_conference">Konferensiya*</label>
+                    <select name="conference" id="id_conference" class="form-control">
+                        <option value="">-- Konferensiyani tanlang --</option>
+                        {% for conference in article_form.fields.conference.queryset %}
+                            <option value="{{ conference.id }}">{{ conference.title }}</option>
+                        {% endfor %}
+                    </select>
+                    {% if article_form.conference.errors %}
+                        <div class="invalid-feedback d-block">{{ article_form.conference.errors }}</div>
+                    {% endif %}
+                    <div class="form-text">Maqola topshirishni xohlagan konferensiyani tanlang.</div>
+                </div>
+                
+                <div id="conference_detail_link" class="mt-2">
+                    <a href="#" id="detail_link" class="btn btn-info" style="display: none;">Konferensiya haqida →</a>
+                </div>
+                
+                <script>
+                    document.getElementById('id_conference').addEventListener('change', function() {
+                        let selectedOption = this.options[this.selectedIndex];
+                        let conferenceId = selectedOption.value;
+                        let detailLink = document.getElementById('detail_link');
+                        
+                        if (conferenceId) {
+                            detailLink.href = "/conferences/" + conferenceId + "/";
+                            detailLink.style.display = "inline-block";
+                        } else {
+                            detailLink.style.display = "none";
+                        }
+                    });
+                </script>
+                
+                {% else %}
+                    <input type="hidden" name="conference" value="{{ conference.id }}">
+                    <div class="form-group">
+                        <label>Konferensiya</label>
+                        <p>{{ conference.title }}</p>
+                    </div>
+                {% endif %}
+                
+                <div class="form-group">
+                    <label for="id_title">Sarlavha*</label>
+                    {{ article_form.title }}
+                    {% if article_form.title.errors %}
+                        <div class="invalid-feedback d-block">{{ article_form.title.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_abstract">Annotatsiya*</label>
+                    {{ article_form.abstract }}
+                    {% if article_form.abstract.errors %}
+                        <div class="invalid-feedback d-block">{{ article_form.abstract.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_keywords">Kalit so‘zlar (vergul bilan ajratilgan)</label>
+                    {{ article_form.keywords }}
+                    {% if article_form.keywords.errors %}
+                        <div class="invalid-feedback d-block">{{ article_form.keywords.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_references">Havolalar</label>
+                    {{ article_form.references }}
+                    {% if article_form.references.errors %}
+                        <div class="invalid-feedback d-block">{{ article_form.references.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="id_start_date">Boshlanish sanasi*</label>
+                        {{ article_form.start_date }}
+                        {% if article_form.start_date.errors %}
+                            <div class="invalid-feedback d-block">{{ article_form.start_date.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="col-md-6 form-group">
+                        <label for="id_end_date">Tugash sanasi</label>
+                        {{ article_form.end_date }}
+                        {% if article_form.end_date.errors %}
+                            <div class="invalid-feedback d-block">{{ article_form.end_date.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 2-qadam: Fayllarni yuklash -->
+            <div class="form-step" id="step-2">
+                <div class="upload-section">
+                    <div class="upload-info">
+                        <h2>Fayllarni yuklash</h2>
+                        <p>Maqolangiz bilan bog‘liq fayllarni yuklang. Maqola matni, ma’lumotlar, rasmlar va tahrirchilarga ishingizni baholashda yordam beradigan boshqa materiallarni yuklashingiz mumkin.</p>
+                    </div>
+                    <div class="upload-area">
+                        <h3>Fayllar</h3>
+                        <div id="file-list">
+                            <!-- Fayllar shu yerda ko‘rsatiladi -->
+                        </div>
+                        <input type="file" name="files" id="id_files" style="display: none;" multiple>
+                        <button type="button" id="add-file-btn" class="add-file-btn">Fayl qo‘shish</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 3-qadam: Mualliflar -->
+            <div class="form-step" id="step-3">
+                <div class="contributors-section">
+                    <div class="contributors-info">
+                        <h2>Mualliflar</h2>
+                        <p>Ushbu maqolaga katta hissa qo‘shgan barcha mualliflarni qo‘shing. Agar muallif ko‘rsatilmagan bo‘lsa, yuboruvchi ular nomidan maqola uchun to‘liq javobgarlikni o‘z zimmasiga oladi. Barcha mualliflar yuborishga va muallif sifatida ko‘rsatilishga rozilik berishlari kerak.</p>
+                    </div>
+                    <div class="contributors-area">
+                        <div id="contributors-list">
+                            <!-- Mualliflar shu yerda ko‘rsatiladi -->
+                        </div>
+                        <button type="button" id="add-contributor-btn" class="add-contributor-btn">Muallif qo‘shish</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 4-qadam: Tahrirchilar uchun -->
+            <div class="form-step" id="step-4">
+                <h2>Tahrirchilar uchun</h2>
+                <div class="form-group">
+                    <label for="id_cover_letter">Mavzu</label>
+                    <p>Maqolangiz mavzusini tasvirlaydigan kalit so‘zlar, iboralar yoki tasnif kodlarini ko‘rsating.</p>
+                    {{ article_form.cover_letter }}
+                    {% if article_form.cover_letter.errors %}
+                        <div class="invalid-feedback d-block">{{ article_form.cover_letter.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_special_instructions">Tahrirchi uchun izohlar</label>
+                    <p>Maqolangizni baholashda tahrirchilar bilishi kerak deb hisoblagan har qanday ma’lumotni qo‘shing.</p>
+                    {{ article_form.special_instructions }}
+                    {% if article_form.special_instructions.errors %}
+                        <div class="invalid-feedback d-block">{{ article_form.special_instructions.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- 5-qadam: Ko‘rib chiqish -->
+            <div class="form-step" id="step-5">
+                <h2>Ko‘rib chiqish va yuborish</h2>
+                <p class="review-intro">
+                    Bu yuborishni yakunlashdan oldin kiritgan ma’lumotlaringizning qisqacha ko‘rinishi. Bu yerda ko‘rsatilgan har qanday tafsilotni har bir bo‘limning yuqori qismidagi “Tahrirlash” tugmasini bosib o‘zgartirishingiz mumkin.
+                </p>
+                <p class="review-intro">
+                    Yuborish tugallangandan so‘ng, tahririyat jamoamiz a’zolaridan biri uni ko‘rib chiqish uchun tayinlanadi. Iltimos, kiritgan ma’lumotlaringiz iloji boricha aniq ekanligiga ishonch hosil qiling.
+                </p>
+
+                <div id="review-errors" class="error-message" style="display: none;">
+                    <span class="error-icon">⚠</span> Yuborishdan oldin tuzatilishi kerak bo‘lgan bir yoki bir nechta muammolar mavjud. Iltimos, quyidagi ma’lumotlarni ko‘rib chiqing va so‘ralgan o‘zgartirishlarni kiriting.
+                </div>
+
+                <div class="review-section">
+                    <div class="review-header">
+                        <h3>Tafsilotlar</h3>
+                        <button type="button" class="edit-btn" data-section="1">Tahrirlash</button>
+                    </div>
+                    <div class="review-content" id="review-details">
+                        <!-- JavaScript orqali to‘ldiriladi -->
+                    </div>
+                </div>
+
+                <div class="review-section">
+                    <div class="review-header">
+                        <h3>Fayllar</h3>
+                        <button type="button" class="edit-btn" data-section="2">Tahrirlash</button>
+                    </div>
+                    <div class="review-content" id="review-files">
+                        <!-- JavaScript orqali to‘ldiriladi -->
+                    </div>
+                </div>
+
+                <div class="review-section">
+                    <div class="review-header">
+                        <h3>Mualliflar</h3>
+                        <button type="button" class="edit-btn" data-section="3">Tahrirlash</button>
+                    </div>
+                    <div class="review-content" id="review-contributors">
+                        <!-- JavaScript orqali to‘ldiriladi -->
+                    </div>
+                </div>
+
+                <div class="review-section">
+                    <div class="review-header">
+                        <h3>Tahrirchilar uchun</h3>
+                        <button type="button" class="edit-btn" data-section="4">Tahrirlash</button>
+                    </div>
+                    <div class="review-content" id="review-editors">
+                        <!-- JavaScript orqali to‘ldiriladi -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-navigation">
+            <button type="button" id="back-btn" class="back-btn">Orqaga</button>
+            <div class="right-buttons">
+                <span id="last-saved">Oxirgi saqlash: Hech qachon</span>
+                <button type="button" id="save-later-bottom" class="save-later-btn">Keyinroq saqlash</button>
+                <button type="button" id="continue-btn" class="continue-btn">Davom etish</button>
+                <button type="submit" id="submit-btn" style="display: none;">Yuborish</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Muallif qo‘shish uchun modal oynasi -->
+<div id="contributor-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Muallif qo‘shish</h2>
+            <span class="close-modal">×</span>
+        </div>
+        <div class="modal-body">
+            <form id="contributor-form">
+                <div class="form-group">
+                    <label for="given-name">Ism <span class="required">*</span></label>
+                    <input type="text" id="given-name" name="given-name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="family-name">Familiya</label>
+                    <input type="text" id="family-name" name="family-name" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label for="preferred-name">Afzal ism</label>
+                    <p class="field-description">Muallif nashr qilingan ishda qanday ko‘rsatilishi kerak bo‘lgan to‘liq ismini ko‘rsating. Masalan: Prof. Ivan P. Sidorov</p>
+                    <input type="text" id="preferred-name" name="preferred-name" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contributor-email">Email <span class="required">*</span></label>
+                    <input type="email" id="contributor-email" name="contributor-email" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="country">Davlat <span class="required">*</span></label>
+                    <select id="country" name="country" class="form-control" required>
+                        <option value="">Davlatni tanlang</option>
+                        <option value="RU">Rossiya</option>
+                        <option value="UZ">O‘zbekiston</option>
+                        <option value="KZ">Qozog‘iston</option>
+                        <option value="US">AQSh</option>
+                        <option value="GB">Buyuk Britaniya</option>
+                        <!-- Kerak bo‘lsa boshqa davlatlarni qo‘shing -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="homepage">Shaxsiy sahifa URL</label>
+                    <input type="url" id="homepage" name="homepage" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label for="orcid">ORCID ID</label>
+                    <input type="text" id="orcid" name="orcid" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label for="bio">Biografiya (masalan, kafedra va lavozim)</label>
+                    <textarea id="bio" name="bio" rows="5" class="form-control"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="affiliation">Tashkilot (aloqa)</label>
+                    <input type="text" id="affiliation" name="affiliation" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label>Muallif roli</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="role" value="author" checked> Muallif
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="role" value="translator"> Tarjimon
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Nashrlar ro‘yxati</label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="include-in-lists" name="include-in-lists" checked>
+                        Ushbu muallifni nashrlar ro‘yxatida mualliflarni aniqlashda kiritish.
+                    </label>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="save-contributor-btn" class="save-btn">Saqlash</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // DOM элементы
+        const steps = document.querySelectorAll(".step");
+        const formSteps = document.querySelectorAll(".form-step");
+        const backBtn = document.getElementById("back-btn");
+        const continueBtn = document.getElementById("continue-btn");
+        const submitBtn = document.getElementById("submit-btn");
+        const saveLaterBtns = document.querySelectorAll(".save-later-btn");
+        const addFileBtn = document.getElementById("add-file-btn");
+        const fileInput = document.getElementById("id_files");
+        const fileList = document.getElementById("file-list");
+        const addContributorBtn = document.getElementById("add-contributor-btn");
+        const contributorsList = document.getElementById("contributors-list");
+        const currentStepTitle = document.getElementById("current-step-title");
+        const lastSavedSpan = document.getElementById("last-saved");
+        const articleForm = document.getElementById("article-form");
+
+        // Элементы обзора
+        const reviewDetailsSection = document.getElementById("review-details");
+        const reviewFilesSection = document.getElementById("review-files");
+        const reviewContributorsSection = document.getElementById("review-contributors");
+        const reviewEditorsSection = document.getElementById("review-editors");
+        const reviewErrorsSection = document.getElementById("review-errors");
+        const editButtons = document.querySelectorAll(".edit-btn");
+
+        // Элементы модального окна
+        const contributorModal = document.getElementById("contributor-modal");
+        const closeModal = document.querySelector(".close-modal");
+        const saveContributorBtn = document.getElementById("save-contributor-btn");
+        const contributorForm = document.getElementById("contributor-form");
+
+        // Текущий шаг
+        let currentStep = 1;
+
+        // Индекс текущего автора для редактирования (null для нового автора)
+        let currentContributorIndex = null;
+
+        // Инициализация объекта данных формы
+        let formData = {
+            id: Date.now(), // Уникальный ID для этой отправки
+            currentStep: 1,
+            completedSteps: [],
+            lastSaved: null,
+            details: {
+                conference: "{{ conference.id }}" || "",
+                title: "",
+                abstract: "",
+                keywords: "",
+                references: "",
+                startDate: "",
+                endDate: ""
+            },
+            files: [],
+            contributors: [],
+            editors: {
+                coverLetter: "",
+                specialInstructions: ""
+            }
+        };
+
+        // Загрузка сохраненных данных, если они существуют
+        loadFormData();
+
+        // Обновление UI на основе загруженных данных
+        updateUI();
+
+        // Обработчики событий
+        backBtn.addEventListener("click", goToPreviousStep);
+        continueBtn.addEventListener("click", goToNextStep);
+
+        saveLaterBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                saveFormData(true);
+            });
+        });
+
+        addFileBtn.addEventListener("click", () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener("change", handleFileSelection);
+
+        addContributorBtn.addEventListener("click", () => {
+            openContributorModal();
+        });
+
+        // Кнопки редактирования на странице обзора
+        editButtons.forEach((btn) => {
+            btn.addEventListener("click", function() {
+                const sectionIndex = parseInt(this.getAttribute("data-section"));
+                goToStep(sectionIndex);
+            });
+        });
+
+        // Обработчики событий модального окна
+        closeModal.addEventListener("click", closeContributorModal);
+
+        saveContributorBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            saveContributor();
+        });
+
+        // Закрытие модального окна при клике вне его
+        window.addEventListener("click", (event) => {
+            if (event.target === contributorModal) {
+                closeContributorModal();
+            }
+        });
+
+        // Добавление обработчиков событий ввода для всех полей формы
+        document.querySelectorAll("input, textarea, select").forEach((input) => {
+            input.addEventListener("input", () => {
+                updateFormData();
+            });
+        });
+
+        // Функции
+        function updateUI() {
+            // Обновление индикаторов шагов
+            steps.forEach((step, index) => {
+                const stepNumber = index + 1;
+                if (stepNumber < currentStep) {
+                    step.classList.add("completed");
+                    step.classList.remove("active");
+                } else if (stepNumber === currentStep) {
+                    step.classList.add("active");
+                    step.classList.remove("completed");
+                } else {
+                    step.classList.remove("active", "completed");
+                }
+            });
+
+            // Обновление видимости шагов формы
+            formSteps.forEach((formStep, index) => {
+                const stepNumber = index + 1;
+                if (stepNumber === currentStep) {
+                    formStep.classList.add("active");
+                } else {
+                    formStep.classList.remove("active");
+                }
+            });
+
+            // Обновление заголовка шага
+            const stepTitles = ["Детали", "Загрузка файлов", "Авторы", "Для редакторов", "Обзор"];
+            currentStepTitle.textContent = stepTitles[currentStep - 1];
+
+            // Обновление видимости кнопки "Назад"
+            backBtn.style.visibility = currentStep === 1 ? "hidden" : "visible";
+
+            // Обновление текста кнопки "Продолжить"
+            continueBtn.textContent = currentStep === 5 ? "Отправить" : "Продолжить";
+
+            // Заполнение полей формы сохраненными данными
+            populateFormFields();
+
+            // Если на шаге обзора, генерируем содержимое обзора
+            if (currentStep === 5) {
+                generateReviewContent();
+            }
+
+            // Обновление отображения времени последнего сохранения
+            if (formData.lastSaved) {
+                lastSavedSpan.textContent = `Последнее сохранение: ${formData.lastSaved}`;
+            }
+        }
+
+        function populateFormFields() {
+            // Детали
+            if (document.getElementById("id_conference")) {
+                document.getElementById("id_conference").value = formData.details.conference || "";
+            }
+            document.getElementById("id_title").value = formData.details.title || "";
+            document.getElementById("id_abstract").value = formData.details.abstract || "";
+            document.getElementById("id_keywords").value = formData.details.keywords || "";
+            document.getElementById("id_references").value = formData.details.references || "";
+            document.getElementById("id_start_date").value = formData.details.startDate || "";
+            document.getElementById("id_end_date").value = formData.details.endDate || "";
+
+            // Файлы
+            renderFileList();
+
+            // Авторы
+            renderContributorsList();
+
+            // Для редакторов
+            document.getElementById("id_cover_letter").value = formData.editors.coverLetter || "";
+            document.getElementById("id_special_instructions").value = formData.editors.specialInstructions || "";
+        }
+
+        function renderFileList() {
+            fileList.innerHTML = "";
+            if (!formData.files || formData.files.length === 0) {
+                const emptyMessage = document.createElement("p");
+                emptyMessage.textContent = "Файлы еще не загружены.";
+                fileList.appendChild(emptyMessage);
+            } else {
+                formData.files.forEach((file, index) => {
+                    const fileItem = document.createElement("div");
+                    fileItem.className = "file-item";
+
+                    const fileName = document.createElement("span");
+                    fileName.className = "file-name";
+                    fileName.textContent = file.name;
+                    fileItem.appendChild(fileName);
+
+                    const removeButton = document.createElement("button");
+                    removeButton.type = "button";
+                    removeButton.textContent = "Удалить";
+                    removeButton.className = "remove-file-btn";
+                    removeButton.dataset.index = index;
+                    removeButton.addEventListener("click", function() {
+                        removeFile(parseInt(this.dataset.index));
+                    });
+                    fileItem.appendChild(removeButton);
+
+                    fileList.appendChild(fileItem);
+                });
+            }
+        }
+
+        function handleFileSelection() {
+            if (this.files.length > 0) {
+                for (let i = 0; i < this.files.length; i++) {
+                    const file = this.files[i];
+                    if (!formData.files) formData.files = [];
+                    formData.files.push({
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                        file: file // Сохраняем объект файла для последующей отправки
+                    });
+                }
+                renderFileList();
+                saveFormData(false);
+            }
+        }
+
+        function removeFile(index) {
+            formData.files.splice(index, 1);
+            renderFileList();
+            saveFormData(false);
+        }
+
+        function renderContributorsList() {
+            // Очистка существующего списка авторов
+            contributorsList.innerHTML = "";
+
+            // Добавление сохраненных авторов
+            if (!formData.contributors || formData.contributors.length === 0) {
+                const emptyMessage = document.createElement("p");
+                emptyMessage.textContent = 'Авторы еще не добавлены. Нажмите "Добавить автора", чтобы добавить автора.';
+                contributorsList.appendChild(emptyMessage);
+            } else {
+                formData.contributors.forEach((contributor, index) => {
+                    const contributorCard = document.createElement("div");
+                    contributorCard.className = "contributor-card";
+
+                    const name = contributor.givenName + (contributor.familyName ? " " + contributor.familyName : "");
+                    const displayName = contributor.preferredName || name;
+
+                    const heading = document.createElement("h3");
+                    heading.textContent = index === 0 ? "Основной автор: " + displayName : displayName;
+
+                    const removeBtn = document.createElement("button");
+                    removeBtn.type = "button";
+                    removeBtn.className = "remove-contributor";
+                    removeBtn.textContent = "Удалить";
+                    removeBtn.dataset.index = index;
+                    removeBtn.addEventListener("click", function() {
+                        removeContributor(parseInt(this.dataset.index));
+                    });
+
+                    const emailInfo = document.createElement("div");
+                    emailInfo.className = "contributor-info";
+                    emailInfo.innerHTML = '<span class="contributor-label">Email:</span> ' + contributor.email;
+
+                    const affiliationInfo = document.createElement("div");
+                    affiliationInfo.className = "contributor-info";
+                    affiliationInfo.innerHTML = '<span class="contributor-label">Организация:</span> ' + (contributor.affiliation || "Не указана");
+
+                    const roleInfo = document.createElement("div");
+                    roleInfo.className = "contributor-info";
+                    roleInfo.innerHTML = '<span class="contributor-label">Роль:</span> ' + (contributor.role === "translator" ? "Переводчик" : "Автор");
+
+                    const editBtn = document.createElement("button");
+                    editBtn.type = "button";
+                    editBtn.className = "edit-contributor-btn";
+                    editBtn.textContent = "Редактировать";
+                    editBtn.dataset.index = index;
+                    editBtn.addEventListener("click", function() {
+                        editContributor(parseInt(this.dataset.index));
+                    });
+
+                    contributorCard.appendChild(heading);
+                    contributorCard.appendChild(removeBtn);
+                    contributorCard.appendChild(emailInfo);
+                    contributorCard.appendChild(affiliationInfo);
+                    contributorCard.appendChild(roleInfo);
+                    contributorCard.appendChild(editBtn);
+
+                    contributorsList.appendChild(contributorCard);
+                });
+            }
+        }
+
+        function openContributorModal(index = null) {
+            currentContributorIndex = index;
+
+            // Очистка полей формы
+            document.getElementById("given-name").value = "";
+            document.getElementById("family-name").value = "";
+            document.getElementById("preferred-name").value = "";
+            document.getElementById("contributor-email").value = "";
+            document.getElementById("country").value = "";
+            document.getElementById("homepage").value = "";
+            document.getElementById("orcid").value = "";
+            document.getElementById("bio").value = "";
+            document.getElementById("affiliation").value = "";
+            document.querySelector('input[name="role"][value="author"]').checked = true;
+            document.getElementById("include-in-lists").checked = true;
+
+            // Если редактируем существующего автора, заполняем поля
+            if (index !== null && formData.contributors && formData.contributors[index]) {
+                const contributor = formData.contributors[index];
+                document.getElementById("given-name").value = contributor.givenName || "";
+                document.getElementById("family-name").value = contributor.familyName || "";
+                document.getElementById("preferred-name").value = contributor.preferredName || "";
+                document.getElementById("contributor-email").value = contributor.email || "";
+                document.getElementById("country").value = contributor.country || "";
+                document.getElementById("homepage").value = contributor.homepage || "";
+                document.getElementById("orcid").value = contributor.orcid || "";
+                document.getElementById("bio").value = contributor.bio || "";
+                document.getElementById("affiliation").value = contributor.affiliation || "";
+
+                if (contributor.role === "translator") {
+                    document.querySelector('input[name="role"][value="translator"]').checked = true;
+                } else {
+                    document.querySelector('input[name="role"][value="author"]').checked = true;
+                }
+
+                document.getElementById("include-in-lists").checked = contributor.includeInLists !== false;
+            }
+
+            // Показ модального окна
+            contributorModal.style.display = "block";
+        }
+
+        function closeContributorModal() {
+            contributorModal.style.display = "none";
+            currentContributorIndex = null;
+        }
+
+        function saveContributor() {
+            // Валидация обязательных полей
+            const givenName = document.getElementById("given-name").value.trim();
+            const email = document.getElementById("contributor-email").value.trim();
+            const country = document.getElementById("country").value;
+
+            if (!givenName) {
+                alert("Имя обязательно для заполнения.");
+                return;
+            }
+
+            if (!email) {
+                alert("Email обязателен для заполнения.");
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                alert("Пожалуйста, введите корректный email.");
+                return;
+            }
+
+            if (!country) {
+                alert("Страна обязательна для заполнения.");
+                return;
+            }
+
+            // Создание объекта автора
+            const contributor = {
+                givenName: givenName,
+                familyName: document.getElementById("family-name").value.trim(),
+                preferredName: document.getElementById("preferred-name").value.trim(),
+                email: email,
+                country: country,
+                homepage: document.getElementById("homepage").value.trim(),
+                orcid: document.getElementById("orcid").value.trim(),
+                bio: document.getElementById("bio").value.trim(),
+                affiliation: document.getElementById("affiliation").value.trim(),
+                role: document.querySelector('input[name="role"]:checked').value,
+                includeInLists: document.getElementById("include-in-lists").checked
+            };
+
+            // Убедимся, что массив авторов существует
+            if (!formData.contributors) {
+                formData.contributors = [];
+            }
+
+            // Добавление или обновление автора
+            if (currentContributorIndex !== null) {
+                formData.contributors[currentContributorIndex] = contributor;
+            } else {
+                formData.contributors.push(contributor);
+            }
+
+            // Сохранение данных формы
+            saveFormData(false);
+
+            // Обновление UI
+            renderContributorsList();
+
+            // Закрытие модального окна
+            closeContributorModal();
+
+            // Показ подтверждения
+            alert("Автор успешно сохранен!");
+        }
+
+        function editContributor(index) {
+            openContributorModal(index);
+        }
+
+        function removeContributor(index) {
+            if (confirm("Вы уверены, что хотите удалить этого автора?")) {
+                formData.contributors.splice(index, 1);
+                renderContributorsList();
+                saveFormData(false);
+            }
+        }
+
+        function generateReviewContent() {
+            // Проверка на ошибки
+            let hasErrors = false;
+
+            // Раздел деталей
+            reviewDetailsSection.innerHTML = "";
+
+            if (!formData.details.title) {
+                addReviewError(reviewDetailsSection, "Заголовок обязателен для заполнения.");
+                hasErrors = true;
+            } else {
+                addReviewItem(reviewDetailsSection, "Заголовок", formData.details.title);
+            }
+
+            if (!formData.details.abstract) {
+                addReviewError(reviewDetailsSection, "Аннотация", "Это поле обязательно для заполнения.");
+                hasErrors = true;
+            } else {
+                addReviewItem(reviewDetailsSection, "Аннотация", formData.details.abstract);
+            }
+
+            if (!formData.details.keywords) {
+                addReviewItem(reviewDetailsSection, "Ключевые слова", "Не указаны");
+            } else {
+                addReviewItem(reviewDetailsSection, "Ключевые слова", formData.details.keywords);
+            }
+
+            addReviewItem(reviewDetailsSection, "Ссылки", formData.details.references || "Не указаны");
+            addReviewItem(reviewDetailsSection, "Дата начала", formData.details.startDate || "Не указана");
+            addReviewItem(reviewDetailsSection, "Дата окончания", formData.details.endDate || "Не указана");
+
+            // Раздел файлов
+            reviewFilesSection.innerHTML = "";
+
+            if (!formData.files || formData.files.length === 0) {
+                addReviewError(reviewFilesSection, "Вы должны загрузить хотя бы один файл статьи.");
+                hasErrors = true;
+            } else {
+                const filesList = document.createElement("ul");
+                formData.files.forEach((file) => {
+                    const li = document.createElement("li");
+                    li.textContent = file.name;
+                    filesList.appendChild(li);
+                });
+
+                const filesItem = document.createElement("div");
+                filesItem.className = "review-item";
+
+                const filesLabel = document.createElement("div");
+                filesLabel.className = "review-label";
+                filesLabel.textContent = "Загруженные файлы";
+
+                const filesValue = document.createElement("div");
+                filesValue.className = "review-value";
+                filesValue.appendChild(filesList);
+
+                filesItem.appendChild(filesLabel);
+                filesItem.appendChild(filesValue);
+                reviewFilesSection.appendChild(filesItem);
+            }
+
+            // Раздел авторов
+            reviewContributorsSection.innerHTML = "";
+
+            if (!formData.contributors || formData.contributors.length === 0) {
+                addReviewError(reviewContributorsSection, "Не добавлены авторы для этой статьи.");
+                hasErrors = true;
+            } else {
+                formData.contributors.forEach((contributor, index) => {
+                    const contributorTitle = index === 0 ? "Основной автор" : `Дополнительный автор ${index}`;
+                    const name = contributor.givenName + (contributor.familyName ? " " + contributor.familyName : "");
+                    const displayName = contributor.preferredName || name;
+
+                    const contributorItem = document.createElement("div");
+                    contributorItem.className = "review-item";
+
+                    const contributorLabel = document.createElement("div");
+                    contributorLabel.className = "review-label";
+                    contributorLabel.textContent = contributorTitle;
+
+                    const contributorValue = document.createElement("div");
+                    contributorValue.className = "review-value";
+
+                    const contributorDetails = document.createElement("p");
+                    contributorDetails.innerHTML = `
+                        <strong>Имя:</strong> ${displayName}<br>
+                        <strong>Email:</strong> ${contributor.email}<br>
+                        <strong>Организация:</strong> ${contributor.affiliation || "Не указана"}<br>
+                        <strong>Роль:</strong> ${contributor.role === "translator" ? "Переводчик" : "Автор"}
+                    `;
+
+                    contributorValue.appendChild(contributorDetails);
+                    contributorItem.appendChild(contributorLabel);
+                    contributorItem.appendChild(contributorValue);
+                    reviewContributorsSection.appendChild(contributorItem);
+                });
+            }
+
+            // Раздел для редакторов
+            reviewEditorsSection.innerHTML = "";
+
+            addReviewItem(reviewEditorsSection, "Тематика", formData.editors.coverLetter || "Не указана");
+            addReviewItem(reviewEditorsSection, "Комментарии для редактора", formData.editors.specialInstructions || "Не указаны");
+
+            // Показ/скрытие сообщения об ошибке
+            if (hasErrors) {
+                reviewErrorsSection.style.display = "block";
+            } else {
+                reviewErrorsSection.style.display = "none";
+            }
+        }
+
+        function addReviewItem(parent, label, value) {
+            const item = document.createElement("div");
+            item.className = "review-item";
+
+            const labelDiv = document.createElement("div");
+            labelDiv.className = "review-label";
+            labelDiv.textContent = label;
+
+            const valueDiv = document.createElement("div");
+            valueDiv.className = "review-value";
+            valueDiv.textContent = value;
+
+            item.appendChild(labelDiv);
+            item.appendChild(valueDiv);
+            parent.appendChild(item);
+        }
+
+        function addReviewError(parent, message, label = null) {
+            if (label) {
+                // Ошибка для конкретного поля
+                const item = document.createElement("div");
+                item.className = "review-item";
+
+                const labelDiv = document.createElement("div");
+                labelDiv.className = "review-label";
+                labelDiv.textContent = label;
+
+                const valueDiv = document.createElement("div");
+                valueDiv.className = "review-value error-value";
+                valueDiv.innerHTML = `<span class="error-icon">⚠</span> ${message}`;
+
+                item.appendChild(labelDiv);
+                item.appendChild(valueDiv);
+                parent.appendChild(item);
+            } else {
+                // Общая ошибка
+                const errorItem = document.createElement("div");
+                errorItem.className = "review-item error-item";
+
+                const errorValue = document.createElement("div");
+                errorValue.className = "error-value";
+                errorValue.innerHTML = `<span class="error-icon">⚠</span> ${message}`;
+
+                errorItem.appendChild(errorValue);
+                parent.appendChild(errorItem);
+            }
+        }
+
+        function goToStep(step) {
+            if (step >= 1 && step <= 5) {
+                currentStep = step;
+                formData.currentStep = currentStep;
+                updateUI();
+                saveFormData(false);
+            }
+        }
+
+        function goToPreviousStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                formData.currentStep = currentStep;
+                updateUI();
+                saveFormData(false);
+            }
+        }
+
+        function goToNextStep() {
+            if (validateCurrentStep()) {
+                if (currentStep < 5) {
+                    currentStep++;
+                    formData.currentStep = currentStep;
+
+                    // Добавление текущего шага в завершенные шаги, если его там еще нет
+                    if (!formData.completedSteps.includes(currentStep - 1)) {
+                        formData.completedSteps.push(currentStep - 1);
+                    }
+
+                    updateUI();
+                    saveFormData(false);
+                } else {
+                    // Проверка на ошибки в обзоре
+                    const errorItems = document.querySelectorAll(".error-item, .error-value");
+
+                    if (errorItems.length > 0) {
+                        alert("Пожалуйста, исправьте все ошибки перед отправкой.");
+                    } else {
+                        // Отправка формы
+                        prepareFormForSubmission();
+                        submitBtn.click();
+                    }
+                }
+            }
+        }
+
+        function validateCurrentStep() {
+            // Простая валидация для обязательных полей
+            if (currentStep === 1) {
+                const title = document.getElementById("id_title").value.trim();
+                const abstract = document.getElementById("id_abstract").value.trim();
+                const startDate = document.getElementById("id_start_date").value;
+                const conference = document.getElementById("id_conference") ? document.getElementById("id_conference").value : formData.details.conference;
+
+                if (!title || !abstract || !startDate || !conference) {
+                    alert("Пожалуйста, заполните все обязательные поля.");
+                    return false;
+                }
+            } else if (currentStep === 2) {
+                if (!formData.files || formData.files.length === 0) {
+                    alert("Пожалуйста, загрузите хотя бы один файл.");
+                    return false;
+                }
+            } else if (currentStep === 3) {
+                if (!formData.contributors || formData.contributors.length === 0) {
+                    alert("Пожалуйста, добавьте хотя бы одного автора.");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function updateFormData() {
+            // Обновление деталей
+            if (currentStep === 1) {
+                formData.details.conference = document.getElementById("id_conference") ? document.getElementById("id_conference").value : formData.details.conference;
+                formData.details.title = document.getElementById("id_title").value;
+                formData.details.abstract = document.getElementById("id_abstract").value;
+                formData.details.keywords = document.getElementById("id_keywords").value;
+                formData.details.references = document.getElementById("id_references").value;
+                formData.details.startDate = document.getElementById("id_start_date").value;
+                formData.details.endDate = document.getElementById("id_end_date").value;
+            }
+
+            // Обновление для редакторов
+            if (currentStep === 4) {
+                formData.editors.coverLetter = document.getElementById("id_cover_letter").value;
+                formData.editors.specialInstructions = document.getElementById("id_special_instructions").value;
+            }
+        }
+
+        function saveFormData(showAlert = true) {
+            // Обновление данных формы перед сохранением
+            updateFormData();
+
+            // Обновление текущего шага и времени последнего сохранения
+            formData.currentStep = currentStep;
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            formData.lastSaved = timeString;
+
+            // Сохранение в localStorage
+            localStorage.setItem("articleFormData", JSON.stringify(formData));
+
+            // Обновление отображения времени последнего сохранения
+            lastSavedSpan.textContent = `Последнее сохранение: ${timeString}`;
+
+            if (showAlert) {
+                alert("Ваш прогресс сохранен. Вы можете вернуться к этой форме позже, чтобы продолжить.");
+            }
+        }
+
+        function loadFormData() {
+            const savedData = localStorage.getItem("articleFormData");
+            if (savedData) {
+                try {
+                    const parsedData = JSON.parse(savedData);
+                    formData = parsedData;
+                    currentStep = formData.currentStep || 1;
+
+                    // Убедимся, что массив авторов существует
+                    if (!formData.contributors) {
+                        formData.contributors = [];
+                    }
+                } catch (e) {
+                    console.error("Ошибка при загрузке сохраненных данных:", e);
+                }
+            }
+        }
+
+        function prepareFormForSubmission() {
+            // Создаем скрытые поля для передачи данных авторов
+            if (formData.contributors && formData.contributors.length > 0) {
+                // Добавляем первого автора как основного
+                const primaryAuthor = formData.contributors[0];
+                
+                // Создаем скрытые поля для основного автора
+                createHiddenInput("author_given_name", primaryAuthor.givenName);
+                createHiddenInput("author_family_name", primaryAuthor.familyName);
+                createHiddenInput("author_email", primaryAuthor.email);
+                createHiddenInput("author_country", primaryAuthor.country);
+                createHiddenInput("author_affiliation", primaryAuthor.affiliation);
+                
+                // Для дополнительных авторов можно создать JSON и передать его в одном поле
+                if (formData.contributors.length > 1) {
+                    const additionalAuthors = formData.contributors.slice(1);
+                    createHiddenInput("additional_authors", JSON.stringify(additionalAuthors));
+                }
+            }
+        }
+
+        function createHiddenInput(name, value) {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = name;
+            input.value = value || "";
+            articleForm.appendChild(input);
+        }
+    });
+</script>
+{% endblock %}

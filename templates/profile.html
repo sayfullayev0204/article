@@ -1,0 +1,668 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Profilni tahrirlash</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'icomoon/icomoon.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/vendor.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+</head>
+<body data-bs-spy="scroll" data-bs-target="#header" tabindex="0">
+
+    <div id="header-wrap">
+
+			{% include "header.html" %}
+
+	</div><!--header-wrap-->
+
+
+
+    <section id="popular-books" class="bookshelf py-5 my-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-header align-center">
+                        <h2 class="section-title">My profile</h2>
+                    </div>
+    
+                    <ul class="tabs">
+                        <li data-tab-target="#all-genre" class="active tab">My data</li>
+                        <li data-tab-target="#business" class="tab">In process articles</li>
+                        <li data-tab-target="#technology" class="tab">Completed articles</li>
+                    </ul>
+    
+                    <div class="tab-content">
+                        <!-- My Data Tab -->
+                        <div id="all-genre" data-tab-content class="active">
+                            <div class="row">
+                                <div class="col-md-8 mx-auto">
+                                    <div class="card" style="border: 1px solid #ddd; padding: 20px; background-color: white; border-radius: 5px;">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h4>Personal Information</h4>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p><strong>First Name:</strong>  {{user.given_name }}</p>
+                                                        <p><strong>Last Name:</strong> {{user.family_name}}</p>
+                                                        <p><strong>Email:</strong> {{user.email}}</p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p><strong>Affiliation:</strong> {{user.affiliation}}</p>
+                                                        <p><strong>Department:</strong> {{user.special_instructions}}</p>
+                                                        <p><strong>ORCID:</strong> {{user.orcid}}</p>
+                                                    </div>
+                                                </div>
+                                                <h4 class="mt-4">Contact Information</h4>
+                                                <hr>
+                                                <p><strong>Address:</strong> {{user.country}}</p>
+                                                <p><strong>Biograf:</strong> {{user.bio}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-center mt-4">
+                                            <a class="btn btn-primary" href="{% url 'edit_profile' %}">Edit Profile</a>
+                                            <a class="btn" style="background: none; color: red;" href="{% url 'logout' %}">Log Out</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- In Process Articles Tab -->
+                        <div id="business" data-tab-content>
+                            {% if articles %}
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="margin-left: 25px;">Sarlavha</th>
+                                                <th>Boshlanish sanasi</th>
+                                                <th>Tugash sanasi</th>
+                                                <th>Holati</th>
+                                                <th>Yaratilgan sana</th>
+                                                <th>Amallar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for article in articles %}
+                                            <tr>
+                                                <td>{{ article.title }}</td>
+                                                <td>{{ article.start_date }}</td>
+                                                <td>{{ article.end_date|default:"Ko‘rsatilmagan" }}</td>
+                                                <td>
+                                                    {% if article.status == 'draft' %}
+                                                        <span class="badge" style="background-color: yellow; color: black;">Qoralama</span>
+                                                    {% elif article.status == 'submitted' %}
+                                                        <span class="badge bg-info">Yuborilgan</span>
+                                                    {% elif article.status == 'under_review' %}
+                                                        <span class="badge bg-warning">Ko‘rib chiqilmoqda</span>
+                                                    {% elif article.status == 'accepted' %}
+                                                        <span class="badge bg-success">Qabul qilingan</span>
+                                                    {% elif article.status == 'rejected' %}
+                                                        <span class="badge bg-danger">Rad etilgan</span>
+                                                    {% elif article.status == 'published' %}
+                                                        <span class="badge bg-primary">Nashr qilingan</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ article.created_at|date:"d.m.Y H:i" }}</td>
+                                                <td>
+                                                    <a href="{% url 'article_detail' article.pk %}" class="btn btn-sm btn-outline-primary">Ko‘rish</a>
+                                                    {% if article.created_by == user and article.status == 'draft' %}
+                                                        <a href="{% url 'edit_article' article.pk %}" class="btn btn-sm btn-outline-secondary">Tahrirlash</a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% else %}
+                                <div class="alert alert-info">
+                                    Hozircha maqolalar yo‘q. <a href="{% url 'create_article' %}">Yangi maqola yarating</a>.
+                                </div>
+                            {% endif %}
+                        </div>
+                        <style>
+                            /* Progress bar styles */
+                            .progress-bar {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                margin-bottom: 30px;
+                                background-color: #f9f9f9;
+                                padding: 15px;
+                                border-radius: 5px;
+                            }
+                        
+                            .step {
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                flex: 1;
+                                position: relative;
+                            }
+                        
+                            .step-circle {
+                                width: 30px;
+                                height: 30px;
+                                border-radius: 50%;
+                                background-color: #fff;
+                                border: 2px solid #ccc;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                margin-bottom: 10px;
+                                position: relative;
+                                z-index: 2;
+                            }
+                        
+                            .step.active .step-circle {
+                                border-color: #0077b6;
+                                color: #0077b6;
+                            }
+                        
+                            .step.completed .step-circle {
+                                background-color: #0077b6;
+                                border-color: #0077b6;
+                                color: #fff;
+                            }
+                        
+                            .step-number {
+                                display: block;
+                                font-size: 14px;
+                                font-weight: bold;
+                            }
+                        
+                            .step.completed .step-number {
+                                display: none;
+                            }
+                        
+                            .checkmark {
+                                display: none;
+                                font-size: 14px;
+                                font-weight: bold;
+                            }
+                        
+                            .step.completed .checkmark {
+                                display: block;
+                            }
+                        
+                            .step-text {
+                                font-size: 12px;
+                                color: #666;
+                                text-align: center;
+                            }
+                        
+                            .step.active .step-text {
+                                color: #0077b6;
+                                font-weight: bold;
+                            }
+                        
+                            .step-line {
+                                flex: 1;
+                                height: 2px;
+                                background-color: #ccc;
+                                position: relative;
+                                z-index: 1;
+                            }
+                        
+                            /* Form styles */
+                            .form-step {
+                                display: none;
+                                padding: 20px;
+                                border: 1px solid #ddd;
+                                border-radius: 4px;
+                                margin-bottom: 20px;
+                            }
+                        
+                            .form-step.active {
+                                display: block;
+                            }
+                        
+                            .header {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                margin-bottom: 30px;
+                                padding-bottom: 20px;
+                                border-bottom: 1px solid #eee;
+                            }
+                        
+                            .header-buttons {
+                                display: flex;
+                                gap: 10px;
+                            }
+                        
+                            .view-submissions-btn {
+                                background-color: #f5f5f5;
+                                border: 1px solid #ddd;
+                                padding: 10px 15px;
+                                border-radius: 4px;
+                                cursor: pointer;
+                            }
+                        
+                            .save-later-btn {
+                                background-color: #fff;
+                                border: 1px solid #0077b6;
+                                color: #0077b6;
+                                padding: 10px 20px;
+                                border-radius: 4px;
+                                cursor: pointer;
+                            }
+                        
+                            .form-navigation {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                margin-top: 20px;
+                            }
+                        
+                            .back-btn {
+                                background-color: #f5f5f5;
+                                border: 1px solid #ddd;
+                                padding: 10px 20px;
+                                border-radius: 4px;
+                                cursor: pointer;
+                            }
+                        
+                            .right-buttons {
+                                display: flex;
+                                align-items: center;
+                                gap: 10px;
+                            }
+                        
+                            #last-saved {
+                                font-size: 14px;
+                                color: #666;
+                            }
+                        
+                            .continue-btn {
+                                background-color: #0077b6;
+                                color: white;
+                                border: none;
+                                padding: 10px 20px;
+                                border-radius: 4px;
+                                cursor: pointer;
+                            }
+                        
+                            /* Upload section styles */
+                            .upload-section {
+                                display: flex;
+                                gap: 30px;
+                            }
+                        
+                            .upload-info {
+                                flex: 1;
+                            }
+                        
+                            .upload-area {
+                                flex: 1;
+                                border: 1px solid #ddd;
+                                border-radius: 4px;
+                                padding: 20px;
+                            }
+                        
+                            .file-item {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                padding: 10px;
+                                border: 1px solid #ddd;
+                                border-radius: 4px;
+                                margin-bottom: 10px;
+                            }
+                        
+                            .file-name {
+                                flex: 1;
+                            }
+                        
+                            .remove-file-btn {
+                                background-color: #e74c3c;
+                                color: white;
+                                border: none;
+                                padding: 5px 10px;
+                                border-radius: 4px;
+                                cursor: pointer;
+                            }
+                        
+                            .add-file-btn {
+                                background-color: #0077b6;
+                                color: white;
+                                border: none;
+                                padding: 10px 15px;
+                                border-radius: 4px;
+                                cursor: pointer;
+                                margin-top: 10px;
+                            }
+                        
+                            /* Contributors section styles */
+                            .contributors-section {
+                                display: flex;
+                                gap: 30px;
+                            }
+                        
+                            .contributors-info {
+                                flex: 1;
+                            }
+                        
+                            .contributors-area {
+                                flex: 1;
+                                border: 1px solid #ddd;
+                                border-radius: 4px;
+                                padding: 20px;
+                            }
+                        
+                            .contributor-card {
+                                border: 1px solid #ddd;
+                                border-radius: 4px;
+                                padding: 20px;
+                                margin-bottom: 20px;
+                                position: relative;
+                            }
+                        
+                            .contributor-info {
+                                margin-bottom: 10px;
+                            }
+                        
+                            .contributor-label {
+                                font-weight: bold;
+                            }
+                        
+                            .add-contributor-btn {
+                                background-color: #0077b6;
+                                color: white;
+                                border: none;
+                                padding: 10px 15px;
+                                border-radius: 4px;
+                                cursor: pointer;
+                            }
+                        
+                            .remove-contributor {
+                                position: absolute;
+                                top: 10px;
+                                right: 10px;
+                                color: #ff4d4d;
+                                background: none;
+                                border: 1px solid #ff4d4d;
+                                border-radius: 4px;
+                                padding: 5px 10px;
+                                cursor: pointer;
+                                font-weight: bold;
+                            }
+                        
+                            /* Review page styles */
+                            .review-section {
+                                margin-bottom: 20px;
+                                border: 1px solid #ddd;
+                                border-radius: 4px;
+                            }
+                        
+                            .review-header {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                padding: 10px 15px;
+                                background-color: #f9f9f9;
+                                border-bottom: 1px solid #ddd;
+                            }
+                        
+                            .review-header h3 {
+                                margin: 0;
+                                font-size: 16px;
+                            }
+                        
+                            .edit-btn {
+                                background-color: #fff;
+                                border: 1px solid #0077b6;
+                                color: #0077b6;
+                                padding: 5px 10px;
+                                border-radius: 4px;
+                                cursor: pointer;
+                                font-size: 14px;
+                            }
+                        
+                            .review-content {
+                                padding: 15px;
+                            }
+                        
+                            .review-item {
+                                margin-bottom: 15px;
+                                padding-bottom: 15px;
+                                border-bottom: 1px solid #eee;
+                            }
+                        
+                            .review-label {
+                                font-weight: bold;
+                                margin-bottom: 5px;
+                                color: #555;
+                            }
+                        
+                            .review-value {
+                                color: #333;
+                            }
+                        
+                            .error-message {
+                                background-color: #fff0f0;
+                                border: 1px solid #ff4d4d;
+                                color: #ff4d4d;
+                                padding: 15px;
+                                margin-bottom: 20px;
+                                border-radius: 4px;
+                            }
+                        
+                            /* Modal styles */
+                            .modal {
+                                display: none;
+                                position: fixed;
+                                z-index: 1000;
+                                left: 0;
+                                top: 0;
+                                width: 100%;
+                                height: 100%;
+                                background-color: rgba(0, 0, 0, 0.5);
+                            }
+                        
+                            .modal-content {
+                                background-color: #fff;
+                                margin: 50px auto;
+                                width: 80%;
+                                max-width: 800px;
+                                border-radius: 4px;
+                                box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+                                max-height: 90vh;
+                                overflow-y: auto;
+                            }
+                        
+                            .modal-header {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                padding: 20px;
+                                border-bottom: 1px solid #eee;
+                            }
+                        
+                            .close-modal {
+                                font-size: 24px;
+                                cursor: pointer;
+                            }
+                        
+                            .modal-body {
+                                padding: 20px;
+                            }
+                        
+                            .modal-footer {
+                                padding: 20px;
+                                border-top: 1px solid #eee;
+                                text-align: right;
+                            }
+                        
+                            .save-btn {
+                                background-color: #0077b6;
+                                color: white;
+                                border: none;
+                                padding: 10px 20px;
+                                border-radius: 4px;
+                                cursor: pointer;
+                            }
+                        
+                            /* Responsive styles */
+                            @media (max-width: 768px) {
+                                .header {
+                                    flex-direction: column;
+                                    align-items: flex-start;
+                                }
+                                
+                                .header-buttons {
+                                    margin-top: 10px;
+                                }
+                                
+                                .progress-bar {
+                                    overflow-x: auto;
+                                    padding-bottom: 5px;
+                                }
+                                
+                                .step-text {
+                                    font-size: 10px;
+                                }
+                                
+                                .upload-section,
+                                .contributors-section {
+                                    flex-direction: column;
+                                }
+                                
+                                .form-navigation {
+                                    flex-direction: column;
+                                    gap: 15px;
+                                }
+                                
+                                .right-buttons {
+                                    width: 100%;
+                                    justify-content: space-between;
+                                }
+                            }
+                        </style>
+                        <!-- Completed Articles Tab -->
+                        <div id="technology" data-tab-content>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Article Title</th>
+                                            <th>Authors</th>
+                                            <th>Publication Date</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Assessment of Environmental and Economic Dimensions of Paddy Production in Iran</td>
+                                            <td>Mehri Alijani; Yaser Feizabadi; Mostafa Goudarzi</td>
+                                            <td>2023-07-10</td>
+                                            <td><span class="badge badge-success">Published</span></td>
+                                            <td>
+                                                <a href="#" class="btn btn-sm btn-danger">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-pdf" viewBox="0 0 16 16">
+                                                        <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1"/>
+                                                        <path d="M4.603 12.087a.8.8 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.7 7.7 0 0 1 1.482-.645 20 20 0 0 0 1.062-2.227 7.3 7.3 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.187-.012.395-.047.614-.084.51-.27 1.134-.52 1.794a11 11 0 0 0 .98 1.686 5.8 5.8 0 0 1 1.334.05c.364.065.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.86.86 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.7 5.7 0 0 1-.911-.95 11.6 11.6 0 0 0-1.997.406 11.3 11.3 0 0 1-1.021 1.51c-.29.35-.608.655-.926.787a.8.8 0 0 1-.58.029m1.379-1.901q-.25.115-.459.238c-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361q.016.032.026.044l.035-.012c.137-.056.355-.235.635-.572a8 8 0 0 0 .45-.606m1.64-1.33a13 13 0 0 1 1.01-.193 12 12 0 0 1-.51-.858 21 21 0 0 1-.5 1.05zm2.446.45q.226.244.435.41c.24.19.407.253.498.256a.1.1 0 0 0 .07-.015.3.3 0 0 0 .094-.125.44.44 0 0 0 .059-.2.1.1 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a4 4 0 0 0-.612-.053zM8.078 5.8a7 7 0 0 0 .2-.828q.046-.282.038-.465a.6.6 0 0 0-.032-.198.5.5 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822q.036.167.09.346z"/>
+                                                    </svg> PDF
+                                                </a>
+                                                <a href="#" class="btn btn-sm btn-primary">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
+                                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+                                                    </svg> View
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Advanced Techniques in Data Analysis for Agricultural Research</td>
+                                            <td>John Doe; Robert Johnson</td>
+                                            <td>2023-04-22</td>
+                                            <td><span class="badge badge-success">Published</span></td>
+                                            <td>
+                                                <a href="#" class="btn btn-sm btn-danger">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-pdf" viewBox="0 0 16 16">
+                                                        <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1"/>
+                                                        <path d="M4.603 12.087a.8.8 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.7 7.7 0 0 1 1.482-.645 20 20 0 0 0 1.062-2.227 7.3 7.3 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.187-.012.395-.047.614-.084.51-.27 1.134-.52 1.794a11 11 0 0 0 .98 1.686 5.8 5.8 0 0 1 1.334.05c.364.065.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.86.86 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.7 5.7 0 0 1-.911-.95 11.6 11.6 0 0 0-1.997.406 11.3 11.3 0 0 1-1.021 1.51c-.29.35-.608.655-.926.787a.8.8 0 0 1-.58.029m1.379-1.901q-.25.115-.459.238c-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361q.016.032.026.044l.035-.012c.137-.056.355-.235.635-.572a8 8 0 0 0 .45-.606m1.64-1.33a13 13 0 0 1 1.01-.193 12 12 0 0 1-.51-.858 21 21 0 0 1-.5 1.05zm2.446.45q.226.244.435.41c.24.19.407.253.498.256a.1.1 0 0 0 .07-.015.3.3 0 0 0 .094-.125.44.44 0 0 0 .059-.2.1.1 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a4 4 0 0 0-.612-.053zM8.078 5.8a7 7 0 0 0 .2-.828q.046-.282.038-.465a.6.6 0 0 0-.032-.198.5.5 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822q.036.167.09.346z"/>
+                                                    </svg> PDF
+                                                </a>
+                                                <a href="#" class="btn btn-sm btn-primary">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
+                                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+                                                    </svg> View
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--inner-tabs-->
+            </div>
+        </div>
+    </section>
+
+<style>
+    .th:first-child, td:first-child {
+        padding-left: 10px;
+    }
+</style>
+	<script src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+		crossorigin="anonymous"></script>
+	<script src="{% static 'js/plugins.js' %}"></script>
+	<script src="{% static 'js/script.js' %}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // URLdan parametrni olish
+            const urlParams = new URLSearchParams(window.location.search);
+            const tabTarget = urlParams.get('tab');
+    
+            // Barcha tablar va kontentlardan 'active' klassini olib tashlash
+            const allTabs = document.querySelectorAll('.tab');
+            const allTabContents = document.querySelectorAll('[data-tab-content]');
+            allTabs.forEach(tab => tab.classList.remove('active'));
+            allTabContents.forEach(content => content.classList.remove('active'));
+    
+            // Agar tab parametri 'business' bo'lsa, #business tabini va divni faollashtirish
+            if (tabTarget === 'business') {
+                const businessTab = document.querySelector('[data-tab-target="#business"]');
+                const businessContent = document.querySelector('#business');
+                if (businessTab && businessContent) {
+                    businessTab.classList.add('active');
+                    businessContent.classList.add('active');
+                }
+            } else {
+                // Agar parametr yo'q bo'lsa, standart tab (#all-genre) faol qoladi
+                const defaultTab = document.querySelector('[data-tab-target="#all-genre"]');
+                const defaultContent = document.querySelector('#all-genre');
+                if (defaultTab && defaultContent) {
+                    defaultTab.classList.add('active');
+                    defaultContent.classList.add('active');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

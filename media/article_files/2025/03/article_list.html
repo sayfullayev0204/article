@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Maqolalar ro‘yxati{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>Maqolalar ro‘yxati</h1>
+    <a href="{% url 'create_article' %}" class="btn btn-primary">Yangi maqola yaratish</a>
+</div>
+
+{% if articles %}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Sarlavha</th>
+                    <th>Boshlanish sanasi</th>
+                    <th>Tugash sanasi</th>
+                    <th>Holati</th>
+                    <th>Yaratilgan sana</th>
+                    <th>Amallar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for article in articles %}
+                <tr>
+                    <td>{{ article.title }}</td>
+                    <td>{{ article.start_date }}</td>
+                    <td>{{ article.end_date|default:"Ko‘rsatilmagan" }}</td>
+                    <td>
+                        {% if article.status == 'draft' %}
+                            <span class="badge bg-secondary">Qoralama</span>
+                        {% elif article.status == 'submitted' %}
+                            <span class="badge bg-info">Yuborilgan</span>
+                        {% elif article.status == 'under_review' %}
+                            <span class="badge bg-warning">Ko‘rib chiqilmoqda</span>
+                        {% elif article.status == 'accepted' %}
+                            <span class="badge bg-success">Qabul qilingan</span>
+                        {% elif article.status == 'rejected' %}
+                            <span class="badge bg-danger">Rad etilgan</span>
+                        {% elif article.status == 'published' %}
+                            <span class="badge bg-primary">Nashr qilingan</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ article.created_at|date:"d.m.Y H:i" }}</td>
+                    <td>
+                        <a href="{% url 'article_detail' article.pk %}" class="btn btn-sm btn-outline-primary">Ko‘rish</a>
+                        {% if article.created_by == user and article.status == 'draft' %}
+                            <a href="{% url 'edit_article' article.pk %}" class="btn btn-sm btn-outline-secondary">Tahrirlash</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        Hozircha maqolalar yo‘q. <a href="{% url 'create_article' %}">Yangi maqola yarating</a>.
+    </div>
+{% endif %}
+{% endblock %}
