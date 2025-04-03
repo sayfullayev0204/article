@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -457,10 +458,10 @@
 
 <div class="container">
     <div class="header">
-        <h1>Maqola yaratish: <span id="current-step-title">Tafsilotlar</span></h1>
+        <h1>{% trans "Maqola yaratish:" %} <span id="current-step-title">{% trans "Tafsilotlar" %}</span></h1>
         <div class="">
-            <a href="{% url 'profile' %}?tab=business"class="save-later-btn"  > Mening maqolalarim</a>
-            <button id="save-later-top" class="save-later-btn ">Keyinroq saqlash</button>
+            <a href="{% url 'profile' %}?tab=business"class="save-later-btn"  > {% trans "Mening maqolalarim" %}</a>
+            <button id="save-later-top" class="save-later-btn ">{% trans "Keyinroq saqlash" %}</button>
         </div>
     </div>
 
@@ -470,35 +471,35 @@
                 <span class="checkmark">✓</span>
                 <span class="step-number">1</span>
             </div>
-            <div class="step-text">Tafsilotlar</div>
+            <div class="step-text">{% trans "Tafsilotlar" %}</div>
         </div>
         <div class="step" data-step="2">
             <div class="step-circle">
                 <span class="checkmark">✓</span>
                 <span class="step-number">2</span>
             </div>
-            <div class="step-text">Fayllar</div>
+            <div class="step-text">{% trans "Fayllar" %}</div>
         </div>
         <div class="step" data-step="3">
             <div class="step-circle">
                 <span class="checkmark">✓</span>
                 <span class="step-number">3</span>
             </div>
-            <div class="step-text">Mualliflar</div>
+            <div class="step-text">{% trans "Mualliflar" %}</div>
         </div>
         <div class="step" data-step="4">
             <div class="step-circle">
                 <span class="checkmark">✓</span>
                 <span class="step-number">4</span>
             </div>
-            <div class="step-text">Tahrirchilar uchun</div>
+            <div class="step-text">{% trans "Tahrirchilar uchun" %}</div>
         </div>
         <div class="step" data-step="5">
             <div class="step-circle">
                 <span class="checkmark">✓</span>
                 <span class="step-number">5</span>
             </div>
-            <div class="step-text">Ko‘rib chiqish</div>
+            <div class="step-text">{% trans "Ko‘rib chiqish" %}</div>
         </div>
     </div>
 
@@ -508,13 +509,13 @@
         <div class="form-container">
             <!-- 1-qadam: Tafsilotlar -->
             <div class="form-step active" id="step-1">
-                <h2>Tafsilotlar</h2>
+                <h2>{% trans "Tafsilotlar" %}</h2>
                 
                 {% if not conference %}
                 <div class="form-group">
-                    <label for="id_conference">Konferensiya*</label>
+                    <label for="id_conference">{% trans "Konferensiya*" %}</label>
                     <select name="conference" id="id_conference" class="form-control">
-                        <option value="">-- Konferensiyani tanlang --</option>
+                        <option value="">{% trans "-- Konferensiyani tanlang --" %}</option>
                         {% for conference in article_form.fields.conference.queryset %}
                             <option value="{{ conference.id }}">{{ conference.title }}</option>
                         {% endfor %}
@@ -522,11 +523,11 @@
                     {% if article_form.conference.errors %}
                         <div class="invalid-feedback d-block">{{ article_form.conference.errors }}</div>
                     {% endif %}
-                    <div class="form-text">Maqola topshirishni xohlagan konferensiyani tanlang.</div>
+                    <div class="form-text">{% trans "Maqola topshirishni xohlagan konferensiyani tanlang." %}</div>
                 </div>
                 
                 <div id="conference_detail_link" class="mt-2">
-                    <a href="#" id="detail_link" class="btn btn-info" style="display: none;">Konferensiya haqida →</a>
+                    <a href="#" id="detail_link" class="btn btn-info" style="display: none;">{% trans "Konferensiya haqida →" %}</a>
                 </div>
                 
                 <script>
@@ -547,13 +548,13 @@
                 {% else %}
                     <input type="hidden" name="conference" value="{{ conference.id }}">
                     <div class="form-group">
-                        <label>Konferensiya</label>
+                        <label>{% trans "Konferensiya" %}</label>
                         <p>{{ conference.title }}</p>
                     </div>
                 {% endif %}
                 
                 <div class="form-group">
-                    <label for="id_title">Sarlavha*</label>
+                    <label for="id_title">{% trans "Sarlavha*" %}</label>
                     {{ article_form.title }}
                     {% if article_form.title.errors %}
                         <div class="invalid-feedback d-block">{{ article_form.title.errors }}</div>
@@ -561,7 +562,7 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="id_abstract">Annotatsiya*</label>
+                    <label for="id_abstract">{% trans "Annotatsiya*" %}</label>
                     {{ article_form.abstract }}
                     {% if article_form.abstract.errors %}
                         <div class="invalid-feedback d-block">{{ article_form.abstract.errors }}</div>
@@ -569,7 +570,7 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="id_keywords">Kalit so‘zlar (vergul bilan ajratilgan)</label>
+                    <label for="id_keywords">{% trans "Kalit so‘zlar (vergul bilan ajratilgan)" %}</label>
                     {{ article_form.keywords }}
                     {% if article_form.keywords.errors %}
                         <div class="invalid-feedback d-block">{{ article_form.keywords.errors }}</div>
@@ -577,7 +578,7 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="id_references">Havolalar</label>
+                    <label for="id_references">{% trans "Havolalar" %}</label>
                     {{ article_form.references }}
                     {% if article_form.references.errors %}
                         <div class="invalid-feedback d-block">{{ article_form.references.errors }}</div>
@@ -586,7 +587,7 @@
                 
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label for="id_start_date">Boshlanish sanasi*</label>
+                        <label for="id_start_date">{% trans "Boshlanish sanasi*" %}</label>
                         {{ article_form.start_date }}
                         {% if article_form.start_date.errors %}
                             <div class="invalid-feedback d-block">{{ article_form.start_date.errors }}</div>
@@ -594,7 +595,7 @@
                     </div>
                     
                     <div class="col-md-6 form-group">
-                        <label for="id_end_date">Tugash sanasi</label>
+                        <label for="id_end_date">{% trans "Tugash sanasi" %}</label>
                         {{ article_form.end_date }}
                         {% if article_form.end_date.errors %}
                             <div class="invalid-feedback d-block">{{ article_form.end_date.errors }}</div>
@@ -607,16 +608,16 @@
             <div class="form-step" id="step-2">
                 <div class="upload-section">
                     <div class="upload-info">
-                        <h2>Fayllarni yuklash</h2>
-                        <p>Maqolangiz bilan bog‘liq fayllarni yuklang. Maqola matni, ma’lumotlar, rasmlar va tahrirchilarga ishingizni baholashda yordam beradigan boshqa materiallarni yuklashingiz mumkin.</p>
+                        <h2>{% trans "Fayllarni yuklash" %}</h2>
+                        <p>{% trans "Maqolangiz bilan bog‘liq fayllarni yuklang. Maqola matni, ma’lumotlar, rasmlar va tahrirchilarga ishingizni baholashda yordam beradigan boshqa materiallarni yuklashingiz mumkin." %}</p>
                     </div>
                     <div class="upload-area">
-                        <h3>Fayllar</h3>
+                        <h3>{% trans "Fayllar" %}</h3>
                         <div id="file-list">
                             <!-- Fayllar shu yerda ko‘rsatiladi -->
                         </div>
                         <input type="file" name="files" id="id_files" style="display: none;" multiple>
-                        <button type="button" id="add-file-btn" class="add-file-btn">Fayl qo‘shish</button>
+                        <button type="button" id="add-file-btn" class="add-file-btn">{% trans "Fayl qo‘shish" %}</button>
                     </div>
                 </div>
             </div>
@@ -625,24 +626,24 @@
             <div class="form-step" id="step-3">
                 <div class="contributors-section">
                     <div class="contributors-info">
-                        <h2>Mualliflar</h2>
-                        <p>Ushbu maqolaga katta hissa qo‘shgan barcha mualliflarni qo‘shing. Agar muallif ko‘rsatilmagan bo‘lsa, yuboruvchi ular nomidan maqola uchun to‘liq javobgarlikni o‘z zimmasiga oladi. Barcha mualliflar yuborishga va muallif sifatida ko‘rsatilishga rozilik berishlari kerak.</p>
+                        <h2>{% trans "Mualliflar" %}</h2>
+                        <p>{% trans "Ushbu maqolaga katta hissa qo‘shgan barcha mualliflarni qo‘shing. Agar muallif ko‘rsatilmagan bo‘lsa, yuboruvchi ular nomidan maqola uchun to‘liq javobgarlikni o‘z zimmasiga oladi. Barcha mualliflar yuborishga va muallif sifatida ko‘rsatilishga rozilik berishlari kerak." %}</p>
                     </div>
                     <div class="contributors-area">
                         <div id="contributors-list">
                             <!-- Mualliflar shu yerda ko‘rsatiladi -->
                         </div>
-                        <button type="button" id="add-contributor-btn" class="add-contributor-btn">Muallif qo‘shish</button>
+                        <button type="button" id="add-contributor-btn" class="add-contributor-btn">{% trans "Muallif qo‘shish" %}</button>
                     </div>
                 </div>
             </div>
             
             <!-- 4-qadam: Tahrirchilar uchun -->
             <div class="form-step" id="step-4">
-                <h2>Tahrirchilar uchun</h2>
+                <h2>{% trans "Tahrirchilar uchun" %}</h2>
                 <div class="form-group">
-                    <label for="id_cover_letter">Mavzu</label>
-                    <p>Maqolangiz mavzusini tasvirlaydigan kalit so‘zlar, iboralar yoki tasnif kodlarini ko‘rsating.</p>
+                    <label for="id_cover_letter">{% trans "Mavzu" %}</label>
+                    <p>{% trans "Maqolangiz mavzusini tasvirlaydigan kalit so‘zlar, iboralar yoki tasnif kodlarini ko‘rsating." %}</p>
                     {{ article_form.cover_letter }}
                     {% if article_form.cover_letter.errors %}
                         <div class="invalid-feedback d-block">{{ article_form.cover_letter.errors }}</div>
@@ -650,8 +651,8 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="id_special_instructions">Tahrirchi uchun izohlar</label>
-                    <p>Maqolangizni baholashda tahrirchilar bilishi kerak deb hisoblagan har qanday ma’lumotni qo‘shing.</p>
+                    <label for="id_special_instructions">{% trans "Tahrirchi uchun izohlar" %}</label>
+                    <p>{% trans "Maqolangizni baholashda tahrirchilar bilishi kerak deb hisoblagan har qanday ma’lumotni qo‘shing." %}</p>
                     {{ article_form.special_instructions }}
                     {% if article_form.special_instructions.errors %}
                         <div class="invalid-feedback d-block">{{ article_form.special_instructions.errors }}</div>
@@ -661,22 +662,22 @@
             
             <!-- 5-qadam: Ko‘rib chiqish -->
             <div class="form-step" id="step-5">
-                <h2>Ko‘rib chiqish va yuborish</h2>
+                <h2>{% trans "Ko‘rib chiqish va yuborish" %}</h2>
                 <p class="review-intro">
-                    Bu yuborishni yakunlashdan oldin kiritgan ma’lumotlaringizning qisqacha ko‘rinishi. Bu yerda ko‘rsatilgan har qanday tafsilotni har bir bo‘limning yuqori qismidagi “Tahrirlash” tugmasini bosib o‘zgartirishingiz mumkin.
+                    {% trans "Bu yuborishni yakunlashdan oldin kiritgan ma’lumotlaringizning qisqacha ko‘rinishi. Bu yerda ko‘rsatilgan har qanday tafsilotni har bir bo‘limning yuqori qismidagi “Tahrirlash” tugmasini bosib o‘zgartirishingiz mumkin." %}
                 </p>
                 <p class="review-intro">
-                    Yuborish tugallangandan so‘ng, tahririyat jamoamiz a’zolaridan biri uni ko‘rib chiqish uchun tayinlanadi. Iltimos, kiritgan ma’lumotlaringiz iloji boricha aniq ekanligiga ishonch hosil qiling.
+                    {% trans "Yuborish tugallangandan so‘ng, tahririyat jamoamiz a’zolaridan biri uni ko‘rib chiqish uchun tayinlanadi. Iltimos, kiritgan ma’lumotlaringiz iloji boricha aniq ekanligiga ishonch hosil qiling." %}
                 </p>
 
                 <div id="review-errors" class="error-message" style="display: none;">
-                    <span class="error-icon">⚠</span> Yuborishdan oldin tuzatilishi kerak bo‘lgan bir yoki bir nechta muammolar mavjud. Iltimos, quyidagi ma’lumotlarni ko‘rib chiqing va so‘ralgan o‘zgartirishlarni kiriting.
+                    <span class="error-icon">⚠</span> {% trans "Yuborishdan oldin tuzatilishi kerak bo‘lgan bir yoki bir nechta muammolar mavjud. Iltimos, quyidagi ma’lumotlarni ko‘rib chiqing va so‘ralgan o‘zgartirishlarni kiriting." %}
                 </div>
 
                 <div class="review-section">
                     <div class="review-header">
-                        <h3>Tafsilotlar</h3>
-                        <button type="button" class="edit-btn" data-section="1">Tahrirlash</button>
+                        <h3>{% trans "Tafsilotlar" %}</h3>
+                        <button type="button" class="edit-btn" data-section="1">{% trans "Tahrirlash" %}</button>
                     </div>
                     <div class="review-content" id="review-details">
                         <!-- JavaScript orqali to‘ldiriladi -->
@@ -685,8 +686,8 @@
 
                 <div class="review-section">
                     <div class="review-header">
-                        <h3>Fayllar</h3>
-                        <button type="button" class="edit-btn" data-section="2">Tahrirlash</button>
+                        <h3>{% trans "Fayllar" %}</h3>
+                        <button type="button" class="edit-btn" data-section="2">{% trans "Tahrirlash" %}</button>
                     </div>
                     <div class="review-content" id="review-files">
                         <!-- JavaScript orqali to‘ldiriladi -->
@@ -695,8 +696,8 @@
 
                 <div class="review-section">
                     <div class="review-header">
-                        <h3>Mualliflar</h3>
-                        <button type="button" class="edit-btn" data-section="3">Tahrirlash</button>
+                        <h3>{% trans "Mualliflar" %}</h3>
+                        <button type="button" class="edit-btn" data-section="3">{% trans "Tahrirlash" %}</button>
                     </div>
                     <div class="review-content" id="review-contributors">
                         <!-- JavaScript orqali to‘ldiriladi -->
@@ -705,8 +706,8 @@
 
                 <div class="review-section">
                     <div class="review-header">
-                        <h3>Tahrirchilar uchun</h3>
-                        <button type="button" class="edit-btn" data-section="4">Tahrirlash</button>
+                        <h3>{% trans "Tahrirchilar uchun" %}</h3>
+                        <button type="button" class="edit-btn" data-section="4">{% trans "Tahrirlash" %}</button>
                     </div>
                     <div class="review-content" id="review-editors">
                         <!-- JavaScript orqali to‘ldiriladi -->
@@ -716,12 +717,12 @@
         </div>
 
         <div class="form-navigation">
-            <button type="button" id="back-btn" class="back-btn">Orqaga</button>
+            <button type="button" id="back-btn" class="back-btn">{% trans "Orqaga" %}</button>
             <div class="right-buttons">
-                <span id="last-saved">Oxirgi saqlash: Hech qachon</span>
-                <button type="button" id="save-later-bottom" class="save-later-btn">Keyinroq saqlash</button>
-                <button type="button" id="continue-btn" class="continue-btn">Davom etish</button>
-                <button type="submit" id="submit-btn" style="display: none;">Yuborish</button>
+                <span id="last-saved">{% trans "Oxirgi saqlash: Hech qachon" %}</span>
+                <button type="button" id="save-later-bottom" class="save-later-btn">{% trans "Keyinroq saqlash" %}</button>
+                <button type="button" id="continue-btn" class="continue-btn">{% trans "Davom etish" %}</button>
+                <button type="submit" id="submit-btn" style="display: none;">{% trans "Yuborish" %}</button>
             </div>
         </div>
     </form>
@@ -730,848 +731,685 @@
 <div id="contributor-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Muallif qo‘shish</h2>
-            <span class="close-modal">×</span>
+            <h2>{% trans "Muallif qo‘shish" %}</h2>
+            <span class="close-modal">{% trans "O'chirish" %}</span>
         </div>
         <div class="modal-body">
             <form id="contributor-form">
                 <div class="form-group">
-                    <label for="given-name">Ism <span class="required">*</span></label>
+                    <label for="given-name">{% trans "Ism" %} <span class="required">*</span></label>
                     <input type="text" id="given-name" name="given-name" class="form-control" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="family-name">Familiya</label>
+                    <label for="family-name">{% trans "Familiya" %}</label>
                     <input type="text" id="family-name" name="family-name" class="form-control">
                 </div>
                 
                 <div class="form-group">
-                    <label for="preferred-name">Afzal ism</label>
-                    <p class="field-description">Muallif nashr qilingan ishda qanday ko‘rsatilishi kerak bo‘lgan to‘liq ismini ko‘rsating. Masalan: Prof. Ivan P. Sidorov</p>
+                    <label for="preferred-name">{% trans "Afzal ism" %}</label>
+                    <p class="field-description">{% trans "Muallif nashr qilingan ishda qanday ko‘rsatilishi kerak bo‘lgan to‘liq ismini ko‘rsating. Masalan: Prof. Ivan P. Sidorov" %}</p>
                     <input type="text" id="preferred-name" name="preferred-name" class="form-control">
                 </div>
                 
                 <div class="form-group">
-                    <label for="contributor-email">Email <span class="required">*</span></label>
+                    <label for="contributor-email">{% trans "Email" %} <span class="required">*</span></label>
                     <input type="email" id="contributor-email" name="contributor-email" class="form-control" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="country">Davlat <span class="required">*</span></label>
+                    <label for="country">{% trans "Davlat" %} <span class="required">*</span></label>
                     <select id="country" name="country" class="form-control" required>
-                        <option value="">Davlatni tanlang</option>
-                        <option value="RU">Rossiya</option>
-                        <option value="UZ">O‘zbekiston</option>
-                        <option value="KZ">Qozog‘iston</option>
-                        <option value="US">AQSh</option>
-                        <option value="GB">Buyuk Britaniya</option>
+                        <option value="">{% trans "Davlatni tanlang" %}</option>
+                        <option value="RU">{% trans "Rossiya" %}</option>
+                        <option value="UZ">{% trans "O‘zbekiston" %}</option>
+                        <option value="KZ">{% trans "Qozog‘iston" %}</option>
+                        <option value="US">{% trans "AQSh" %}</option>
+                        <option value="GB">{% trans "Buyuk Britaniya" %}</option>
                         <!-- Kerak bo‘lsa boshqa davlatlarni qo‘shing -->
                     </select>
                 </div>
                 
                 <div class="form-group">
-                    <label for="homepage">Shaxsiy sahifa URL</label>
+                    <label for="homepage">{% trans "Shaxsiy sahifa URL" %}</label>
                     <input type="url" id="homepage" name="homepage" class="form-control">
                 </div>
                 
                 <div class="form-group">
-                    <label for="orcid">ORCID ID</label>
+                    <label for="orcid">{% trans "ORCID ID" %}</label>
                     <input type="text" id="orcid" name="orcid" class="form-control">
                 </div>
                 
                 <div class="form-group">
-                    <label for="bio">Biografiya (masalan, kafedra va lavozim)</label>
+                    <label for="bio">{% trans "Biografiya (masalan, kafedra va lavozim)" %}</label>
                     <textarea id="bio" name="bio" rows="5" class="form-control"></textarea>
                 </div>
                 
                 <div class="form-group">
-                    <label for="affiliation">Tashkilot (aloqa)</label>
+                    <label for="affiliation">{% trans "Tashkilot (aloqa)" %}</label>
                     <input type="text" id="affiliation" name="affiliation" class="form-control">
                 </div>
                 
                 <div class="form-group">
-                    <label>Muallif roli</label>
+                    <label>{% trans "Muallif roli" %}</label>
                     <div class="radio-group">
                         <label class="radio-label">
-                            <input type="radio" name="role" value="author" checked> Muallif
+                            <input type="radio" name="role" value="author" checked> {% trans "Muallif" %}
                         </label>
                         <label class="radio-label">
-                            <input type="radio" name="role" value="translator"> Tarjimon
+                            <input type="radio" name="role" value="translator"> {% trans "Tarjimon" %}
                         </label>
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label>Nashrlar ro‘yxati</label>
+                    <label>{% trans "Nashrlar ro‘yxati" %}</label>
                     <label class="checkbox-label">
                         <input type="checkbox" id="include-in-lists" name="include-in-lists" checked>
-                        Ushbu muallifni nashrlar ro‘yxatida mualliflarni aniqlashda kiritish.
+                        {% trans "Ushbu muallifni nashrlar ro‘yxatida mualliflarni aniqlashda kiritish." %}
                     </label>
                 </div>
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" id="save-contributor-btn" class="save-btn">Saqlash</button>
+            <button type="button" id="save-contributor-btn" class="save-btn">{% trans "Saqlash" %}</button>
         </div>
     </div>
 </div>
 
 {% block extra_js %}
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // DOM elementlari
-        const steps = document.querySelectorAll(".step");
-        const formSteps = document.querySelectorAll(".form-step");
-        const backBtn = document.getElementById("back-btn");
-        const continueBtn = document.getElementById("continue-btn");
-        const submitBtn = document.getElementById("submit-btn");
-        const saveLaterBtns = document.querySelectorAll(".save-later-btn");
-        const addFileBtn = document.getElementById("add-file-btn");
-        const fileInput = document.getElementById("id_files");
-        const fileList = document.getElementById("file-list");
-        const addContributorBtn = document.getElementById("add-contributor-btn");
-        const contributorsList = document.getElementById("contributors-list");
-        const currentStepTitle = document.getElementById("current-step-title");
-        const lastSavedSpan = document.getElementById("last-saved");
-        const articleForm = document.getElementById("article-form");
-
-        // Ko‘rib chiqish elementlari
-        const reviewDetailsSection = document.getElementById("review-details");
-        const reviewFilesSection = document.getElementById("review-files");
-        const reviewContributorsSection = document.getElementById("review-contributors");
-        const reviewEditorsSection = document.getElementById("review-editors");
-        const reviewErrorsSection = document.getElementById("review-errors");
-        const editButtons = document.querySelectorAll(".edit-btn");
-
-        // Modal oynaning elementlari
-        const contributorModal = document.getElementById("contributor-modal");
-        const closeModal = document.querySelector(".close-modal");
-        const saveContributorBtn = document.getElementById("save-contributor-btn");
-        const contributorForm = document.getElementById("contributor-form");
-
-        // Joriy qadam
-        let currentStep = 1;
-
-        // Tahrirlash uchun joriy muallif indeksi (yangi muallif uchun null)
-        let currentContributorIndex = null;
-
-        // Forma ma’lumotlari obyekti
-        let formData = {
-            id: Date.now(), // Ushbu yuborish uchun noyob ID
-            currentStep: 1,
-            completedSteps: [],
-            lastSaved: null,
-            details: {
-                conference: "{{ conference.id }}" || "",
-                title: "",
-                abstract: "",
-                keywords: "",
-                references: "",
-                startDate: "",
-                endDate: ""
-            },
-            files: [],
-            contributors: [],
-            editors: {
-                coverLetter: "",
-                specialInstructions: ""
-            }
-        };
-
-        // Saqlangan ma’lumotlarni yuklash
-        loadFormData();
-
-        // UI ni yangilash
-        updateUI();
-
-        // Hodisalar ishlovchilari
-        backBtn.addEventListener("click", goToPreviousStep);
-        continueBtn.addEventListener("click", goToNextStep);
-
-        saveLaterBtns.forEach((btn) => {
-            btn.addEventListener("click", () => {
-                saveFormData(true);
-            });
-        });
-
-        addFileBtn.addEventListener("click", () => {
-            fileInput.click();
-        });
-
-        fileInput.addEventListener("change", handleFileSelection);
-
-        addContributorBtn.addEventListener("click", () => {
-            openContributorModal();
-        });
-
-        // Ko‘rib chiqish sahifasidagi tahrirlash tugmalari
-        editButtons.forEach((btn) => {
-            btn.addEventListener("click", function() {
-                const sectionIndex = parseInt(this.getAttribute("data-section"));
-                goToStep(sectionIndex);
-            });
-        });
-
-        // Modal oyna hodisalari
-        closeModal.addEventListener("click", closeContributorModal);
-
-        saveContributorBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            saveContributor();
-        });
-
-        // Modal oynadan tashqariga bosilganda yopish
-        window.addEventListener("click", (event) => {
-            if (event.target === contributorModal) {
-                closeContributorModal();
+    document.addEventListener('DOMContentLoaded', function() {
+    // Variables
+    const form = document.getElementById('article-form');
+    const steps = document.querySelectorAll('.form-step');
+    const progressSteps = document.querySelectorAll('.step');
+    const backBtn = document.getElementById('back-btn');
+    const continueBtn = document.getElementById('continue-btn');
+    const submitBtn = document.getElementById('submit-btn');
+    const saveLaterBtns = document.querySelectorAll('.save-later-btn');
+    const currentStepTitle = document.getElementById('current-step-title');
+    const stepTitles = ['Tafsilotlar', 'Fayllar', 'Mualliflar', 'Tahrirchilar uchun', 'Ko\'rib chiqish'];
+    
+    let currentStep = 0;
+    let articleId = null;
+    let contributors = [];
+    let uploadedFiles = [];
+    
+    // Initialize the form
+    function initForm() {
+        updateStepVisibility();
+        updateProgressBar();
+        updateButtons();
+        
+        // Hide back button on first step
+        if (currentStep === 0) {
+            backBtn.style.display = 'none';
+        }
+        
+        // Load saved data if available
+        const savedArticleId = localStorage.getItem('article_draft_id');
+        if (savedArticleId) {
+            articleId = savedArticleId;
+            loadSavedDraft(articleId);
+        }
+    }
+    
+    // Update which step is visible
+    function updateStepVisibility() {
+        steps.forEach((step, index) => {
+            if (index === currentStep) {
+                step.classList.add('active');
+            } else {
+                step.classList.remove('active');
             }
         });
-
-        // Forma maydonlari uchun kiritish hodisalari
-        document.querySelectorAll("input, textarea, select").forEach((input) => {
-            input.addEventListener("input", () => {
-                updateFormData();
-            });
+        
+        // Update the step title
+        currentStepTitle.textContent = stepTitles[currentStep];
+    }
+    
+    // Update the progress bar
+    function updateProgressBar() {
+        progressSteps.forEach((step, index) => {
+            if (index < currentStep) {
+                step.classList.add('completed');
+                step.classList.remove('active');
+            } else if (index === currentStep) {
+                step.classList.add('active');
+                step.classList.remove('completed');
+            } else {
+                step.classList.remove('active');
+                step.classList.remove('completed');
+            }
         });
-
-        // Funktsiyalar
-        function updateUI() {
-            // Qadam indikatorlarini yangilash
-            steps.forEach((step, index) => {
-                const stepNumber = index + 1;
-                if (stepNumber < currentStep) {
-                    step.classList.add("completed");
-                    step.classList.remove("active");
-                } else if (stepNumber === currentStep) {
-                    step.classList.add("active");
-                    step.classList.remove("completed");
-                } else {
-                    step.classList.remove("active", "completed");
-                }
-            });
-
-            // Forma qadamlarining ko‘rinishini yangilash
-            formSteps.forEach((formStep, index) => {
-                const stepNumber = index + 1;
-                if (stepNumber === currentStep) {
-                    formStep.classList.add("active");
-                } else {
-                    formStep.classList.remove("active");
-                }
-            });
-
-            // Qadam sarlavhasini yangilash
-            const stepTitles = ["Tafsilotlar", "Fayllarni yuklash", "Mualliflar", "Tahrirchilar uchun", "Ko‘rib chiqish"];
-            currentStepTitle.textContent = stepTitles[currentStep - 1];
-
-            // "Orqaga" tugmasining ko‘rinishini yangilash
-            backBtn.style.visibility = currentStep === 1 ? "hidden" : "visible";
-
-            // "Davom etish" tugmasi matnini yangilash
-            continueBtn.textContent = currentStep === 5 ? "Yuborish" : "Davom etish";
-
-            // Forma maydonlarini saqlangan ma’lumotlar bilan to‘ldirish
-            populateFormFields();
-
-            // Agar ko‘rib chiqish qadamida bo‘lsa, mazmunni generatsiya qilish
-            if (currentStep === 5) {
-                generateReviewContent();
-            }
-
-            // Oxirgi saqlash vaqtini yangilash
-            if (formData.lastSaved) {
-                lastSavedSpan.textContent = `Oxirgi saqlash: ${formData.lastSaved}`;
-            }
+    }
+    
+    // Update button visibility
+    function updateButtons() {
+        if (currentStep === 0) {
+            backBtn.style.display = 'none';
+        } else {
+            backBtn.style.display = 'block';
         }
-
-        function populateFormFields() {
-            // Tafsilotlar
-            if (document.getElementById("id_conference")) {
-                document.getElementById("id_conference").value = formData.details.conference || "";
-            }
-            document.getElementById("id_title").value = formData.details.title || "";
-            document.getElementById("id_abstract").value = formData.details.abstract || "";
-            document.getElementById("id_keywords").value = formData.details.keywords || "";
-            document.getElementById("id_references").value = formData.details.references || "";
-            document.getElementById("id_start_date").value = formData.details.startDate || "";
-            document.getElementById("id_end_date").value = formData.details.endDate || "";
-
-            // Fayllar
-            renderFileList();
-
-            // Mualliflar
-            renderContributorsList();
-
-            // Tahrirchilar uchun
-            document.getElementById("id_cover_letter").value = formData.editors.coverLetter || "";
-            document.getElementById("id_special_instructions").value = formData.editors.specialInstructions || "";
+        
+        if (currentStep === steps.length - 1) {
+            continueBtn.style.display = 'none';
+            submitBtn.style.display = 'block';
+        } else {
+            continueBtn.style.display = 'block';
+            submitBtn.style.display = 'none';
         }
-
-        function renderFileList() {
-            fileList.innerHTML = "";
-            if (!formData.files || formData.files.length === 0) {
-                const emptyMessage = document.createElement("p");
-                emptyMessage.textContent = "Fayllar hali yuklanmagan.";
-                fileList.appendChild(emptyMessage);
-            } else {
-                formData.files.forEach((file, index) => {
-                    const fileItem = document.createElement("div");
-                    fileItem.className = "file-item";
-
-                    const fileName = document.createElement("span");
-                    fileName.className = "file-name";
-                    fileName.textContent = file.name;
-                    fileItem.appendChild(fileName);
-
-                    const removeButton = document.createElement("button");
-                    removeButton.type = "button";
-                    removeButton.textContent = "O‘chirish";
-                    removeButton.className = "remove-file-btn";
-                    removeButton.dataset.index = index;
-                    removeButton.addEventListener("click", function() {
-                        removeFile(parseInt(this.dataset.index));
-                    });
-                    fileItem.appendChild(removeButton);
-
-                    fileList.appendChild(fileItem);
-                });
-            }
-        }
-
-        function handleFileSelection() {
-            if (this.files.length > 0) {
-                for (let i = 0; i < this.files.length; i++) {
-                    const file = this.files[i];
-                    if (!formData.files) formData.files = [];
-                    formData.files.push({
-                        name: file.name,
-                        size: file.size,
-                        type: file.type,
-                        file: file // Keyinchalik yuborish uchun fayl obyekti saqlanadi
-                    });
-                }
-                renderFileList();
-                saveFormData(false);
-            }
-        }
-
-        function removeFile(index) {
-            formData.files.splice(index, 1);
-            renderFileList();
-            saveFormData(false);
-        }
-
-        function renderContributorsList() {
-            // Mavjud mualliflar ro‘yxatini tozalash
-            contributorsList.innerHTML = "";
-
-            // Saqlangan mualliflarni qo‘shish
-            if (!formData.contributors || formData.contributors.length === 0) {
-                const emptyMessage = document.createElement("p");
-                emptyMessage.textContent = 'Mualliflar hali qo‘shilmagan. Muallif qo‘shish uchun "Muallif qo‘shish" tugmasini bosing.';
-                contributorsList.appendChild(emptyMessage);
-            } else {
-                formData.contributors.forEach((contributor, index) => {
-                    const contributorCard = document.createElement("div");
-                    contributorCard.className = "contributor-card";
-
-                    const name = contributor.givenName + (contributor.familyName ? " " + contributor.familyName : "");
-                    const displayName = contributor.preferredName || name;
-
-                    const heading = document.createElement("h3");
-                    heading.textContent = index === 0 ? "Asosiy muallif: " + displayName : displayName;
-
-                    const removeBtn = document.createElement("button");
-                    removeBtn.type = "button";
-                    removeBtn.className = "remove-contributor";
-                    removeBtn.textContent = "O‘chirish";
-                    removeBtn.dataset.index = index;
-                    removeBtn.addEventListener("click", function() {
-                        removeContributor(parseInt(this.dataset.index));
-                    });
-
-                    const emailInfo = document.createElement("div");
-                    emailInfo.className = "contributor-info";
-                    emailInfo.innerHTML = '<span class="contributor-label">Email:</span> ' + contributor.email;
-
-                    const affiliationInfo = document.createElement("div");
-                    affiliationInfo.className = "contributor-info";
-                    affiliationInfo.innerHTML = '<span class="contributor-label">Tashkilot:</span> ' + (contributor.affiliation || "Ko‘rsatilmagan");
-
-                    const roleInfo = document.createElement("div");
-                    roleInfo.className = "contributor-info";
-                    roleInfo.innerHTML = '<span class="contributor-label">Rol:</span> ' + (contributor.role === "translator" ? "Tarjimon" : "Muallif");
-
-                    const editBtn = document.createElement("button");
-                    editBtn.type = "button";
-                    editBtn.className = "edit-contributor-btn";
-                    editBtn.textContent = "Tahrirlash";
-                    editBtn.dataset.index = index;
-                    editBtn.addEventListener("click", function() {
-                        editContributor(parseInt(this.dataset.index));
-                    });
-
-                    contributorCard.appendChild(heading);
-                    contributorCard.appendChild(removeBtn);
-                    contributorCard.appendChild(emailInfo);
-                    contributorCard.appendChild(affiliationInfo);
-                    contributorCard.appendChild(roleInfo);
-                    contributorCard.appendChild(editBtn);
-
-                    contributorsList.appendChild(contributorCard);
-                });
-            }
-        }
-
-        function openContributorModal(index = null) {
-            currentContributorIndex = index;
-
-            // Forma maydonlarini tozalash
-            document.getElementById("given-name").value = "";
-            document.getElementById("family-name").value = "";
-            document.getElementById("preferred-name").value = "";
-            document.getElementById("contributor-email").value = "";
-            document.getElementById("country").value = "";
-            document.getElementById("homepage").value = "";
-            document.getElementById("orcid").value = "";
-            document.getElementById("bio").value = "";
-            document.getElementById("affiliation").value = "";
-            document.querySelector('input[name="role"][value="author"]').checked = true;
-            document.getElementById("include-in-lists").checked = true;
-
-            // Agar mavjud muallif tahrirlanayotgan bo‘lsa, maydonlarni to‘ldirish
-            if (index !== null && formData.contributors && formData.contributors[index]) {
-                const contributor = formData.contributors[index];
-                document.getElementById("given-name").value = contributor.givenName || "";
-                document.getElementById("family-name").value = contributor.familyName || "";
-                document.getElementById("preferred-name").value = contributor.preferredName || "";
-                document.getElementById("contributor-email").value = contributor.email || "";
-                document.getElementById("country").value = contributor.country || "";
-                document.getElementById("homepage").value = contributor.homepage || "";
-                document.getElementById("orcid").value = contributor.orcid || "";
-                document.getElementById("bio").value = contributor.bio || "";
-                document.getElementById("affiliation").value = contributor.affiliation || "";
-
-                if (contributor.role === "translator") {
-                    document.querySelector('input[name="role"][value="translator"]').checked = true;
-                } else {
-                    document.querySelector('input[name="role"][value="author"]').checked = true;
-                }
-
-                document.getElementById("include-in-lists").checked = contributor.includeInLists !== false;
-            }
-
-            // Modal oynani ko‘rsatish
-            contributorModal.style.display = "block";
-        }
-
-        function closeContributorModal() {
-            contributorModal.style.display = "none";
-            currentContributorIndex = null;
-        }
-
-        function saveContributor() {
-            // Majburiy maydonlarni tekshirish
-            const givenName = document.getElementById("given-name").value.trim();
-            const email = document.getElementById("contributor-email").value.trim();
-            const country = document.getElementById("country").value;
-
-            if (!givenName) {
-                alert("Ism majburiydir.");
-                return;
-            }
-
-            if (!email) {
-                alert("Email majburiydir.");
-                return;
-            }
-
-            if (!validateEmail(email)) {
-                alert("Iltimos, to‘g‘ri email kiriting.");
-                return;
-            }
-
-            if (!country) {
-                alert("Davlat majburiydir.");
-                return;
-            }
-
-            // Muallif obyekti yaratish
-            const contributor = {
-                givenName: givenName,
-                familyName: document.getElementById("family-name").value.trim(),
-                preferredName: document.getElementById("preferred-name").value.trim(),
-                email: email,
-                country: country,
-                homepage: document.getElementById("homepage").value.trim(),
-                orcid: document.getElementById("orcid").value.trim(),
-                bio: document.getElementById("bio").value.trim(),
-                affiliation: document.getElementById("affiliation").value.trim(),
-                role: document.querySelector('input[name="role"]:checked').value,
-                includeInLists: document.getElementById("include-in-lists").checked
-            };
-
-            // Mualliflar massivining mavjudligiga ishonch hosil qilish
-            if (!formData.contributors) {
-                formData.contributors = [];
-            }
-
-            // Muallifni qo‘shish yoki yangilash
-            if (currentContributorIndex !== null) {
-                formData.contributors[currentContributorIndex] = contributor;
-            } else {
-                formData.contributors.push(contributor);
-            }
-
-            // Forma ma’lumotlarini saqlash
-            saveFormData(false);
-
-            // UI ni yangilash
-            renderContributorsList();
-
-            // Modal oynani yopish
-            closeContributorModal();
-
-            // Tasdiqlashni ko‘rsatish
-            alert("Muallif muvaffaqiyatli saqlandi!");
-        }
-
-        function editContributor(index) {
-            openContributorModal(index);
-        }
-
-        function removeContributor(index) {
-            if (confirm("Bu muallifni o‘chirishga ishonchingiz komilmi?")) {
-                formData.contributors.splice(index, 1);
-                renderContributorsList();
-                saveFormData(false);
-            }
-        }
-
-        function generateReviewContent() {
-            // Xatolarni tekshirish
-            let hasErrors = false;
-
-            // Tafsilotlar bo‘limi
-            reviewDetailsSection.innerHTML = "";
-
-            if (!formData.details.title) {
-                addReviewError(reviewDetailsSection, "Sarlavha majburiydir.");
-                hasErrors = true;
-            } else {
-                addReviewItem(reviewDetailsSection, "Sarlavha", formData.details.title);
-            }
-
-            if (!formData.details.abstract) {
-                addReviewError(reviewDetailsSection, "Annotatsiya", "Bu maydon majburiydir.");
-                hasErrors = true;
-            } else {
-                addReviewItem(reviewDetailsSection, "Annotatsiya", formData.details.abstract);
-            }
-
-            if (!formData.details.keywords) {
-                addReviewItem(reviewDetailsSection, "Kalit so‘zlar", "Ko‘rsatilmagan");
-            } else {
-                addReviewItem(reviewDetailsSection, "Kalit so‘zlar", formData.details.keywords);
-            }
-
-            addReviewItem(reviewDetailsSection, "Havolalar", formData.details.references || "Ko‘rsatilmagan");
-            addReviewItem(reviewDetailsSection, "Boshlanish sanasi", formData.details.startDate || "Ko‘rsatilmagan");
-            addReviewItem(reviewDetailsSection, "Tugash sanasi", formData.details.endDate || "Ko‘rsatilmagan");
-
-            // Fayllar bo‘limi
-            reviewFilesSection.innerHTML = "";
-
-            if (!formData.files || formData.files.length === 0) {
-                addReviewError(reviewFilesSection, "Kamida bitta maqola faylini yuklashingiz kerak.");
-                hasErrors = true;
-            } else {
-                const filesList = document.createElement("ul");
-                formData.files.forEach((file) => {
-                    const li = document.createElement("li");
-                    li.textContent = file.name;
-                    filesList.appendChild(li);
-                });
-
-                const filesItem = document.createElement("div");
-                filesItem.className = "review-item";
-
-                const filesLabel = document.createElement("div");
-                filesLabel.className = "review-label";
-                filesLabel.textContent = "Yuklangan fayllar";
-
-                const filesValue = document.createElement("div");
-                filesValue.className = "review-value";
-                filesValue.appendChild(filesList);
-
-                filesItem.appendChild(filesLabel);
-                filesItem.appendChild(filesValue);
-                reviewFilesSection.appendChild(filesItem);
-            }
-
-            // Mualliflar bo‘limi
-            reviewContributorsSection.innerHTML = "";
-
-            if (!formData.contributors || formData.contributors.length === 0) {
-                addReviewError(reviewContributorsSection, "Ushbu maqola uchun mualliflar qo‘shilmagan.");
-                hasErrors = true;
-            } else {
-                formData.contributors.forEach((contributor, index) => {
-                    const contributorTitle = index === 0 ? "Asosiy muallif" : `Qo‘shimcha muallif ${index}`;
-                    const name = contributor.givenName + (contributor.familyName ? " " + contributor.familyName : "");
-                    const displayName = contributor.preferredName || name;
-
-                    const contributorItem = document.createElement("div");
-                    contributorItem.className = "review-item";
-
-                    const contributorLabel = document.createElement("div");
-                    contributorLabel.className = "review-label";
-                    contributorLabel.textContent = contributorTitle;
-
-                    const contributorValue = document.createElement("div");
-                    contributorValue.className = "review-value";
-
-                    const contributorDetails = document.createElement("p");
-                    contributorDetails.innerHTML = `
-                        <strong>Ism:</strong> ${displayName}<br>
-                        <strong>Email:</strong> ${contributor.email}<br>
-                        <strong>Tashkilot:</strong> ${contributor.affiliation || "Ko‘rsatilmagan"}<br>
-                        <strong>Rol:</strong> ${contributor.role === "translator" ? "Tarjimon" : "Muallif"}
-                    `;
-
-                    contributorValue.appendChild(contributorDetails);
-                    contributorItem.appendChild(contributorLabel);
-                    contributorItem.appendChild(contributorValue);
-                    reviewContributorsSection.appendChild(contributorItem);
-                });
-            }
-
-            // Tahrirchilar uchun bo‘lim
-            reviewEditorsSection.innerHTML = "";
-
-            addReviewItem(reviewEditorsSection, "Mavzu", formData.editors.coverLetter || "Ko‘rsatilmagan");
-            addReviewItem(reviewEditorsSection, "Tahrirchi uchun izohlar", formData.editors.specialInstructions || "Ko‘rsatilmagan");
-
-            // Xato xabarini ko‘rsatish/yashirish
-            if (hasErrors) {
-                reviewErrorsSection.style.display = "block";
-            } else {
-                reviewErrorsSection.style.display = "none";
-            }
-        }
-
-        function addReviewItem(parent, label, value) {
-            const item = document.createElement("div");
-            item.className = "review-item";
-
-            const labelDiv = document.createElement("div");
-            labelDiv.className = "review-label";
-            labelDiv.textContent = label;
-
-            const valueDiv = document.createElement("div");
-            valueDiv.className = "review-value";
-            valueDiv.textContent = value;
-
-            item.appendChild(labelDiv);
-            item.appendChild(valueDiv);
-            parent.appendChild(item);
-        }
-
-        function addReviewError(parent, message, label = null) {
-            if (label) {
-                // Muayyan maydon uchun xato
-                const item = document.createElement("div");
-                item.className = "review-item";
-
-                const labelDiv = document.createElement("div");
-                labelDiv.className = "review-label";
-                labelDiv.textContent = label;
-
-                const valueDiv = document.createElement("div");
-                valueDiv.className = "review-value error-value";
-                valueDiv.innerHTML = `<span class="error-icon">⚠</span> ${message}`;
-
-                item.appendChild(labelDiv);
-                item.appendChild(valueDiv);
-                parent.appendChild(item);
-            } else {
-                // Umumiy xato
-                const errorItem = document.createElement("div");
-                errorItem.className = "review-item error-item";
-
-                const errorValue = document.createElement("div");
-                errorValue.className = "error-value";
-                errorValue.innerHTML = `<span class="error-icon">⚠</span> ${message}`;
-
-                errorItem.appendChild(errorValue);
-                parent.appendChild(errorItem);
-            }
-        }
-
-        function goToStep(step) {
-            if (step >= 1 && step <= 5) {
-                currentStep = step;
-                formData.currentStep = currentStep;
-                updateUI();
-                saveFormData(false);
-            }
-        }
-
-        function goToPreviousStep() {
-            if (currentStep > 1) {
-                currentStep--;
-                formData.currentStep = currentStep;
-                updateUI();
-                saveFormData(false);
-            }
-        }
-
-        function goToNextStep() {
-            if (validateCurrentStep()) {
-                if (currentStep < 5) {
-                    currentStep++;
-                    formData.currentStep = currentStep;
-
-                    // Joriy qadamni tugallangan qadamlarga qo‘shish
-                    if (!formData.completedSteps.includes(currentStep - 1)) {
-                        formData.completedSteps.push(currentStep - 1);
-                    }
-
-                    updateUI();
-                    saveFormData(false);
-                } else {
-                    // Ko‘rib chiqishda xatolarni tekshirish
-                    const errorItems = document.querySelectorAll(".error-item, .error-value");
-
-                    if (errorItems.length > 0) {
-                        alert("Iltimos, yuborishdan oldin barcha xatolarni tuzating.");
-                    } else {
-                        // Formani yuborish
-                        prepareFormForSubmission();
-                        submitBtn.click();
-                    }
+    }
+    
+    // Go to the next step
+    function nextStep() {
+        if (validateCurrentStep()) {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                updateStepVisibility();
+                updateProgressBar();
+                updateButtons();
+                window.scrollTo(0, 0);
+                
+                // If we're on the review step, populate the review content
+                if (currentStep === steps.length - 1) {
+                    populateReviewContent();
                 }
             }
         }
-
-        function validateCurrentStep() {
-            // Majburiy maydonlar uchun oddiy tekshirish
-            if (currentStep === 1) {
-                const title = document.getElementById("id_title").value.trim();
-                const abstract = document.getElementById("id_abstract").value.trim();
-                const startDate = document.getElementById("id_start_date").value;
-                const conference = document.getElementById("id_conference") ? document.getElementById("id_conference").value : formData.details.conference;
-
-                if (!title || !abstract || !startDate || !conference) {
-                    alert("Iltimos, barcha majburiy maydonlarni to‘ldiring.");
-                    return false;
-                }
-            } else if (currentStep === 2) {
-                if (!formData.files || formData.files.length === 0) {
-                    alert("Iltimos, kamida bitta fayl yuklang.");
-                    return false;
-                }
-            } else if (currentStep === 3) {
-                if (!formData.contributors || formData.contributors.length === 0) {
-                    alert("Iltimos, kamida bitta muallif qo‘shing.");
-                    return false;
-                }
+    }
+    
+    // Go to the previous step
+    function prevStep() {
+        if (currentStep > 0) {
+            currentStep--;
+            updateStepVisibility();
+            updateProgressBar();
+            updateButtons();
+            window.scrollTo(0, 0);
+        }
+    }
+    
+    // Validate the current step
+    function validateCurrentStep() {
+        if (currentStep === 0) {
+            // Validate details step
+            const title = document.getElementById('id_title').value;
+            const abstract = document.getElementById('id_abstract').value;
+            const conference = document.getElementById('id_conference');
+            
+            if (!title) {
+                alert('{% trans "Iltimos, maqola sarlavhasini kiriting."%}');
+                return false;
             }
-
+            
+            if (!abstract) {
+                alert('{% trans "Iltimos, maqola annotatsiyasini kiriting."%}');
+                return false;
+            }
+            
+            if (conference && conference.value === '') {
+                alert('{% trans "Iltimos, konferensiyani tanlang."%}');
+                return false;
+            }
+            
+            return true;
+        } else if (currentStep === 1) {
+            // Validate files step
+            if (uploadedFiles.length === 0) {
+                alert('{% trans "Iltimos, kamida bitta fayl yuklang."%}');
+                return false;
+            }
+            return true;
+        } else if (currentStep === 2) {
+            // Validate authors step
+            if (contributors.length === 0) {
+                alert('{% trans "Iltimos, kamida bitta muallif qoshing."%}');
+                return false;
+            }
             return true;
         }
-
-        function validateEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
+        
+        return true;
+    }
+    
+    // Save the current draft
+    function saveDraft() {
+        const formData = new FormData(form);
+        
+        // Add article ID if we have one
+        if (articleId) {
+            formData.append('article_id', articleId);
         }
-
-        function updateFormData() {
-            // Tafsilotlarni yangilash
-            if (currentStep === 1) {
-                formData.details.conference = document.getElementById("id_conference") ? document.getElementById("id_conference").value : formData.details.conference;
-                formData.details.title = document.getElementById("id_title").value;
-                formData.details.abstract = document.getElementById("id_abstract").value;
-                formData.details.keywords = document.getElementById("id_keywords").value;
-                formData.details.references = document.getElementById("id_references").value;
-                formData.details.startDate = document.getElementById("id_start_date").value;
-                formData.details.endDate = document.getElementById("id_end_date").value;
+        
+        // Add contributors
+        contributors.forEach((contributor, index) => {
+            formData.append('contributors[]', JSON.stringify(contributor));
+        });
+        
+        // Make AJAX request to save draft
+        fetch('/articles/save-draft/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
             }
-
-            // Tahrirchilar uchun yangilash
-            if (currentStep === 4) {
-                formData.editors.coverLetter = document.getElementById("id_cover_letter").value;
-                formData.editors.specialInstructions = document.getElementById("id_special_instructions").value;
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Update article ID and last saved time
+                articleId = data.article_id;
+                localStorage.setItem('article_draft_id', articleId);
+                
+                const lastSavedElement = document.getElementById('last-saved');
+                if (lastSavedElement) {
+                    lastSavedElement.textContent = '{% trans "Oxirgi saqlash: "%}' + data.last_saved;
+                }
+                
+                alert('{% trans "Maqola qoralama sifatida saqlandi."%}');
+            } else {
+                alert('{% trans "Xatolik: "%}' + data.message);
             }
-        }
-
-        function saveFormData(showAlert = true) {
-            // Saqlashdan oldin ma’lumotlarni yangilash
-            updateFormData();
-
-            // Joriy qadam va oxirgi saqlash vaqtini yangilash
-            formData.currentStep = currentStep;
-            const now = new Date();
-            const timeString = now.toLocaleTimeString();
-            formData.lastSaved = timeString;
-
-            // localStorage ga saqlash
-            localStorage.setItem("articleFormData", JSON.stringify(formData));
-
-            // Oxirgi saqlash vaqtini ko‘rsatish
-            lastSavedSpan.textContent = `Oxirgi saqlash: ${timeString}`;
-
-            if (showAlert) {
-                alert("Sizning jarayoningiz saqlandi. Keyinroq ushbu formaga qaytib, davom ettirishingiz mumkin.");
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('{% trans "Saqlashda xatolik yuz berdi."%}');
+        });
+    }
+    
+    // Load a saved draft
+    function loadSavedDraft(id) {
+        fetch(`/articles/get-draft/${id}/`, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
             }
-        }
-
-        function loadFormData() {
-            const savedData = localStorage.getItem("articleFormData");
-            if (savedData) {
-                try {
-                    const parsedData = JSON.parse(savedData);
-                    formData = parsedData;
-                    currentStep = formData.currentStep || 1;
-
-                    // Mualliflar massivining mavjudligiga ishonch hosil qilish
-                    if (!formData.contributors) {
-                        formData.contributors = [];
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Populate form fields
+                document.getElementById('id_title').value = data.article.title || '';
+                document.getElementById('id_abstract').value = data.article.abstract || '';
+                document.getElementById('id_keywords').value = data.article.keywords || '';
+                document.getElementById('id_references').value = data.article.references || '';
+                document.getElementById('id_cover_letter').value = data.article.cover_letter || '';
+                document.getElementById('id_special_instructions').value = data.article.special_instructions || '';
+                
+                if (data.article.start_date) {
+                    document.getElementById('id_start_date').value = data.article.start_date;
+                }
+                
+                if (data.article.end_date) {
+                    document.getElementById('id_end_date').value = data.article.end_date;
+                }
+                
+                if (data.article.conference_id) {
+                    const conferenceSelect = document.getElementById('id_conference');
+                    if (conferenceSelect) {
+                        conferenceSelect.value = data.article.conference_id;
                     }
-                } catch (e) {
-                    console.error("Saqlangan ma’lumotlarni yuklashda xato:", e);
                 }
-            }
-        }
-
-        function prepareFormForSubmission() {
-            // Mualliflar ma’lumotlarini yuborish uchun yashirin maydonlar yaratish
-            if (formData.contributors && formData.contributors.length > 0) {
-                // Birinchi muallifni asosiy sifatida qo‘shish
-                const primaryAuthor = formData.contributors[0];
                 
-                // Asosiy muallif uchun yashirin maydonlar yaratish
-                createHiddenInput("author_given_name", primaryAuthor.givenName);
-                createHiddenInput("author_family_name", primaryAuthor.familyName);
-                createHiddenInput("author_email", primaryAuthor.email);
-                createHiddenInput("author_country", primaryAuthor.country);
-                createHiddenInput("author_affiliation", primaryAuthor.affiliation);
+                // Load contributors
+                contributors = data.contributors || [];
+                renderContributors();
                 
-                // Qo‘shimcha mualliflar uchun JSON yaratish
-                if (formData.contributors.length > 1) {
-                    const additionalAuthors = formData.contributors.slice(1);
-                    createHiddenInput("additional_authors", JSON.stringify(additionalAuthors));
+                // Load files
+                uploadedFiles = data.files || [];
+                renderFiles();
+                
+                // Update last saved time
+                const lastSavedElement = document.getElementById('last-saved');
+                if (lastSavedElement && data.article.last_saved) {
+                    lastSavedElement.textContent = '{% trans "Oxirgi saqlash: "%}' + data.article.last_saved;
                 }
+            } else {
+                alert('{% trans "Xatolik: "%}' + data.message);
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('{% trans "Qoralamani yuklashda xatolik yuz berdi."%}');
+        });
+    }
+    
+    // Populate the review content
+    function populateReviewContent() {
+        // Details section
+        const reviewDetails = document.getElementById('review-details');
+        reviewDetails.innerHTML = '';
+        
+        const conferenceSelect = document.getElementById('id_conference');
+        let conferenceText = '';
+        if (conferenceSelect) {
+            const selectedOption = conferenceSelect.options[conferenceSelect.selectedIndex];
+            conferenceText = selectedOption ? selectedOption.text : '';
         }
-
-        function createHiddenInput(name, value) {
-            const input = document.createElement("input");
-            input.type = "hidden";
-            input.name = name;
-            input.value = value || "";
-            articleForm.appendChild(input);
+        
+        const detailsItems = [
+            { label: '{% trans "Konferensiya" %}', value: conferenceText },
+            { label: '{% trans "Sarlavha" %}', value: document.getElementById('id_title').value },
+            { label: '{% trans "Annotatsiya" %}', value: document.getElementById('id_abstract').value },
+            { label: '{% trans "Kalit sozlar" %}', value: document.getElementById('id_keywords').value },
+            { label: '{% trans "Havolalar" %}', value: document.getElementById('id_references').value },
+            { label: '{% trans "Boshlanish sanasi" %}', value: document.getElementById('id_start_date').value },
+            { label: '{% trans "Tugash sanasi" %}', value: document.getElementById('id_end_date').value }
+        ];
+        
+        detailsItems.forEach(item => {
+            if (item.value) {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'review-item';
+                itemElement.innerHTML = `
+                    <div class="review-label">${item.label}</div>
+                    <div class="review-value">${item.value}</div>
+                `;
+                reviewDetails.appendChild(itemElement);
+            }
+        });
+        
+        // Files section
+        const reviewFiles = document.getElementById('review-files');
+        reviewFiles.innerHTML = '';
+        
+        if (uploadedFiles.length > 0) {
+            uploadedFiles.forEach(file => {
+                const fileElement = document.createElement('div');
+                fileElement.className = 'review-item';
+                fileElement.innerHTML = `
+                    <div class="review-label">{% trans "Fayl" %}</div>
+                    <div class="review-value">${file.name}</div>
+                `;
+                reviewFiles.appendChild(fileElement);
+            });
+        } else {
+            reviewFiles.innerHTML = '<div class="review-item">{% trans "Fayllar yuklanmagan</div>';
         }
+        
+        // Contributors section
+        const reviewContributors = document.getElementById('review-contributors');
+        reviewContributors.innerHTML = '';
+        
+        if (contributors.length > 0) {
+            contributors.forEach((contributor, index) => {
+                const contributorElement = document.createElement('div');
+                contributorElement.className = 'review-item';
+                contributorElement.innerHTML = `
+                    <div class="review-label">{% trans "Muallif"%} ${index + 1}</div>
+                    <div class="review-value">
+                        <strong>${contributor.given_name} ${contributor.family_name || ''}</strong><br>
+                        Email: ${contributor.email}<br>
+                        ${contributor.affiliation ? '{% trans "Tashkilot: "%}' + contributor.affiliation + '<br>' : ''}
+                        ${contributor.country ? '{% trans "Davlat: "%}' + contributor.country + '<br>' : ''}
+                    </div>
+                `;
+                reviewContributors.appendChild(contributorElement);
+            });
+        } else {
+            reviewContributors.innerHTML = '<div class="review-item">{% trans "Mualliflar qoshilmagan" %}</div>';
+        }
+        
+        // Editors section
+        const reviewEditors = document.getElementById('review-editors');
+        reviewEditors.innerHTML = '';
+        
+        const editorsItems = [
+            { label: '{% trans "Mavzu" %}', value: document.getElementById('id_cover_letter').value },
+            { label: '{% trans "Tahrirchi uchun izohlar" %}', value: document.getElementById('id_special_instructions').value }
+        ];
+        
+        editorsItems.forEach(item => {
+            if (item.value) {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'review-item';
+                itemElement.innerHTML = `
+                    <div class="review-label">${item.label}</div>
+                    <div class="review-value">${item.value}</div>
+                `;
+                reviewEditors.appendChild(itemElement);
+            }
+        });
+        
+        // Check for validation errors
+        const hasErrors = validateAllSteps();
+        const reviewErrors = document.getElementById('review-errors');
+        if (hasErrors) {
+            reviewErrors.style.display = 'block';
+        } else {
+            reviewErrors.style.display = 'none';
+        }
+    }
+    
+    // Validate all steps for the review page
+    function validateAllSteps() {
+        let hasErrors = false;
+        
+        // Check details
+        const title = document.getElementById('id_title').value;
+        const abstract = document.getElementById('id_abstract').value;
+        const conference = document.getElementById('id_conference');
+        
+        if (!title || !abstract || (conference && conference.value === '')) {
+            hasErrors = true;
+        }
+        
+        // Check files
+        if (uploadedFiles.length === 0) {
+            hasErrors = true;
+        }
+        
+        // Check authors
+        if (contributors.length === 0) {
+            hasErrors = true;
+        }
+        
+        return hasErrors;
+    }
+    
+    // File handling functions
+    function handleFileUpload(files) {
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            uploadedFiles.push(file);
+        }
+        renderFiles();
+    }
+    
+    function renderFiles() {
+        const fileList = document.getElementById('file-list');
+        fileList.innerHTML = '';
+        
+        uploadedFiles.forEach((file, index) => {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.innerHTML = `
+                <div class="file-name">${file.name}</div>
+                <button type="button" class="remove-file-btn" data-index="${index}">{% trans "Olib tashlash" %}</button>
+            `;
+            fileList.appendChild(fileItem);
+        });
+        
+        // Add event listeners to remove buttons
+        document.querySelectorAll('.remove-file-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const index = parseInt(this.getAttribute('data-index'));
+                uploadedFiles.splice(index, 1);
+                renderFiles();
+            });
+        });
+    }
+    
+    // Contributor handling functions
+    function openContributorModal() {
+        const modal = document.getElementById('contributor-modal');
+        modal.style.display = 'block';
+        
+        // Reset the form
+        document.getElementById('contributor-form').reset();
+    }
+    
+    function closeContributorModal() {
+        const modal = document.getElementById('contributor-modal');
+        modal.style.display = 'none';
+    }
+    
+    function saveContributor() {
+        const givenName = document.getElementById('given-name').value;
+        const familyName = document.getElementById('family-name').value;
+        const preferredName = document.getElementById('preferred-name').value;
+        const email = document.getElementById('contributor-email').value;
+        const country = document.getElementById('country').value;
+        const homepage = document.getElementById('homepage').value;
+        const orcid = document.getElementById('orcid').value;
+        const bio = document.getElementById('bio').value;
+        const affiliation = document.getElementById('affiliation').value;
+        const role = document.querySelector('input[name="role"]:checked').value;
+        const includeInLists = document.getElementById('include-in-lists').checked;
+        
+        // Validate required fields
+        if (!givenName || !email || !country) {
+            alert('{% trans "Iltimos, barcha majburiy maydonlarni toldiring." %}');
+            return;
+        }
+        
+        // Create contributor object
+        const contributor = {
+            given_name: givenName,
+            family_name: familyName,
+            preferred_name: preferredName,
+            email: email,
+            country: country,
+            homepage: homepage,
+            orcid: orcid,
+            bio: bio,
+            affiliation: affiliation,
+            role: role,
+            include_in_lists: includeInLists
+        };
+        
+        // Add to contributors array
+        contributors.push(contributor);
+        
+        // Render contributors
+        renderContributors();
+        
+        // Close modal
+        closeContributorModal();
+    }
+    
+    function renderContributors() {
+        const contributorsList = document.getElementById('contributors-list');
+        contributorsList.innerHTML = '';
+        
+        contributors.forEach((contributor, index) => {
+            const contributorCard = document.createElement('div');
+            contributorCard.className = 'contributor-card';
+            contributorCard.innerHTML = `
+                <button type="button" class="remove-contributor" data-index="${index}">{% trans "O'chirish" %}</button>
+                <div class="contributor-info">
+                    <span class="contributor-label">{% trans "Ism:" %}</span> ${contributor.given_name}
+                </div>
+                <div class="contributor-info">
+                    <span class="contributor-label">{% trans "Familiya:" %}</span> ${contributor.family_name || '-'}
+                </div>
+                <div class="contributor-info">
+                    <span class="contributor-label">{% trans "Email:" %}</span> ${contributor.email}
+                </div>
+                <div class="contributor-info">
+                    <span class="contributor-label">{% trans "Davlat:" %}</span> ${contributor.country}
+                </div>
+                <div class="contributor-info">
+                    <span class="contributor-label">{% trans "Tashkilot:" %}</span> ${contributor.affiliation || '-'}
+                </div>
+            `;
+            contributorsList.appendChild(contributorCard);
+        });
+        
+        // Add event listeners to remove buttons
+        document.querySelectorAll('.remove-contributor').forEach(button => {
+            button.addEventListener('click', function() {
+                const index = parseInt(this.getAttribute('data-index'));
+                contributors.splice(index, 1);
+                renderContributors();
+            });
+        });
+    }
+    
+    // Event listeners
+    continueBtn.addEventListener('click', nextStep);
+    backBtn.addEventListener('click', prevStep);
+    
+    // Save draft buttons
+    saveLaterBtns.forEach(button => {
+        button.addEventListener('click', saveDraft);
     });
+    
+    // Submit button
+    submitBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        if (validateAllSteps()) {
+            alert('{% trans "Iltimos, yuborishdan oldin barcha xatolarni tuzating.');
+            return;
+        }
+        
+        // Add hidden input for submit type
+        const submitTypeInput = document.createElement('input');
+        submitTypeInput.type = 'hidden';
+        submitTypeInput.name = 'submit_type';
+        submitTypeInput.value = 'submit';
+        form.appendChild(submitTypeInput);
+        
+        // Add contributors to form
+        contributors.forEach((contributor, index) => {
+            const contributorInput = document.createElement('input');
+            contributorInput.type = 'hidden';
+            contributorInput.name = 'contributors[]';
+            contributorInput.value = JSON.stringify(contributor);
+            form.appendChild(contributorInput);
+        });
+        
+        // Submit the form
+        form.submit();
+    });
+    
+    // File upload
+    document.getElementById('add-file-btn').addEventListener('click', function() {
+        document.getElementById('id_files').click();
+    });
+    
+    document.getElementById('id_files').addEventListener('change', function() {
+        handleFileUpload(this.files);
+    });
+    
+    // Contributor modal
+    document.getElementById('add-contributor-btn').addEventListener('click', openContributorModal);
+    document.querySelector('.close-modal').addEventListener('click', closeContributorModal);
+    document.getElementById('save-contributor-btn').addEventListener('click', saveContributor);
+    
+    // Edit buttons in review step
+    document.querySelectorAll('.edit-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const section = parseInt(this.getAttribute('data-section'));
+            currentStep = section - 1;
+            updateStepVisibility();
+            updateProgressBar();
+            updateButtons();
+            window.scrollTo(0, 0);
+        });
+    });
+    
+    // Initialize the form
+    initForm();
+});
 </script>
+<script src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+<script src="{% static 'js/plugins.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
 {% endblock %}

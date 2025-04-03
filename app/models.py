@@ -17,7 +17,7 @@ class Conference(models.Model):
     image = models.ImageField(upload_to='conference_images/', blank=True, null=True, verbose_name="Rasm")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Yaratilgan sana")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Yangilangan sana")
-
+    price = models.CharField(max_length=20, blank=True, null=True)
     def is_open_for_submission(self):
         """Konferensiya maqola topshirish uchun ochiq yoki yo'qligini tekshiradi"""
         return self.is_active and self.submission_deadline >= timezone.now().date()
@@ -26,8 +26,8 @@ class Conference(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = "Konferensiya"
-        verbose_name_plural = "Konferensiyalar"
+        verbose_name = "Jurnal soni"
+        verbose_name_plural = "Jurnal soni"
         ordering = ['-start_date']
 
 
@@ -51,7 +51,7 @@ class Author(AbstractBaseUser):
     given_name = models.CharField(max_length=100, verbose_name="Ism")
     family_name = models.CharField(max_length=100, blank=True, verbose_name="Familiya")
     preferred_name = models.CharField(max_length=200, blank=True, verbose_name="Tanlangan ism")
-    email = models.EmailField(unique=True, verbose_name="Email")  # unique=True qo'shildi
+    email = models.EmailField(unique=True, verbose_name="Email")
     country = models.CharField(max_length=100, verbose_name="Davlat")
     homepage = models.URLField(blank=True, verbose_name="Shaxsiy sahifa")
     orcid = models.CharField(max_length=50, blank=True, verbose_name="ORCID ID")
@@ -74,8 +74,8 @@ class Author(AbstractBaseUser):
 
     objects = AuthorManager()
 
-    USERNAME_FIELD = 'email'  # Foydalanuvchi identifikatori sifatida email ishlatiladi
-    REQUIRED_FIELDS = ['given_name', 'family_name']  # createsuperuser uchun talab qilinadigan maydonlar
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['given_name', 'family_name']
 
     def __str__(self):
         full_name = f"{self.given_name} {self.family_name}".strip()
@@ -87,9 +87,16 @@ class Author(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return self.is_superuser
 
+    # Qo‘shimcha metodlar (admin panel uchun zarur)
+    def get_all_permissions(self, obj=None):
+        return set()  # Bo‘sh ruxsatlar to‘plami qaytariladi
+
+    def get_user_permissions(self, obj=None):
+        return set()  # Bo‘sh ruxsatlar to‘plami qaytariladi
+
     class Meta:
-        verbose_name = "Muallif"
-        verbose_name_plural = "Mualliflar"
+        verbose_name = "Foydalanuvchilar"
+        verbose_name_plural = "Foydalanuvchilar"
 
 
 class Article(models.Model):
@@ -98,6 +105,7 @@ class Article(models.Model):
         ('draft', 'Qoralama'),
         ('submitted', 'Yuborilgan'),
         ('under_review', "Ko'rib chiqilmoqda"),
+        ('payment', "To'lov qilish"),
         ('accepted', 'Qabul qilingan'),
         ('rejected', 'Rad etilgan'),
         ('published', 'Chop etilgan'),
@@ -214,14 +222,32 @@ class Team(models.Model):
     contact = models.CharField(max_length=200)
     image = models.ImageField(upload_to='team/', blank=True, null=True)
 
+    def __str__(self):
+        return self.fullname
+    
+    class Meta:
+        verbose_name = "Taqriz a'zolari"
+        verbose_name_plural = "Taqriz a'zolari"
+
 class ArticleRequirement(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     order = models.IntegerField(default=0)
-
     def __str__(self):
         return self.title
     
+    class Meta:
+        verbose_name = "Maqola Talablari"
+        verbose_name_plural = "Maqola Talablari"
+
+class ArticleRequirementFile(models.Model):
+    file = models.FileField(upload_to='article_requirement_files/%Y/%m/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    
+    class Meta:
+        verbose_name = "Maqola Talablari Fayllari"
+        verbose_name_plural = "Maqola Talablari Fayllari"
 
 class News(models.Model):
     title = models.CharField(max_length=200)
@@ -232,3 +258,27 @@ class News(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name = "Yangiliklar"
+        verbose_name_plural = "Yangiliklar"
+
+class Payment(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name="Maqola")
+    card_number = models.CharField(max_length=20, verbose_name="Karta raqami")  # Xato tuzatildi
+    price = models.CharField(max_length=20, verbose_name="Narx")
+    description = models.TextField(verbose_name="Izoh")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Yaratilgan sana")
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # To'lov saqlanganda maqola statusini "accepted" ga o'zgartirish
+        self.article.status = 'accepted'
+        self.article.save()
+
+    def __str__(self):
+        return f"{self.article.title} - {self.created_at}"
+
+    class Meta:
+        verbose_name = "To'lov"
+        verbose_name_plural = "To'lovlar"

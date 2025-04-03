@@ -1,9 +1,9 @@
+{% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<title>Articles</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,17 +35,17 @@
 
 					<div class="container pattern-overlay" style="max-width: 400px;">
 							<div class="banner-content">   
-                                 <h1 class="format-detection">Login</h1>
+                                 <h1 class="format-detection">{ % trans "Login" %}</h1>
                                 <form method="post">
                                     {% csrf_token %}
                                     <label for="email">Email</label>
                                     <input  class="form-control" type="text" name="email" id="id_email">
-                                    <label for="password">Password</label>
+                                    <label for="password">{ % trans "Password" %}</label>
                                     <input class="form-control" type="password" name="password" id="id_password">
-                                    <button type="submit" >Login</button>
+                                    <button type="submit" >{ % trans "Login" %}</button>
                                 </form>
                                 <p class="text-center mt-3">
-                                    <a href="{% url 'register' %}" style="color: blue;">Register</a>
+                                    <a href="{% url 'register' %}" style="color: blue;">{ % trans "Register" %}</a>
                                 </p>   
                             </div><!--banner-content-->
 						</div><!--slider-item-->

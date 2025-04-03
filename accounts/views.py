@@ -34,12 +34,17 @@ def register_view(request):
     else:
         form = RegisterForm()
     return render(request, 'accounts/register.html', {'form': form})
-
+    
 @login_required
 def profile_view(request):
     articles = Article.objects.filter(created_by=request.user).order_by('-created_at')
-    return render(request, 'profile.html', {'user': request.user,'articles':articles})
-
+    tab = request.GET.get('tab', 'personal')  # Default: 'personal'
+    context = {
+        'user': request.user,
+        'articles': articles,
+        'tab': tab
+    }
+    return render(request, 'profile.html', context)
 @login_required
 def edit_profile_view(request):
     if request.method == "POST":

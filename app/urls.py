@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home,archive,current,police,team,about_journal,contact,news,news_detail
+from .views import home, archive, current, police, team, about_journal, contact, news, news_detail
 from . import views
 
 urlpatterns = [
@@ -18,12 +18,13 @@ urlpatterns = [
     
     # Статьи
     path('articles/', views.ArticleListView.as_view(), name='article_list'),
+    path('payment/<int:article_id>/', views.make_payment, name='make_payment'),
     path('articles/<int:pk>/', views.ArticleDetailView.as_view(), name='article_detail'),
     path('articles/create/', views.create_article, name='create_article'),
     path('conferences/<int:conference_id>/submit/', views.create_article, name='submit_to_conference'),
     path('articles/<int:pk>/edit/', views.edit_article, name='edit_article'),
     path('articles/<int:pk>/submit/', views.submit_article, name='submit_article'),
-
-
     path('articles/save-draft/', views.save_article_draft, name='save_article_draft'),
+    path('articles/get-draft/<int:article_id>/', views.get_article_draft, name='get_article_draft'),
+    path('search/', views.search, name='search'),
 ]

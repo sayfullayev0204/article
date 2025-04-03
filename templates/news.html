@@ -1,9 +1,9 @@
+{% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<title>Articles</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,7 +38,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="section-header align-center">
-						<h2 class="section-title">News</h2>
+						<h2 class="section-title">{% trans 'News' %}</h2>
 					</div>
 	
 					<div class="product-list" data-aos="fade-up">
@@ -54,13 +54,13 @@
 													 data-image="{% if news.image %}{{ news.image.url }}{% endif %}" 
 													 data-summary="{{ news.summary|escapejs }}" 
 													 data-content="{{ news.content|escapejs }}">
-													<button class="read-more" onclick="toggleDetails(this)">Batafsil</button>
+													<button class="read-more" onclick="toggleDetails(this)">{% trans 'Batafsil' %}</button>
 												</div>
 											</div>
 										{% endfor %}
 									</div>
 								{% else %}
-									<p>Hozircha yangiliklar yo‘q.</p>
+									<p>{% trans 'Hozircha yangiliklar yo‘q.' %}</p>
 								{% endif %}
 							</div>
 						</div><!--ft-books-slider-->
@@ -150,7 +150,7 @@
 
 .news-image {
     width: 100%;
-    height: 200px;
+    height: 100%;
     object-fit: cover;
     border-radius: 5px;
     margin-bottom: 15px;

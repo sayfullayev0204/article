@@ -1,8 +1,8 @@
+{% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Profilni tahrirlash</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,7 +68,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-8">
                     <div class="edit-profile-container">
-                        <h1 class="text-center mb-4">Edit Profile</h1>
+                        <h1 class="text-center mb-4">{% trans "Edit Profile" %}</h1>
                         {% if form.errors %}
                             <div class="alert alert-danger" role="alert">
                                 {% for field in form %}
@@ -85,16 +85,16 @@
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="id_given_name">Name</label>
+                                    <label for="id_given_name">{% trans "Name" %}</label>
                                     <input type="text" name="given_name" id="id_given_name" class="form-control-custom" value="{{ form.given_name.value|default:'' }}">
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="id_family_name">Lastname</label>
+                                    <label for="id_family_name">{% trans "Lastname" %}</label>
                                     <input type="text" name="family_name" id="id_family_name" class="form-control-custom" value="{{ form.family_name.value|default:'' }}">
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="id_preferred_name">Preferred_name</label>
+                                <label for="id_preferred_name">{% trans "Preferred_name" %}</label>
                                 <input type="text" name="preferred_name" id="id_preferred_name" class="form-control-custom" value="{{ form.preferred_name.value|default:'' }}">
                             </div>
                             <div class="mb-3">
@@ -102,35 +102,35 @@
                                 <input type="email" name="email" id="id_email" class="form-control-custom" value="{{ form.email.value|default:'' }}">
                             </div>
                             <div class="mb-3">
-                                <label for="id_country">Country</label>
+                                <label for="id_country">{% trans "Country" %}</label>
                                 <input type="text" name="country" id="id_country" class="form-control-custom" value="{{ form.country.value|default:'' }}">
                             </div>
                             <div class="mb-3">
-                                <label for="id_homepage">Personal url</label>
+                                <label for="id_homepage">{% trans "Personal url" %}</label>
                                 <input type="url" name="homepage" id="id_homepage" class="form-control-custom" value="{{ form.homepage.value|default:'' }}">
                             </div>
                             <div class="mb-3">
-                                <label for="id_orcid">ORCID ID</label>
+                                <label for="id_orcid">{% trans "ORCID ID" %}</label>
                                 <input type="text" name="orcid" id="id_orcid" class="form-control-custom" value="{{ form.orcid.value|default:'' }}">
                             </div>
                             <div class="mb-3">
-                                <label for="id_bio">Bio</label>
+                                <label for="id_bio">{% trans "Bio" %}</label>
                                 <textarea name="bio" id="id_bio" class="form-control-custom textarea-custom">{{ form.bio.value|default:'' }}</textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="id_affiliation">Affiliation</label>
+                                <label for="id_affiliation">{% trans "Affiliation" %}</label>
                                 <input type="text" name="affiliation" id="id_affiliation" class="form-control-custom" value="{{ form.affiliation.value|default:'' }}">
                             </div>
                             <div class="mb-3">
-                                <label for="id_role">Role</label>
+                                <label for="id_role">{% trans "Role" %}</label>
                                 {{ form.role }} <!-- ChoiceField uchun avtomatik select -->
                             </div>
                             <div class="d-grid gap-2">
-                                <button type="submit" class="">Save</button>
+                                <button type="submit" class="">{% trans "Save" %}</button>
                             </div>
                         </form>
                         <p class="text-center mt-3">
-                            <a href="{% url 'profile' %}" style="color: #007bff; text-decoration: none;">Back</a>
+                            <a href="{% url 'profile' %}" style="color: #007bff; text-decoration: none;">{% trans "Back" %}</a>
                         </p>
                     </div><!--edit-profile-container-->
                 </div>

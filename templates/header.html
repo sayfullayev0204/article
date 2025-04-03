@@ -1,4 +1,5 @@
-
+{% load static %}
+{% load i18n %}
 <div class="top-content">
     <div class="container-fluid">
         <div class="row">
@@ -22,16 +23,33 @@
             </div>
             <div class="col-md-6">
                 <div class="right-element">
-                    {% if user.is_authenticated %}
-                    <a href="{% url 'profile' %}" class="user-account for-buy">Profile</a>
-                    {% else %}
-                    <a href="{% url 'register' %}" class="user-account for-buy"><span>Register</span></a>
-                    <a href="{% url 'login' %}" class="cart for-buy"><span>Login</span></a>
-
-                    {% endif %}
-                </div><!--top-right-->
+                         <div class="action-menu">
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'profile' %}" class="user-account for-buy">{% trans 'Profile' %}</a>
+                            {% else %}
+                                <a href="{% url 'register' %}" class="user-account for-buy">{% trans 'Registe' %}r</a>
+                                <a href="{% url 'login' %}" class="cart for-buy">{% trans 'Login' %}</a>
+                            {% endif %}
+                         </div>
+            
+                        <!-- Search Bar -->
+                        <div class="action-menu">
+                            <div class="search-bar">
+                                <a href="#" class="search-button search-toggle" data-selector="#header-wrap">
+                                    <i class="icon icon-search"></i>
+                                </a>
+                                <form role="search" method="get" class="search-box" action="{% url 'search' %}">
+                                    <input class="search-field text search-input" 
+                                           type="search" 
+                                           name="q" 
+                                           value="{{ request.GET.q }}" 
+                                           placeholder="{% trans 'Search' %}">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
         </div>
     </div>
 </div><!--top-content-->
@@ -43,7 +61,7 @@
 
             <div class="col-md-2">
                 <div class="main-logo">
-                    <a href="index.html">Article</a>
+                    <a href="{% url 'home' %}">{% trans 'Article' %}</a>
                 </div>
 
             </div>
@@ -53,19 +71,73 @@
                 <nav id="navbar">
                     <div class="main-menu stellarnav">
                         <ul class="menu-list">
-                            <li class="menu-item{% if home %} active{% endif %}"><a href="{% url 'home' %}">Home</a></li>
-                            <li class="menu-item{% if current %} active{% endif %}"><a href="{% url 'current' %}" class="nav-link">Current</a></li>
-                            <li class="menu-item{% if archive %} active{% endif %}"><a href="{% url 'archive' %}" class="nav-link">Archives</a></li>
-                            <li class="menu-item{% if team %} active{% endif %}"><a href="{% url 'team' %}" class="nav-link">Editorial Team</a></li>
-                            <li class="menu-item {% if news %} active{% endif %}"><a href="{% url 'news' %}" class="nav-link">News</a></li>
-                            <li class="menu-item{% if police %} active{% endif %}"><a href="{% url 'police' %}" class="nav-link">Policies</a></li>
+                            <li class="language">
+                                <a href="#">
+                                  <span>
+                                    {% if request.LANGUAGE_CODE == "uz" %}
+                                    O'zbekcha <img src="{% static 'images/uz.png' %}" style="max-width: 20px;" alt="">
+                                    {% elif request.LANGUAGE_CODE == "ru" %}
+                                    Русский <img src="{% static 'images/ru.png' %}" style="max-width: 20px;" alt="">
+                                    {% elif request.LANGUAGE_CODE == "en" %}
+                                    English <img src="{% static 'images/en.png' %}" style="max-width: 20px;" alt="">
+                                    {% endif %}
+                                  </span>
+                                  <i class="bi bi-chevron-down toggle-dropdown"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                  <!-- Ruscha til uchun -->
+                                  <li>
+                                    <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+                                      {% csrf_token %}
+                                      <input type="hidden" name="language" value="ru">
+                                      <button type="submit"
+                                        style="background: none; border: none; padding: 0; cursor: pointer; display: flex; align-items: center;">
+                                        <span style="margin-right: 5px; color: #757575; font-weight: normal;"  class="nav-link">{% trans "Ruscha" %}</span>
+                                        <img src="{% static 'images/ru.png' %}" style="max-width: 20px;" alt="">
+                                      </button>
+                                    </form>
+                                  </li>
+                      
+                                  <!-- Inglizcha til uchun -->
+                                  <li>
+                                    <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+                                      {% csrf_token %}
+                                      <input type="hidden" name="language" value="en">
+                                      <button type="submit"
+                                        style="background: none; border: none; padding: 0; cursor: pointer; display: flex; align-items: center;">
+                                        <span style="margin-right: 5px; color: #757575; font-weight: normal;"  class="nav-link">{% trans "Inglizcha" %}</span>
+                                        <img src="{% static 'images/en.png' %}" style="max-width: 20px;" alt="">
+                                      </button>
+                                    </form>
+                                  </li>
+                      
+                                  <!-- O'zbekcha til uchun -->
+                                  <li>
+                                    <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+                                      {% csrf_token %}
+                                      <input type="hidden" name="language" value="uz">
+                                      <button type="submit"
+                                        style="background: none; border: none; padding: 0; cursor: pointer; display: flex; align-items: center;">
+                                        <span style="margin-right: 5px; color: #757575; font-weight: normal;"  class="nav-link">{% trans "O'zbekcha" %}</span>
+                                        <img src="{% static 'images/uz.png' %}" style="max-width: 20px;" alt="">
+                                      </button>
+                                    </form>
+                                  </li>
+                                </ul>
+                              </li>
+                            <li class="menu-item{% if home %} active{% endif %}"><a href="{% url 'home' %}">{% trans 'Home' %}</a></li>
+                            <li class="menu-item{% if current %} active{% endif %}"><a href="{% url 'current' %}" class="nav-link">{% trans 'Current' %}</a></li>
+                            <li class="menu-item{% if archive %} active{% endif %}"><a href="{% url 'archive' %}" class="nav-link">{% trans 'Archives' %}</a></li>
+                            <li class="menu-item{% if team %} active{% endif %}"><a href="{% url 'team' %}" class="nav-link">{% trans 'Editorial Team' %}</a></li>
+                            <li class="menu-item {% if news %} active{% endif %}"><a href="{% url 'news' %}" class="nav-link">{% trans 'News' %}</a></li>
+                            <li class="menu-item{% if police %} active{% endif %}"><a href="{% url 'police' %}" class="nav-link">{% trans 'Policies' %}</a></li>
                             <li class="menu-item{% if about %} active{% endif %} has-sub">
                                 <a href="#pages" class="nav-link">About</a>
 
                                 <ul style="right: 1px;">
-                                    <li><a href="{% url 'about_journal' %}" class="nav-link">About the Journal</a></li>
-                                    <li><a href="{% url 'create_article' %}" class="nav-link">Create Submissions</a></li>
-                                    <li><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
+                                    <li><a href="{% url 'about_journal' %}" class="nav-link">{% trans 'About the Journal' %}</a></li>
+                                    <li><a href="{% url 'create_article' %}" class="nav-link">{% trans 'Create Submissions' %}</a></li>
+                                    <li><a href="{% url 'contact' %}" class="nav-link">{% trans 'Contact' %}</a></li>
                                 </ul>
 
                             </li>

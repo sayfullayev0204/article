@@ -1,9 +1,9 @@
+{% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<title>Articles</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,18 +58,18 @@
 				<div class="col-md-12">
 
 					<div class="section-header align-center">
-						<h2 class="section-title">Editorial Team</h2>
+						<h2 class="section-title">{% trans "Editorial Team" %}</h2>
 					</div>
 
 					<div class="table-responsive" data-aos="fade-up">
                         <table class="table table-custom table-striped">
                             <thead>
                                 <tr>
-                                    <th>Image</th>
-                                    <th>Fulle name</th>
-                                    <th>Specialty</th>
-                                    <th>Affiliation</th>
-                                    <th>Contakt</th>
+                                    <th>{% trans "Image" %}</th>
+                                    <th>{% trans "Fulle name" %}</th>
+                                    <th>{% trans "Specialty" %}</th>
+                                    <th>{% trans "Affiliation" %}</th>
+                                    <th>{% trans "Contakt" %}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -89,7 +89,7 @@
                                 </tr>
                                 {% empty %}
                                 <tr>
-                                    <td colspan="5" class="text-center">Jamoada a'zolar mavjud emas.</td>
+                                    <td colspan="5" class="text-center">{% trans "Jamoada a'zolar mavjud emas." %}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

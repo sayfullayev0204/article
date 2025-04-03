@@ -1,0 +1,1074 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-03 23:42+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: .\templates\about_journal.html:42
+msgid "About Journal"
+msgstr "About Journal"
+
+#: .\templates\accounts\edit_profile.html:71 .\templates\profile.html:76
+msgid "Edit Profile"
+msgstr "Edit Profile"
+
+#: .\templates\accounts\edit_profile.html:88 .\templates\accounts\register.html:47
+msgid "Name"
+msgstr "Name"
+
+#: .\templates\accounts\edit_profile.html:92 .\templates\accounts\register.html:50
+msgid "Lastname"
+msgstr "Lastname"
+
+#: .\templates\accounts\edit_profile.html:97
+msgid "Preferred_name"
+msgstr "Preferred Name"
+
+#: .\templates\accounts\edit_profile.html:105 .\templates\accounts\register.html:56
+msgid "Country"
+msgstr "Country"
+
+#: .\templates\accounts\edit_profile.html:109
+msgid "Personal url"
+msgstr "Personal URL"
+
+#: .\templates\accounts\edit_profile.html:113 .\templates\articles\article_edit.html:909 .\templates\articles\article_form.html:779
+msgid "ORCID ID"
+msgstr "ORCID ID"
+
+#: .\templates\accounts\edit_profile.html:117
+msgid "Bio"
+msgstr "Bio"
+
+#: .\templates\accounts\edit_profile.html:121 .\templates\team.html:71
+msgid "Affiliation"
+msgstr "Affiliation"
+
+#: .\templates\accounts\edit_profile.html:125
+msgid "Role"
+msgstr "Role"
+
+#: .\templates\accounts\edit_profile.html:129
+msgid "Save"
+msgstr "Save"
+
+#: .\templates\accounts\edit_profile.html:133
+msgid "Back"
+msgstr "Back"
+
+#: .\templates\accounts\register.html:32 .\templates\conferences\conference_detail.html:113
+msgid "Ro‘yxatdan o‘tish"
+msgstr "Register"
+
+#: .\templates\accounts\register.html:59
+msgid "Password"
+msgstr "Password"
+
+#: .\templates\accounts\register.html:62
+msgid "Confirm Password"
+msgstr "Confirm Password"
+
+#: .\templates\accounts\register.html:65
+msgid "Register"
+msgstr "Register"
+
+#: .\templates\accounts\register.html:68 .\templates\header.html:31
+msgid "Login"
+msgstr "Login"
+
+#: .\templates\archive.html:43 .\templates\header.html:130
+msgid "Archives"
+msgstr "Archives"
+
+#: .\templates\articles\article_detail.html:95 .\templates\articles\article_edit.html:807 .\templates\articles\article_edit.html:817 .\templates\articles\article_edit.html:827 .\templates\articles\article_edit.html:837 .\templates\articles\article_edit.html:1259 .\templates\articles\article_form.html:680 .\templates\articles\article_form.html:690 .\templates\articles\article_form.html:700 .\templates\articles\article_form.html:710 .\templates\profile.html:129
+msgid "Tahrirlash"
+msgstr "Edit"
+
+#: .\templates\articles\article_detail.html:96
+msgid "Ko‘rib chiqishga yuborish"
+msgstr "Submit for Review"
+
+#: .\templates\articles\article_detail.html:98
+msgid "Ro‘yxatga qaytish"
+msgstr "Return to List"
+
+#: .\templates\articles\article_detail.html:106
+msgid "Maqola haqida ma’lumot"
+msgstr "Article Information"
+
+#: .\templates\articles\article_detail.html:108 .\templates\conferences\conference_detail.html:90 .\templates\profile.html:107
+msgid "Qoralama"
+msgstr "Draft"
+
+#: .\templates\articles\article_detail.html:108 .\templates\conferences\conference_detail.html:90 .\templates\profile.html:109
+msgid "Yuborilgan"
+msgstr "Submitted"
+
+#: .\templates\articles\article_detail.html:108 .\templates\conferences\conference_detail.html:90 .\templates\profile.html:111
+msgid "Ko‘rib chiqilmoqda"
+msgstr "Under Review"
+
+#: .\templates\articles\article_detail.html:108 .\templates\conferences\conference_detail.html:90 .\templates\profile.html:118
+msgid "Qabul qilingan"
+msgstr "Accepted"
+
+#: .\templates\articles\article_detail.html:108 .\templates\conferences\conference_detail.html:90 .\templates\profile.html:120
+msgid "Rad etilgan"
+msgstr "Rejected"
+
+#: .\templates\articles\article_detail.html:108 .\templates\conferences\conference_detail.html:90 .\templates\profile.html:122
+msgid "Nashr qilingan"
+msgstr "Published"
+
+#: .\templates\articles\article_detail.html:114
+msgid "Boshlanish sanasi:"
+msgstr "Start Date:"
+
+#: .\templates\articles\article_detail.html:115
+msgid "Tugash sanasi:"
+msgstr "End Date:"
+
+#: .\templates\articles\article_detail.html:116 .\templates\conferences\conference_detail.html:93
+msgid "Yaratilgan:"
+msgstr "Created:"
+
+#: .\templates\articles\article_detail.html:117
+msgid "Oxirgi yangilanish:"
+msgstr "Last Updated:"
+
+#: .\templates\articles\article_detail.html:120
+msgid "Yaratuvchi:"
+msgstr "Creator:"
+
+#: .\templates\articles\article_detail.html:122
+msgid "Yuborilgan sana:"
+msgstr "Submission Date:"
+
+#: .\templates\articles\article_detail.html:137 .\templates\articles\article_form.html:1095
+msgid "Annotatsiya"
+msgstr "Abstract"
+
+#: .\templates\articles\article_detail.html:147 .\templates\articles\article_edit.html:682 .\templates\articles\article_form.html:581 .\templates\articles\article_form.html:1097
+msgid "Havolalar"
+msgstr "References"
+
+#: .\templates\articles\article_detail.html:158 .\templates\articles\article_edit.html:597 .\templates\articles\article_edit.html:770 .\templates\articles\article_edit.html:836 .\templates\articles\article_form.html:495 .\templates\articles\article_form.html:643 .\templates\articles\article_form.html:709
+msgid "Tahrirchilar uchun"
+msgstr "For Editors"
+
+#: .\templates\articles\article_detail.html:162
+msgid "Qo‘shma xat:"
+msgstr "Cover Letter:"
+
+#: .\templates\articles\article_detail.html:167
+msgid "Maxsus ko‘rsatmalar:"
+msgstr "Special Instructions:"
+
+#: .\templates\articles\article_detail.html:178
+msgid "Kalit so‘zlar"
+msgstr "Keywords"
+
+#: .\templates\articles\article_detail.html:189 .\templates\articles\article_edit.html:590 .\templates\articles\article_edit.html:756 .\templates\articles\article_edit.html:826 .\templates\articles\article_form.html:488 .\templates\articles\article_form.html:629 .\templates\articles\article_form.html:699
+msgid "Mualliflar"
+msgstr "Authors"
+
+#: .\templates\articles\article_detail.html:200
+msgid "Asosiy"
+msgstr "Primary"
+
+#: .\templates\articles\article_detail.html:213
+msgid "Mualliflar qo‘shilmagan"
+msgstr "Authors Not Added"
+
+#: .\templates\articles\article_detail.html:220 .\templates\articles\article_edit.html:583 .\templates\articles\article_edit.html:716 .\templates\articles\article_edit.html:816 .\templates\articles\article_form.html:481 .\templates\articles\article_form.html:615 .\templates\articles\article_form.html:689
+msgid "Fayllar"
+msgstr "Files"
+
+#: .\templates\articles\article_detail.html:236
+msgid "Yuklangan:"
+msgstr "Uploaded:"
+
+#: .\templates\articles\article_detail.html:241
+msgid "Fayllar yuklanmagan"
+msgstr "Files Not Uploaded"
+
+#: .\templates\articles\article_edit.html:563 .\templates\articles\article_form.html:461
+msgid "Maqola yaratish:"
+msgstr "Create Article:"
+
+#: .\templates\articles\article_edit.html:563 .\templates\articles\article_edit.html:576 .\templates\articles\article_edit.html:614 .\templates\articles\article_edit.html:806 .\templates\articles\article_form.html:461 .\templates\articles\article_form.html:474 .\templates\articles\article_form.html:512 .\templates\articles\article_form.html:679
+msgid "Tafsilotlar"
+msgstr "Details"
+
+#: .\templates\articles\article_edit.html:565 .\templates\articles\article_form.html:463
+msgid "Mening maqolalarim"
+msgstr "My Articles"
+
+#: .\templates\articles\article_edit.html:566 .\templates\articles\article_edit.html:850 .\templates\articles\article_form.html:464 .\templates\articles\article_form.html:723
+msgid "Keyinroq saqlash"
+msgstr "Save for Later"
+
+#: .\templates\articles\article_edit.html:604 .\templates\articles\article_form.html:502
+msgid "Ko‘rib chiqish"
+msgstr "Review"
+
+#: .\templates\articles\article_edit.html:618 .\templates\articles\article_form.html:516
+msgid "Konferensiya*"
+msgstr "Conference*"
+
+#: .\templates\articles\article_edit.html:620 .\templates\articles\article_form.html:518
+msgid "-- Konferensiyani tanlang --"
+msgstr "-- Select Conference --"
+
+#: .\templates\articles\article_edit.html:628 .\templates\articles\article_form.html:526
+msgid "Maqola topshirishni xohlagan konferensiyani tanlang."
+msgstr "Select the conference you want to submit your article to."
+
+#: .\templates\articles\article_edit.html:632 .\templates\articles\article_form.html:530
+msgid "Konferensiya haqida →"
+msgstr "About the Conference →"
+
+#: .\templates\articles\article_edit.html:652 .\templates\articles\article_form.html:551 .\templates\articles\article_form.html:1093
+msgid "Konferensiya"
+msgstr "Conference"
+
+#: .\templates\articles\article_edit.html:658 .\templates\articles\article_form.html:557
+msgid "Sarlavha*"
+msgstr "Title*"
+
+#: .\templates\articles\article_edit.html:666 .\templates\articles\article_form.html:565
+msgid "Annotatsiya*"
+msgstr "Abstract*"
+
+#: .\templates\articles\article_edit.html:674 .\templates\articles\article_form.html:573
+msgid "Kalit so‘zlar (vergul bilan ajratilgan)"
+msgstr "Keywords (comma-separated)"
+
+#: .\templates\articles\article_edit.html:691 .\templates\articles\article_form.html:590
+msgid "Boshlanish sanasi*"
+msgstr "Start Date*"
+
+#: .\templates\articles\article_edit.html:699 .\templates\articles\article_edit.html:1425 .\templates\articles\article_form.html:598 .\templates\articles\article_form.html:1099 .\templates\profile.html:93
+msgid "Tugash sanasi"
+msgstr "End Date"
+
+#: .\templates\articles\article_edit.html:712 .\templates\articles\article_form.html:611
+msgid "Fayllarni yuklash"
+msgstr "Upload Files"
+
+#: .\templates\articles\article_edit.html:713
+msgid "Maqolangiz bilan bog‘liq fayllarni yuklang. Siz maqola matnini, ma’lumotlarni, rasmlarni va tahrirchilarga ishni baholashda yordam beradigan boshqa materiallarni yuklashingiz mumkin."
+msgstr "Upload files related to your article. You can upload the article text, data, images, and other materials that will help editors evaluate your work."
+
+#: .\templates\articles\article_edit.html:721
+msgid "Yuklangan fayllar"
+msgstr "Uploaded Files"
+
+#: .\templates\articles\article_edit.html:729
+msgid "Turi:"
+msgstr "Type:"
+
+#: .\templates\articles\article_edit.html:732
+msgid "Yuklab olish"
+msgstr "Download"
+
+#: .\templates\articles\article_edit.html:733
+msgid "O‘chirish"
+msgstr "Delete"
+
+#: .\templates\articles\article_edit.html:744 .\templates\articles\article_form.html:620
+msgid "Fayl qo‘shish"
+msgstr "Add File"
+
+#: .\templates\articles\article_edit.html:757
+msgid "Ushbu maqolaga katta hissa qo‘shgan barcha mualliflarni qo‘shing. Agar muallif ko‘rsatilmagan bo‘lsa, yuboruvchi ular nomidan maqola uchun to‘liq javobgarlikni o‘z zimmasiga oladi. Barcha mualliflar maqola yuborilishiga va ular muallif sifatida ko‘rsatilganiga rozilik berishlari kerak."
+msgstr "Add all authors who have made significant contributions to this article. If no author is specified, the submitter takes full responsibility for the article on their behalf. All authors must agree to the submission and to being listed as authors."
+
+#: .\templates\articles\article_edit.html:763 .\templates\articles\article_edit.html:864 .\templates\articles\article_form.html:636 .\templates\articles\article_form.html:734
+msgid "Muallif qo‘shish"
+msgstr "Add Author"
+
+#: .\templates\articles\article_edit.html:772 .\templates\articles\article_edit.html:1532 .\templates\articles\article_form.html:645 .\templates\articles\article_form.html:1160
+msgid "Mavzu"
+msgstr "Subject"
+
+#: .\templates\articles\article_edit.html:773 .\templates\articles\article_form.html:646
+msgid "Maqolangiz mavzusini tasvirlaydigan kalit so‘zlar, iboralar yoki tasnif kodlarini ko‘rsating."
+msgstr "Specify keywords, phrases, or classification codes that describe the subject of your article."
+
+#: .\templates\articles\article_edit.html:781 .\templates\articles\article_form.html:654 .\templates\articles\article_form.html:1161
+msgid "Tahrirchi uchun izohlar"
+msgstr "Comments for Editor"
+
+#: .\templates\articles\article_edit.html:782 .\templates\articles\article_form.html:655
+msgid "Maqolangizni baholashda tahrirchilar bilishi kerak deb hisoblagan har qanday ma’lumotni qo‘shing."
+msgstr "Add any information you think editors should know when evaluating your article."
+
+#: .\templates\articles\article_edit.html:792 .\templates\articles\article_form.html:665
+msgid "Ko‘rib chiqish va yuborish"
+msgstr "Review and Submit"
+
+#: .\templates\articles\article_edit.html:794
+msgid "Bu yuborishni yakunlashdan oldin kiritgan ma’lumotlaringizning qisqacha ko‘rinishi. Bu yerda ko‘rsatilgan har qanday tafsilotni har bir bo‘limning yuqori qismidagi 'Tahrirlash' tugmasini bosish orqali o‘zgartirishingiz mumkin."
+msgstr "This is a brief overview of the information you’ve entered before finalizing this submission. You can modify any details shown here by clicking the 'Edit' button at the top of each section."
+
+#: .\templates\articles\article_edit.html:797
+msgid "Yuborish tugallangandan so‘ng, bizning tahririyat jamoamiz a’zolaridan biri uni ko‘rib chiqish uchun tayinlanadi. Iltimos, kiritgan ma’lumotlaringiz iloji boricha aniq ekanligiga ishonch hosil qiling."
+msgstr "Once the submission is complete, one of our editorial team members will be assigned to review it. Please ensure the information you’ve provided is as accurate as possible."
+
+#: .\templates\articles\article_edit.html:801 .\templates\articles\article_form.html:674
+msgid "Yuborishdan oldin tuzatilishi kerak bo‘lgan bir yoki bir nechta muammolar mavjud. Iltimos, quyidagi ma’lumotlarni ko‘rib chiqing va so‘ralgan o‘zgartirishlarni kiriting."
+msgstr "There are one or more issues that need to be corrected before submission. Please review the information below and make the requested changes."
+
+#: .\templates\articles\article_edit.html:847 .\templates\articles\article_form.html:720
+msgid "Orqaga"
+msgstr "Back"
+
+#: .\templates\articles\article_edit.html:849 .\templates\articles\article_form.html:722
+msgid "Oxirgi saqlash: Hech qachon"
+msgstr "Last Saved: Never"
+
+#: .\templates\articles\article_edit.html:851 .\templates\articles\article_edit.html:1125 .\templates\articles\article_form.html:724
+msgid "Davom etish"
+msgstr "Continue"
+
+#: .\templates\articles\article_edit.html:852 .\templates\articles\article_edit.html:1125 .\templates\articles\article_form.html:725 .\templates\contact.html:75
+msgid "Yuborish"
+msgstr "Submit"
+
+#: .\templates\articles\article_edit.html:870 .\templates\articles\article_form.html:740
+msgid "Ism"
+msgstr "First Name"
+
+#: .\templates\articles\article_edit.html:875 .\templates\articles\article_form.html:745
+msgid "Familiya"
+msgstr "Last Name"
+
+#: .\templates\articles\article_edit.html:880 .\templates\articles\article_form.html:750
+msgid "Afzal ism"
+msgstr "Preferred Name"
+
+#: .\templates\articles\article_edit.html:881
+msgid "Muallif nashr qilingan ishda ko‘rsatilishi kerak bo‘lgan to‘liq ismini kiriting. Masalan: Prof. Ivan P. Sidorov"
+msgstr "Enter the full name of the author as it should appear in the published work. For example: Prof. Ivan P. Sidorov"
+
+#: .\templates\articles\article_edit.html:886 .\templates\articles\article_edit.html:1246 .\templates\articles\article_form.html:756
+msgid "Email"
+msgstr "Email"
+
+#: .\templates\articles\article_edit.html:891 .\templates\articles\article_form.html:761
+msgid "Davlat"
+msgstr "Country"
+
+#: .\templates\articles\article_edit.html:893 .\templates\articles\article_form.html:763
+msgid "Davlatni tanlang"
+msgstr "Select Country"
+
+#: .\templates\articles\article_edit.html:894 .\templates\articles\article_form.html:764
+msgid "Rossiya"
+msgstr "Russia"
+
+#: .\templates\articles\article_edit.html:895 .\templates\articles\article_form.html:765
+msgid "O‘zbekiston"
+msgstr "Uzbekistan"
+
+#: .\templates\articles\article_edit.html:896 .\templates\articles\article_form.html:766
+msgid "Qozog‘iston"
+msgstr "Kazakhstan"
+
+#: .\templates\articles\article_edit.html:897 .\templates\articles\article_form.html:767
+msgid "AQSh"
+msgstr "USA"
+
+#: .\templates\articles\article_edit.html:898 .\templates\articles\article_form.html:768
+msgid "Buyuk Britaniya"
+msgstr "United Kingdom"
+
+#: .\templates\articles\article_edit.html:904 .\templates\articles\article_form.html:774
+msgid "Shaxsiy sahifa URL"
+msgstr "Personal Page URL"
+
+#: .\templates\articles\article_edit.html:914 .\templates\articles\article_form.html:784
+msgid "Biografiya (masalan, kafedra va lavozim)"
+msgstr "Biography (e.g., department and position)"
+
+#: .\templates\articles\article_edit.html:926
+msgid "Tashkilot (muassasa)"
+msgstr "Organization (institution)"
+
+#: .\templates\articles\article_edit.html:931
+msgid "Muallifning roli"
+msgstr "Author’s Role"
+
+#: .\templates\articles\article_edit.html:934 .\templates\articles\article_edit.html:1254 .\templates\articles\article_form.html:797 .\templates\articles\article_form.html:1141
+msgid "Muallif"
+msgstr "Author"
+
+#: .\templates\articles\article_edit.html:937 .\templates\articles\article_edit.html:1254 .\templates\articles\article_form.html:800
+msgid "Tarjimon"
+msgstr "Translator"
+
+#: .\templates\articles\article_edit.html:943 .\templates\articles\article_form.html:806
+msgid "Nashrlar ro‘yxati"
+msgstr "Publication List"
+
+#: .\templates\articles\article_edit.html:946
+msgid "Ushbu muallifni nashrlar ro‘yxatida mualliflar identifikatsiyasida kiritish."
+msgstr "Include this author in the publication list for author identification."
+
+#: .\templates\articles\article_edit.html:952 .\templates\articles\article_form.html:815
+msgid "Saqlash"
+msgstr "Save"
+
+#: .\templates\articles\article_edit.html:1054
+msgid "Haqiqatan ham bu faylni oʻchirib tashlamoqchimisiz?"
+msgstr "Are you sure you want to delete this file?"
+
+#: .\templates\articles\article_edit.html:1169
+msgid "Yangi fayllar hali yuklanmagan."
+msgstr "New files have not yet been uploaded."
+
+#: .\templates\articles\article_edit.html:1183 .\templates\articles\article_edit.html:1238
+msgid "Oʻchirish"
+msgstr "Delete"
+
+#: .\templates\articles\article_edit.html:1222
+msgid "Mualliflar hali qoshilmagan. Muallifni qoshish uchun Muallif qoshish tugmasini bosing."
+msgstr "Authors have not yet been added. Click the Add Author button to add an author."
+
+#: .\templates\articles\article_edit.html:1233
+msgid "Bosh muallif"
+msgstr "Primary Author"
+
+#: .\templates\articles\article_edit.html:1250
+msgid "Tashkilot"
+msgstr "Organization"
+
+#: .\templates\articles\article_edit.html:1250 .\templates\articles\article_edit.html:1424 .\templates\articles\article_edit.html:1425 .\templates\articles\article_edit.html:1532
+msgid "Belgilanmagan"
+msgstr "Not Specified"
+
+#: .\templates\articles\article_edit.html:1254
+msgid "Rol"
+msgstr "Role"
+
+#: .\templates\articles\article_edit.html:1331
+msgid "Ism talab qilinadi."
+msgstr "First name is required."
+
+#: .\templates\articles\article_edit.html:1336
+msgid "Elektron pochta kerak."
+msgstr "Email is required."
+
+#: .\templates\articles\article_edit.html:1341
+msgid "Yaroqli elektron pochta manzilini kiriting."
+msgstr "Enter a valid email address."
+
+#: .\templates\articles\article_edit.html:1346
+msgid "Mamlakat talab qilinadi."
+msgstr "Country is required."
+
+#: .\templates\articles\article_edit.html:1387
+msgid "Muallif muvaffaqiyatli saqlandi!"
+msgstr "Author successfully saved!"
+
+#: .\templates\articles\article_edit.html:1395
+msgid "Haqiqatan ham bu muallifni olib tashlamoqchimisiz?"
+msgstr "Are you sure you want to remove this author?"
+
+#: .\templates\articles\article_edit.html:1405
+msgid "Sarlavha kerak."
+msgstr "Title is required."
+
+#: .\templates\articles\article_edit.html:1408 .\templates\articles\article_form.html:1094 .\templates\profile.html:91
+msgid "Sarlavha"
+msgstr "Title"
+
+#: .\templates\articles\article_edit.html:1412
+msgid "Bu maydon shart."
+msgstr "This field is required."
+
+#: .\templates\articles\article_edit.html:1412 .\templates\articles\article_edit.html:1415
+msgid "Izoh"
+msgstr "Comment"
+
+#: .\templates\articles\article_edit.html:1419 .\templates\articles\article_edit.html:1421 .\templates\articles\article_form.html:1096
+msgid "Kalit sozlar"
+msgstr "Keywords"
+
+#: .\templates\articles\article_edit.html:1419 .\templates\articles\article_edit.html:1423 .\templates\articles\article_edit.html:1533
+msgid "belgilanmagan"
+msgstr "not specified"
+
+#: .\templates\articles\article_edit.html:1423
+msgid "Ssilka"
+msgstr "Link"
+
+#: .\templates\articles\article_edit.html:1424
+msgid "boshlanish sanasi"
+msgstr "start date"
+
+#: .\templates\articles\article_edit.html:1435
+msgid "Siz kamida bitta maqola faylini yuklashingiz kerak."
+msgstr "You must upload at least one article file."
+
+#: .\templates\articles\article_edit.html:1445
+msgid "Mavjud fayllar"
+msgstr "Existing Files"
+
+#: .\templates\articles\article_edit.html:1473
+msgid "Yangi fayllar"
+msgstr "New Files"
+
+#: .\templates\articles\article_edit.html:1496
+msgid "Ushbu maqola uchun mualliflar qoshilmagan."
+msgstr "No authors have been added for this article."
+
+#: .\templates\articles\article_edit.html:1500
+msgid "Birlamchi muallif"
+msgstr "Primary Author"
+
+#: .\templates\articles\article_edit.html:1500
+msgid "Qo'shimcha muallif"
+msgstr "Additional Author"
+
+#: .\templates\articles\article_edit.html:1533
+msgid "Muharrir uchun sharhlar"
+msgstr "Comments for Editor"
+
+#: .\templates\articles\article_edit.html:1645
+msgid "Barcha kerakli maydonlarni toʻldiring."
+msgstr "Fill in all required fields."
+
+#: .\templates\articles\article_edit.html:1652 .\templates\articles\article_form.html:961
+msgid "Iltimos, kamida bitta fayl yuklang."
+msgstr "Please upload at least one file."
+
+#: .\templates\articles\article_edit.html:1657 .\templates\articles\article_form.html:968
+msgid "Iltimos, kamida bitta muallif qoshing."
+msgstr "Please add at least one author."
+
+#: .\templates\articles\article_edit.html:1705
+msgid "Jarayoningiz saqlandi. Davom etish uchun keyinroq bu shaklga qaytishingiz mumkin."
+msgstr "Your progress has been saved. You can return to this form later to continue."
+
+#: .\templates\articles\article_form.html:612
+msgid "Maqolangiz bilan bog‘liq fayllarni yuklang. Maqola matni, ma’lumotlar, rasmlar va tahrirchilarga ishingizni baholashda yordam beradigan boshqa materiallarni yuklashingiz mumkin."
+msgstr "Upload files related to your article. You can upload the article text, data, images, and other materials that will help editors evaluate your work."
+
+#: .\templates\articles\article_form.html:630
+msgid "Ushbu maqolaga katta hissa qo‘shgan barcha mualliflarni qo‘shing. Agar muallif ko‘rsatilmagan bo‘lsa, yuboruvchi ular nomidan maqola uchun to‘liq javobgarlikni o‘z zimmasiga oladi. Barcha mualliflar yuborishga va muallif sifatida ko‘rsatilishga rozilik berishlari kerak."
+msgstr "Add all authors who have made significant contributions to this article. If no author is specified, the submitter takes full responsibility for the article on their behalf. All authors must agree to the submission and to being listed as authors."
+
+#: .\templates\articles\article_form.html:667
+msgid "Bu yuborishni yakunlashdan oldin kiritgan ma’lumotlaringizning qisqacha ko‘rinishi. Bu yerda ko‘rsatilgan har qanday tafsilotni har bir bo‘limning yuqori qismidagi “Tahrirlash” tugmasini bosib o‘zgartirishingiz mumkin."
+msgstr "This is a brief overview of the information you’ve entered before finalizing this submission. You can modify any details shown here by clicking the “Edit” button at the top of each section."
+
+#: .\templates\articles\article_form.html:670
+msgid "Yuborish tugallangandan so‘ng, tahririyat jamoamiz a’zolaridan biri uni ko‘rib chiqish uchun tayinlanadi. Iltimos, kiritgan ma’lumotlaringiz iloji boricha aniq ekanligiga ishonch hosil qiling."
+msgstr "Once the submission is complete, one of our editorial team members will be assigned to review it. Please ensure the information you’ve provided is as accurate as possible."
+
+#: .\templates\articles\article_form.html:735 .\templates\articles\article_form.html:1311
+msgid "O'chirish"
+msgstr "Delete"
+
+#: .\templates\articles\article_form.html:751
+msgid "Muallif nashr qilingan ishda qanday ko‘rsatilishi kerak bo‘lgan to‘liq ismini ko‘rsating. Masalan: Prof. Ivan P. Sidorov"
+msgstr "Specify the full name of the author as it should appear in the published work. For example: Prof. Ivan P. Sidorov"
+
+#: .\templates\articles\article_form.html:789
+msgid "Tashkilot (aloqa)"
+msgstr "Organization (contact)"
+
+#: .\templates\articles\article_form.html:794
+msgid "Muallif roli"
+msgstr "Author Role"
+
+#: .\templates\articles\article_form.html:809
+msgid "Ushbu muallifni nashrlar ro‘yxatida mualliflarni aniqlashda kiritish."
+msgstr "Include this author in the publication list for author identification."
+
+#: .\templates\articles\article_form.html:943
+msgid "Iltimos, maqola sarlavhasini kiriting."
+msgstr "Please enter the article title."
+
+#: .\templates\articles\article_form.html:948
+msgid "Iltimos, maqola annotatsiyasini kiriting."
+msgstr "Please enter the article abstract."
+
+#: .\templates\articles\article_form.html:953
+msgid "Iltimos, konferensiyani tanlang."
+msgstr "Please select a conference."
+
+#: .\templates\articles\article_form.html:1008 .\templates\articles\article_form.html:1067
+msgid "Oxirgi saqlash: "
+msgstr "Last Saved: "
+
+#: .\templates\articles\article_form.html:1011
+msgid "Maqola qoralama sifatida saqlandi."
+msgstr "The article has been saved as a draft."
+
+#: .\templates\articles\article_form.html:1013 .\templates\articles\article_form.html:1070
+msgid "Xatolik: "
+msgstr "Error: "
+
+#: .\templates\articles\article_form.html:1018
+msgid "Saqlashda xatolik yuz berdi."
+msgstr "An error occurred while saving."
+
+#: .\templates\articles\article_form.html:1075
+msgid "Qoralamani yuklashda xatolik yuz berdi."
+msgstr "An error occurred while loading the draft."
+
+#: .\templates\articles\article_form.html:1098 .\templates\profile.html:92
+msgid "Boshlanish sanasi"
+msgstr "Start Date"
+
+#: .\templates\articles\article_form.html:1123
+msgid "Fayl"
+msgstr "File"
+
+#: .\templates\articles\article_form.html:1145
+msgid "Tashkilot: "
+msgstr "Organization: "
+
+#: .\templates\articles\article_form.html:1146
+msgid "Davlat: "
+msgstr "Country: "
+
+#: .\templates\articles\article_form.html:1152
+msgid "Mualliflar qoshilmagan"
+msgstr "Authors Not Added"
+
+#: .\templates\articles\article_form.html:1230
+msgid "Olib tashlash"
+msgstr "Remove"
+
+#: .\templates\articles\article_form.html:1274
+msgid "Iltimos, barcha majburiy maydonlarni toldiring."
+msgstr "Please fill in all required fields."
+
+#: .\templates\articles\article_form.html:1313
+msgid "Ism:"
+msgstr "First Name:"
+
+#: .\templates\articles\article_form.html:1316
+msgid "Familiya:"
+msgstr "Last Name:"
+
+#: .\templates\articles\article_form.html:1319 .\templates\contact.html:52 .\templates\contact.html:68 .\templates\profile.html:61
+msgid "Email:"
+msgstr "Email:"
+
+#: .\templates\articles\article_form.html:1322
+msgid "Davlat:"
+msgstr "Country:"
+
+#: .\templates\articles\article_form.html:1325
+msgid "Tashkilot:"
+msgstr "Organization:"
+
+#: .\templates\articles\payment_form.html:38
+msgid "Payment"
+msgstr "Payment"
+
+#: .\templates\articles\payment_form.html:52
+msgid "Payment for"
+msgstr "Payment for"
+
+#: .\templates\articles\payment_form.html:53
+msgid "Conference price:"
+msgstr "Conference Price:"
+
+#: .\templates\articles\payment_form.html:57
+msgid "Card Number"
+msgstr "Card Number"
+
+#: .\templates\articles\payment_form.html:61
+msgid "Description"
+msgstr "Description"
+
+#: .\templates\articles\payment_form.html:64
+msgid "Submit"
+msgstr "Submit"
+
+#: .\templates\articles\search_results.html:38
+msgid "Search Results for"
+msgstr "Search Results for"
+
+#: .\templates\articles\search_results.html:57 .\templates\index.html:89
+msgid "Articles"
+msgstr "Articles"
+
+#: .\templates\articles\search_results.html:69
+msgid "No results found for your search."
+msgstr "No results found for your search."
+
+#: .\templates\conferences\conference_detail.html:41
+msgid "Konferensiya haqida"
+msgstr "About the Conference"
+
+#: .\templates\conferences\conference_detail.html:53
+msgid "Konferensiya ma’lumotlari"
+msgstr "Conference Information"
+
+#: .\templates\conferences\conference_detail.html:56
+msgid "O‘tkaziladigan joy:"
+msgstr "Venue:"
+
+#: .\templates\conferences\conference_detail.html:57
+msgid "O‘tkazilish sanalari:"
+msgstr "Event Dates:"
+
+#: .\templates\conferences\conference_detail.html:58
+msgid "Maqola yuborishning oxirgi muddati:"
+msgstr "Article Submission Deadline:"
+
+#: .\templates\conferences\conference_detail.html:59
+msgid "Holati:"
+msgstr "Status:"
+
+#: .\templates\conferences\conference_detail.html:61
+msgid "Faol"
+msgstr "Active"
+
+#: .\templates\conferences\conference_detail.html:63
+msgid "Faol emas"
+msgstr "Inactive"
+
+#: .\templates\conferences\conference_detail.html:67
+msgid "Maqola yuborish uchun ochiq"
+msgstr "Open for Article Submission"
+
+#: .\templates\conferences\conference_detail.html:69
+msgid "Maqola yuborish uchun yopiq"
+msgstr "Closed for Article Submission"
+
+#: .\templates\conferences\conference_detail.html:80
+msgid "Ushbu konferensiya uchun sizning maqolalaringiz"
+msgstr "Your Articles for This Conference"
+
+#: .\templates\conferences\conference_detail.html:98
+msgid "Sizda hali ushbu konferensiya uchun maqolalar yo‘q."
+msgstr "You don’t yet have any articles for this conference."
+
+#: .\templates\conferences\conference_detail.html:100 .\templates\conferences\conference_detail.html:108
+msgid "Maqola yuborish"
+msgstr "Submit Article"
+
+#: .\templates\conferences\conference_detail.html:111
+msgid "Ushbu konferensiyaga maqola yuborish uchun avtorizatsiyadan o‘tish kerak."
+msgstr "You need to log in to submit an article to this conference."
+
+#: .\templates\conferences\conference_detail.html:112
+msgid "Kirish"
+msgstr "Login"
+
+#: .\templates\conferences\conference_detail.html:120
+msgid "Muhim sanalar"
+msgstr "Important Dates"
+
+#: .\templates\conferences\conference_detail.html:125
+msgid "Maqola yuborishning oxirgi muddati"
+msgstr "Article Submission Deadline"
+
+#: .\templates\conferences\conference_detail.html:129
+msgid "Konferensiya boshlanishi"
+msgstr "Conference Start"
+
+#: .\templates\conferences\conference_detail.html:133
+msgid "Konferensiya tugashi"
+msgstr "Conference End"
+
+#: .\templates\contact.html:41 .\templates\header.html:140
+msgid "Contact"
+msgstr "Contact"
+
+#: .\templates\contact.html:49
+msgid "Biz bilan bog‘laning"
+msgstr "Contact Us"
+
+#: .\templates\contact.html:50
+msgid "Bizga xabar yuborish uchun quyidagi formani to‘ldiring yoki quyidagi kontaktlar orqali bog‘laning:"
+msgstr "Fill out the form below to send us a message or contact us via the details below:"
+
+#: .\templates\contact.html:52
+msgid "info@example.com"
+msgstr "info@example.com"
+
+#: .\templates\contact.html:53
+msgid "Telefon:"
+msgstr "Phone:"
+
+#: .\templates\contact.html:54
+msgid "Manzil:"
+msgstr "Address:"
+
+#: .\templates\contact.html:54
+msgid "Toshkent sh., Amir Temur ko‘chasi, 123"
+msgstr "Tashkent city, Amir Temur street, 123"
+
+#: .\templates\contact.html:60
+msgid "Xabar yuborish"
+msgstr "Send Message"
+
+#: .\templates\contact.html:64
+msgid "Ismingiz:"
+msgstr "Your Name:"
+
+#: .\templates\contact.html:72
+msgid "Xabar:"
+msgstr "Message:"
+
+#: .\templates\current.html:41
+msgid "Conferences"
+msgstr "Conferences"
+
+#: .\templates\current.html:54
+msgid "End date"
+msgstr "End Date"
+
+#: .\templates\current.html:56 .\templates\index.html:116
+msgid "view"
+msgstr "View"
+
+#: .\templates\header.html:28
+msgid "Profile"
+msgstr "Profile"
+
+#: .\templates\header.html:30
+msgid "Registe"
+msgstr "Register"
+
+#: .\templates\header.html:46
+msgid "Search"
+msgstr "Search"
+
+#: .\templates\header.html:64
+msgid "Article"
+msgstr "Article"
+
+#: .\templates\header.html:95
+msgid "Ruscha"
+msgstr "Russian"
+
+#: .\templates\header.html:108
+msgid "Inglizcha"
+msgstr "English"
+
+#: .\templates\header.html:121
+msgid "O'zbekcha"
+msgstr "Uzbek"
+
+#: .\templates\header.html:128
+msgid "Home"
+msgstr "Home"
+
+#: .\templates\header.html:129
+msgid "Current"
+msgstr "Current"
+
+#: .\templates\header.html:131 .\templates\team.html:61
+msgid "Editorial Team"
+msgstr "Editorial Team"
+
+#: .\templates\header.html:132 .\templates\news.html:41
+msgid "News"
+msgstr "News"
+
+#: .\templates\header.html:133
+msgid "Policies"
+msgstr "Policies"
+
+#: .\templates\header.html:138
+msgid "About the Journal"
+msgstr "About the Journal"
+
+#: .\templates\header.html:139
+msgid "Create Submissions"
+msgstr "Create Submissions"
+
+#: .\templates\index.html:47
+msgid "Journal name"
+msgstr "Journal Name"
+
+#: .\templates\index.html:48
+msgid "Journal description"
+msgstr "Journal Description"
+
+#: .\templates\index.html:50
+msgid "Read More"
+msgstr "Read More"
+
+#: .\templates\index.html:68
+msgid "Indexs"
+msgstr "Indexes"
+
+#: .\templates\index.html:93
+msgid "Current issue"
+msgstr "Current Issue"
+
+#: .\templates\index.html:94
+msgid "Articles in press"
+msgstr "Articles in Press"
+
+#: .\templates\index.html:95
+msgid "Most visited articles"
+msgstr "Most Visited Articles"
+
+#: .\templates\index.html:108
+msgid "End day"
+msgstr "End Day"
+
+#: .\templates\index.html:108
+msgid "Submission deadline"
+msgstr "Submission Deadline"
+
+#: .\templates\news.html:57
+msgid "Batafsil"
+msgstr "Details"
+
+#: .\templates\news.html:63
+msgid "Hozircha yangiliklar yo‘q."
+msgstr "There are no news items yet."
+
+#: .\templates\police.html:42
+msgid "Requirements for articles"
+msgstr "Requirements for Articles"
+
+#: .\templates\police.html:58
+msgid "Hozircha talablar mavjud emas."
+msgstr "There are no requirements available yet."
+
+#: .\templates\police.html:67
+msgid "Maqola shablonini yuklab olish uchun quyidagi havoladan foydalaning:"
+msgstr "Use the link below to download the article template:"
+
+#: .\templates\police.html:69
+msgid "Shablon faylni yuklab olish"
+msgstr "Download Template File"
+
+#: .\templates\police.html:71
+msgid "Hozircha fayl mavjud emas."
+msgstr "There is no file available yet."
+
+#: .\templates\profile.html:38
+msgid "My profile"
+msgstr "My Profile"
+
+#: .\templates\profile.html:42
+msgid "My data"
+msgstr "My Data"
+
+#: .\templates\profile.html:43
+msgid "In process articles"
+msgstr "In-Process Articles"
+
+#: .\templates\profile.html:44
+msgid "Completed articles"
+msgstr "Completed Articles"
+
+#: .\templates\profile.html:55
+msgid "Personal Information"
+msgstr "Personal Information"
+
+#: .\templates\profile.html:59
+msgid "First Name:"
+msgstr "First Name:"
+
+#: .\templates\profile.html:60
+msgid "Last Name:"
+msgstr "Last Name:"
+
+#: .\templates\profile.html:64
+msgid "Affiliation:"
+msgstr "Affiliation:"
+
+#: .\templates\profile.html:65
+msgid "Department:"
+msgstr "Department:"
+
+#: .\templates\profile.html:66
+msgid "ORCID:"
+msgstr "ORCID:"
+
+#: .\templates\profile.html:69
+msgid "Contact Information"
+msgstr "Contact Information"
+
+#: .\templates\profile.html:71
+msgid "Address:"
+msgstr "Address:"
+
+#: .\templates\profile.html:72
+msgid "Biograf:"
+msgstr "Biography:"
+
+#: .\templates\profile.html:77
+msgid "Log Out"
+msgstr "Log Out"
+
+#: .\templates\profile.html:94
+msgid "Holati"
+msgstr "Status"
+
+#: .\templates\profile.html:95
+msgid "Yaratilgan sana"
+msgstr "Creation Date"
+
+#: .\templates\profile.html:96
+msgid "Amallar"
+msgstr "Actions"
+
+#: .\templates\profile.html:113
+msgid "To'lov qilish kutilmoqda"
+msgstr "Payment Pending"
+
+#: .\templates\profile.html:115
+msgid "To'lov qilish"
+msgstr "Make Payment"
+
+#: .\templates\profile.html:127
+msgid "Ko‘rish"
+msgstr "View"
+
+#: .\templates\profile.html:139
+msgid "Hozircha maqolalar yo‘q."
+msgstr "There are no articles yet."
+
+#: .\templates\profile.html:139
+msgid "Yangi maqola yarating"
+msgstr "Create a New Article"
+
+#: .\templates\team.html:68
+msgid "Image"
+msgstr "Image"
+
+#: .\templates\team.html:69
+msgid "Fulle name"
+msgstr "Full Name"
+
+#: .\templates\team.html:70
+msgid "Specialty"
+msgstr "Specialty"
+
+#: .\templates\team.html:72
+msgid "Contakt"
+msgstr "Contact"
+
+#: .\templates\team.html:92
+msgid "Jamoada a'zolar mavjud emas."
+msgstr "There are no members in the team."

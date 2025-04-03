@@ -1,8 +1,8 @@
+{% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Profilni tahrirlash</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,13 +35,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="section-header align-center">
-                        <h2 class="section-title">My profile</h2>
+                        <h2 class="section-title">{% trans 'My profile' %}</h2>
                     </div>
     
                     <ul class="tabs">
-                        <li data-tab-target="#all-genre" class="active tab">My data</li>
-                        <li data-tab-target="#business" class="tab">In process articles</li>
-                        <li data-tab-target="#technology" class="tab">Completed articles</li>
+                        <li data-tab-target="#all-genre" class="active tab">{% trans 'My data' %}</li>
+                        <li data-tab-target="#business" class="tab">{% trans "In process articles" %}</li>
+                        <li data-tab-target="#technology" class="tab">{% trans "Completed articles" %}</li>
                     </ul>
     
                     <div class="tab-content">
@@ -52,29 +52,29 @@
                                     <div class="card" style="border: 1px solid #ddd; padding: 20px; background-color: white; border-radius: 5px;">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h4>Personal Information</h4>
+                                                <h4>{% trans "Personal Information" %}</h4>
                                                 <hr>
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <p><strong>First Name:</strong>  {{user.given_name }}</p>
-                                                        <p><strong>Last Name:</strong> {{user.family_name}}</p>
-                                                        <p><strong>Email:</strong> {{user.email}}</p>
+                                                        <p><strong>{% trans "First Name:" %}</strong>  {{user.given_name }}</p>
+                                                        <p><strong>{% trans "Last Name:" %}</strong> {{user.family_name}}</p>
+                                                        <p><strong>{% trans "Email:" %}</strong> {{user.email}}</p>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <p><strong>Affiliation:</strong> {{user.affiliation}}</p>
-                                                        <p><strong>Department:</strong> {{user.special_instructions}}</p>
-                                                        <p><strong>ORCID:</strong> {{user.orcid}}</p>
+                                                        <p><strong>{% trans "Affiliation:" %}</strong> {{user.affiliation}}</p>
+                                                        <p><strong>{% trans "Department:" %}</strong> {{user.special_instructions}}</p>
+                                                        <p><strong>{% trans "ORCID:" %}</strong> {{user.orcid}}</p>
                                                     </div>
                                                 </div>
-                                                <h4 class="mt-4">Contact Information</h4>
+                                                <h4 class="mt-4">{% trans "Contact Information" %}</h4>
                                                 <hr>
-                                                <p><strong>Address:</strong> {{user.country}}</p>
-                                                <p><strong>Biograf:</strong> {{user.bio}}</p>
+                                                <p><strong>{% trans "Address:" %}</strong> {{user.country}}</p>
+                                                <p><strong>{% trans "Biograf:" %}</strong> {{user.bio}}</p>
                                             </div>
                                         </div>
                                         <div class="text-center mt-4">
-                                            <a class="btn btn-primary" href="{% url 'edit_profile' %}">Edit Profile</a>
-                                            <a class="btn" style="background: none; color: red;" href="{% url 'logout' %}">Log Out</a>
+                                            <a class="btn btn-primary" href="{% url 'edit_profile' %}">{% trans "Edit Profile" %}</a>
+                                            <a class="btn" style="background: none; color: red;" href="{% url 'logout' %}">{% trans "Log Out" %}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -88,12 +88,12 @@
                                     <table class="table table-striped table-hover">
                                         <thead>
                                             <tr>
-                                                <th style="margin-left: 25px;">Sarlavha</th>
-                                                <th>Boshlanish sanasi</th>
-                                                <th>Tugash sanasi</th>
-                                                <th>Holati</th>
-                                                <th>Yaratilgan sana</th>
-                                                <th>Amallar</th>
+                                                <th style="margin-left: 25px;">{% trans "Sarlavha" %}</th>
+                                                <th>{% trans "Boshlanish sanasi" %}</th>
+                                                <th>{% trans "Tugash sanasi" %}</th>
+                                                <th>{% trans "Holati" %}</th>
+                                                <th>{% trans "Yaratilgan sana" %}</th>
+                                                <th>{% trans "Amallar" %}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -104,24 +104,29 @@
                                                 <td>{{ article.end_date|default:"Ko‘rsatilmagan" }}</td>
                                                 <td>
                                                     {% if article.status == 'draft' %}
-                                                        <span class="badge" style="background-color: yellow; color: black;">Qoralama</span>
+                                                        <span class="badge" style="background-color: yellow; color: black;">{% trans "Qoralama" %}</span>
                                                     {% elif article.status == 'submitted' %}
-                                                        <span class="badge bg-info">Yuborilgan</span>
+                                                        <span class="badge bg-info">{% trans "Yuborilgan" %}</span>
                                                     {% elif article.status == 'under_review' %}
-                                                        <span class="badge bg-warning">Ko‘rib chiqilmoqda</span>
+                                                        <span class="badge bg-warning">{% trans "Ko‘rib chiqilmoqda" %}</span>
+                                                    {% elif article.status == 'payment' %}
+                                                        <span class="badge bg-warning">{% trans "To'lov qilish kutilmoqda" %}</span>
+                                                        <a href="{% url 'make_payment' article.id %}" class="badge bg-success" style="color: white;">
+                                                            {% trans "To'lov qilish" %}
+                                                        </a>
                                                     {% elif article.status == 'accepted' %}
-                                                        <span class="badge bg-success">Qabul qilingan</span>
+                                                        <span class="badge bg-success">{% trans "Qabul qilingan" %}</span>
                                                     {% elif article.status == 'rejected' %}
-                                                        <span class="badge bg-danger">Rad etilgan</span>
+                                                        <span class="badge bg-danger">{% trans "Rad etilgan" %}</span>
                                                     {% elif article.status == 'published' %}
-                                                        <span class="badge bg-primary">Nashr qilingan</span>
+                                                        <span class="badge bg-primary">{% trans "Nashr qilingan" %}</span>
                                                     {% endif %}
                                                 </td>
                                                 <td>{{ article.created_at|date:"d.m.Y H:i" }}</td>
                                                 <td>
-                                                    <a href="{% url 'article_detail' article.pk %}" class="btn btn-sm btn-outline-primary">Ko‘rish</a>
+                                                    <a href="{% url 'article_detail' article.pk %}" class="btn btn-sm btn-outline-primary">{% trans "Ko‘rish" %}</a>
                                                     {% if article.created_by == user and article.status == 'draft' %}
-                                                        <a href="{% url 'edit_article' article.pk %}" class="btn btn-sm btn-outline-secondary">Tahrirlash</a>
+                                                        <a href="{% url 'edit_article' article.pk %}" class="btn btn-sm btn-outline-secondary">{% trans "Tahrirlash" %}</a>
                                                     {% endif %}
                                                 </td>
                                             </tr>
@@ -131,7 +136,7 @@
                                 </div>
                             {% else %}
                                 <div class="alert alert-info">
-                                    Hozircha maqolalar yo‘q. <a href="{% url 'create_article' %}">Yangi maqola yarating</a>.
+                                    {% trans "Hozircha maqolalar yo‘q." %} <a href="{% url 'create_article' %}">{% trans "Yangi maqola yarating" %}</a>
                                 </div>
                             {% endif %}
                         </div>

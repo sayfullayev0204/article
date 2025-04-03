@@ -1,5 +1,15 @@
-from django.shortcuts import render
-from .models import Team,ArticleRequirement,News,Conference
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import CreateView, UpdateView, DetailView, ListView
+from django.urls import reverse_lazy, reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.db import transaction
+from django.http import HttpResponseRedirect, JsonResponse
+from django.utils import timezone
+import json
+from .models import Article, ArticleRequirementFile, Author, ArticleFile, ArticleAuthor, Conference,Payment,News,Team,ArticleRequirement
+from .forms import ArticleForm, AuthorForm, ArticleFileForm, AuthorFormSet, FileFormSet
 
 
 def home(request):
@@ -20,7 +30,12 @@ def team(request):
 
 def police(request):
     polices = ArticleRequirement.objects.all()
-    return render(request, 'police.html', {"police":"police", "polices":polices})
+    polices_file = ArticleRequirementFile.objects.first()
+    return render(request, 'police.html', {
+        "police": "police",
+        "polices": polices,
+        "polices_file": polices_file
+    })
 
 def about_journal(request):
     return render(request, 'about_journal.html', {"about":"about"})
@@ -36,18 +51,6 @@ def news_detail(request, news_id):
     news = get_object_or_404(News, id=news_id)
     return render(request, 'news_detail.html', {'news': news})
 
-from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import CreateView, UpdateView, DetailView, ListView
-from django.urls import reverse_lazy, reverse
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.db import transaction
-from django.http import HttpResponseRedirect, JsonResponse
-from django.utils import timezone
-
-from .models import Article, Author, ArticleFile, ArticleAuthor, Conference
-from .forms import ArticleForm, AuthorForm, ArticleFileForm, AuthorFormSet, FileFormSet
 
 class ConferenceListView(ListView):
     model = Conference
@@ -55,7 +58,7 @@ class ConferenceListView(ListView):
     context_object_name = 'conferences'
     
     def get_queryset(self):
-        # Показываем только активные конференции
+        # Faqat faol konferensiyalarni ko'rsatamiz
         return Conference.objects.filter(is_active=True).order_by('start_date')
 
 class ConferenceDetailView(DetailView):
@@ -65,7 +68,7 @@ class ConferenceDetailView(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Добавляем статьи для этой конференции, если пользователь авторизован
+        # Foydalanuvchi tizimga kirgan bo'lsa, uning maqolalarini qo'shamiz
         if self.request.user.is_authenticated:
             context['user_articles'] = Article.objects.filter(
                 conference=self.object,
@@ -79,7 +82,7 @@ class ArticleListView(ListView):
     context_object_name = 'articles'
     
     def get_queryset(self):
-        # Если пользователь авторизован, показываем только его статьи
+        # Agar foydalanuvchi tizimga kirgan bo'lsa, faqat uning maqolalarini ko'rsatamiz
         if self.request.user.is_authenticated:
             return Article.objects.filter(created_by=self.request.user).order_by('-created_at')
         return Article.objects.none()
@@ -91,7 +94,7 @@ class ArticleDetailView(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Проверяем, может ли пользователь редактировать статью
+        # Foydalanuvchi maqolani tahrirlashi mumkinligini tekshiramiz
         article = self.object
         context['can_edit'] = (
             self.request.user.is_authenticated and 
@@ -108,46 +111,66 @@ def create_article(request, conference_id=None):
     if conference_id:
         conference = get_object_or_404(Conference, pk=conference_id, is_active=True)
         if not conference.is_open_for_submission():
-            messages.error(request, 'Эта конференция закрыта для подачи статей.')
+            messages.error(request, 'Bu konferensiya maqola topshirish uchun yopilgan.')
             return redirect('conference_detail', pk=conference_id)
         initial_data['conference'] = conference
 
+    # Forma yuborilganini qayta ishlash
     if request.method == 'POST':
         article_form = ArticleForm(request.POST)
         
         if article_form.is_valid():
             with transaction.atomic():
-                # Сохраняем статью
+                # Maqolani saqlash
                 article = article_form.save(commit=False)
                 article.created_by = request.user
                 article.status = 'draft'
-                # Agar konferensiya mavjud bo‘lsa, uni qo‘shish
+                
+                # Konferensiya mavjud bo'lsa, uni qo'shamiz
                 if conference:
                     article.conference = conference
                 article.save()
                 
-                # Обрабатываем авторов
-                author_data = {
-                    'given_name': request.POST.get('author_given_name'),
-                    'family_name': request.POST.get('author_family_name'),
-                    'email': request.POST.get('author_email'),
-                    'country': request.POST.get('author_country'),
-                    'affiliation': request.POST.get('author_affiliation'),
-                }
+                # Formadan mualliflarni qayta ishlash
+                contributors_data = request.POST.getlist('contributors[]')
+                if contributors_data:
+                    for i, contributor_json in enumerate(contributors_data):
+                        try:
+                            contributor = json.loads(contributor_json)
+                            author_data = {
+                                'given_name': contributor.get('given_name', ''),
+                                'family_name': contributor.get('family_name', ''),
+                                'email': contributor.get('email', ''),
+                                'country': contributor.get('country', ''),
+                                'affiliation': contributor.get('affiliation', ''),
+                                'orcid': contributor.get('orcid', ''),
+                                'homepage': contributor.get('homepage', ''),
+                                'bio': contributor.get('bio', ''),
+                            }
+                            
+                            if all([author_data['given_name'], author_data['email'], author_data['country']]):
+                                author, created = Author.objects.get_or_create(
+                                    email=author_data['email'],
+                                    defaults=author_data
+                                )
+                                
+                                # Agar yaratilmagan bo'lsa, muallif ma'lumotlarini yangilaymiz
+                                if not created:
+                                    for key, value in author_data.items():
+                                        if value:  # Faqat bo'sh bo'lmagan qiymatlarni yangilaymiz
+                                            setattr(author, key, value)
+                                    author.save()
+                                
+                                ArticleAuthor.objects.create(
+                                    article=article,
+                                    author=author,
+                                    is_primary=(i == 0),  # Birinchi muallif asosiy hisoblanadi
+                                    order=i
+                                )
+                        except json.JSONDecodeError:
+                            continue
                 
-                if all([author_data['given_name'], author_data['email'], author_data['country']]):
-                    author, created = Author.objects.get_or_create(
-                        email=author_data['email'],
-                        defaults=author_data
-                    )
-                    ArticleAuthor.objects.create(
-                        article=article,
-                        author=author,
-                        is_primary=True,
-                        order=0
-                    )
-                
-                # Обрабатываем файлы
+                # Fayllarni qayta ishlash
                 files = request.FILES.getlist('files')
                 for file in files:
                     ArticleFile.objects.create(
@@ -157,8 +180,21 @@ def create_article(request, conference_id=None):
                         file_type='article_text'
                     )
                 
-                messages.success(request, 'Статья успешно создана!')
+                if request.POST.get('submit_type') == 'submit':
+                    # Agar foydalanuvchi yakuniy yuborish tugmasini bosgan bo'lsa
+                    article.status = 'submitted'
+                    article.submitted_at = timezone.now()
+                    article.save()
+                    messages.success(request, 'Maqola muvaffaqiyatli yuborildi!')
+                else:
+                    messages.success(request, 'Maqola qoralama sifatida saqlandi!')
+                
                 return redirect('article_detail', pk=article.pk)
+        else:
+            # Forma tekshiruvi muvaffaqiyatsiz tugadi
+            for field, errors in article_form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
     else:
         article_form = ArticleForm(initial=initial_data)
     
@@ -167,19 +203,18 @@ def create_article(request, conference_id=None):
         'conference': conference,
     })
 
-
 @login_required
 def edit_article(request, pk):
     article = get_object_or_404(Article, pk=pk)
     
-    # Проверяем, имеет ли пользователь право редактировать статью
+    # Foydalanuvchining maqolani tahrirlash huquqini tekshiramiz
     if article.created_by != request.user:
-        messages.error(request, 'У вас нет прав для редактирования этой статьи.')
+        messages.error(request, 'Sizda ushbu maqolani tahrirlash huquqi yo\'q.')
         return redirect('article_detail', pk=article.pk)
     
-    # Проверяем, можно ли редактировать статью (только в статусе черновика)
+    # Maqolani tahrirlash mumkinligini tekshiramiz (faqat qoralama holatida)
     if article.status != 'draft':
-        messages.error(request, 'Нельзя редактировать статью, которая уже отправлена.')
+        messages.error(request, 'Yuborilgan maqolani tahrirlab bo\'lmaydi.')
         return redirect('article_detail', pk=article.pk)
     
     if request.method == 'POST':
@@ -193,7 +228,7 @@ def edit_article(request, pk):
                 author_formset.save()
                 file_formset.save()
                 
-                messages.success(request, 'Статья успешно обновлена!')
+                messages.success(request, 'Maqola muvaffaqiyatli yangilandi!')
                 return redirect('article_detail', pk=article.pk)
     else:
         article_form = ArticleForm(instance=article)
@@ -211,42 +246,42 @@ def edit_article(request, pk):
 def submit_article(request, pk):
     article = get_object_or_404(Article, pk=pk)
     
-    # Проверяем, имеет ли пользователь право отправлять статью
+    # Foydalanuvchining maqolani yuborish huquqini tekshiramiz
     if article.created_by != request.user:
-        messages.error(request, 'У вас нет прав для отправки этой статьи.')
+        messages.error(request, 'Sizda ushbu maqolani yuborish huquqi yo\'q.')
         return redirect('article_detail', pk=article.pk)
     
-    # Проверяем, можно ли отправить статью (только в статусе черновика)
+    # Maqolani yuborish mumkinligini tekshiramiz (faqat qoralama holatida)
     if article.status != 'draft':
-        messages.error(request, 'Эта статья уже отправлена.')
+        messages.error(request, 'Bu maqola allaqachon yuborilgan.')
         return redirect('article_detail', pk=article.pk)
     
-    # Проверяем, открыта ли конференция для подачи статей
+    # Konferensiya maqola topshirish uchun ochiqligini tekshiramiz
     if not article.conference.is_open_for_submission():
-        messages.error(request, 'Конференция закрыта для подачи статей.')
+        messages.error(request, 'Konferensiya maqola topshirish uchun yopilgan.')
         return redirect('article_detail', pk=article.pk)
     
-    # Проверяем, заполнены ли все обязательные поля
+    # Barcha majburiy maydonlar to'ldirilganligini tekshiramiz
     if not article.title or not article.abstract or not article.keywords:
-        messages.error(request, 'Пожалуйста, заполните все обязательные поля перед отправкой.')
+        messages.error(request, 'Iltimos, yuborishdan oldin barcha majburiy maydonlarni to\'ldiring.')
         return redirect('edit_article', pk=article.pk)
     
-    # Проверяем, есть ли хотя бы один автор
+    # Kamida bitta muallif mavjudligini tekshiramiz
     if not article.authors.exists():
-        messages.error(request, 'Пожалуйста, добавьте хотя бы одного автора перед отправкой.')
+        messages.error(request, 'Iltimos, yuborishdan oldin kamida bitta muallif qo\'shing.')
         return redirect('edit_article', pk=article.pk)
     
-    # Проверяем, есть ли хотя бы один файл
+    # Kamida bitta fayl mavjudligini tekshiramiz
     if not article.files.exists():
-        messages.error(request, 'Пожалуйста, загрузите хотя бы один файл перед отправкой.')
+        messages.error(request, 'Iltimos, yuborishdan oldin kamida bitta fayl yuklang.')
         return redirect('edit_article', pk=article.pk)
     
-    # Обновляем статус статьи
+    # Maqola holatini yangilaymiz
     article.status = 'submitted'
     article.submitted_at = timezone.now()
     article.save()
     
-    messages.success(request, 'Статья успешно отправлена на рассмотрение!')
+    messages.success(request, 'Maqola muvaffaqiyatli ko\'rib chiqish uchun yuborildi!')
     return redirect('article_detail', pk=article.pk)
 
 @login_required
@@ -350,3 +385,119 @@ def save_article_draft(request):
         'message': 'Noto\'g\'ri so\'rov'
     }, status=400)
 
+
+@login_required
+def get_article_draft(request, article_id):
+    try:
+        article = Article.objects.get(pk=article_id, created_by=request.user, status='draft')
+        
+        # Mualliflarni olamiz
+        article_authors = ArticleAuthor.objects.filter(article=article).order_by('order')
+        contributors = []
+        
+        for article_author in article_authors:
+            author = article_author.author
+            contributors.append({
+                'given_name': author.given_name,
+                'family_name': author.family_name,
+                'email': author.email,
+                'country': author.country,
+                'affiliation': author.affiliation,
+                'orcid': author.orcid,
+                'homepage': author.homepage,
+                'bio': author.bio,
+                'is_primary': article_author.is_primary,
+                'order': article_author.order
+            })
+        
+        # Fayllarni olamiz
+        article_files = ArticleFile.objects.filter(article=article)
+        files = []
+        
+        for file in article_files:
+            files.append({
+                'id': file.id,
+                'name': file.file_name,
+                'url': file.file.url if file.file else None,
+                'type': file.file_type
+            })
+        
+        return JsonResponse({
+            'status': 'success',
+            'article': {
+                'id': article.id,
+                'title': article.title,
+                'abstract': article.abstract,
+                'keywords': article.keywords,
+                'references': article.references,
+                'start_date': article.start_date.strftime('%Y-%m-%d') if article.start_date else None,
+                'end_date': article.end_date.strftime('%Y-%m-%d') if article.end_date else None,
+                'cover_letter': article.cover_letter,
+                'special_instructions': article.special_instructions,
+                'conference_id': article.conference.id if article.conference else None,
+                'last_saved': article.updated_at.strftime('%Y-%m-%d %H:%M:%S') if article.updated_at else None
+            },
+            'contributors': contributors,
+            'files': files
+        })
+    except Article.DoesNotExist:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Maqola topilmadi'
+        }, status=404)
+
+@login_required
+def make_payment(request, article_id):
+    article = get_object_or_404(Article, id=article_id, created_by=request.user)
+    conference = article.conference
+
+    if request.method == 'POST':
+        card_number = request.POST.get('card_number')
+        description = request.POST.get('description')
+        price = conference.price if conference and conference.price else "0"  # Agar conference bo'lmasa 0
+
+        payment = Payment(
+            article=article,
+            card_number=card_number,
+            price=price,
+            description=description
+        )
+        payment.save()
+        messages.success(request, "To'lov muvaffaqiyatli amalga oshirildi!")
+        return redirect(f"{reverse('profile')}?tab=business")
+
+    context = {
+        'article': article,
+        'price': conference.price if conference else "0"
+    }
+    return render(request, 'articles/payment_form.html', context)
+
+from django.db.models import Q
+from django.shortcuts import render
+from .models import Article, Author
+
+def search(request):
+    query = request.GET.get('q', '')
+    
+    if query:
+        # Search articles by title, abstract, or keywords
+            articles = Article.objects.filter(
+            Q(title__icontains=query) |
+            Q(abstract__icontains=query) |
+            Q(keywords__icontains=query) |
+            Q(authors__given_name__icontains=query) |
+            Q(authors__family_name__icontains=query) |
+            Q(authors__preferred_name__icontains=query) |
+            Q(authors__email__icontains=query) |
+            Q(authors__affiliation__icontains=query)
+        ).distinct()
+
+    else:
+        articles = Article.objects.none()
+    
+    context = {
+        'query': query,
+        'articles': articles
+    }
+    
+    return render(request, 'articles/search_results.html', context)

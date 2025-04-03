@@ -1,9 +1,9 @@
+{% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<title>Articles</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,7 +38,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="section-header align-center">
-                        <h2 class="section-title">Contact</h2>
+                        <h2 class="section-title">{% trans "Contact" %}</h2>
                     </div>
     
                     <div class="product-list" data-aos="fade-up">
@@ -46,33 +46,33 @@
                             <div class="container">
                                 <!-- Aloqa ma'lumotlari -->
                                 <div class="contact-info">
-                                    <h3>Biz bilan bog‘laning</h3>
-                                    <p>Bizga xabar yuborish uchun quyidagi formani to‘ldiring yoki quyidagi kontaktlar orqali bog‘laning:</p>
+                                    <h3>{% trans "Biz bilan bog‘laning" %}</h3>
+                                    <p>{% trans "Bizga xabar yuborish uchun quyidagi formani to‘ldiring yoki quyidagi kontaktlar orqali bog‘laning:" %}</p>
                                     <ul>
-                                        <li><strong>Email:</strong> info@example.com</li>
-                                        <li><strong>Telefon:</strong> +998 90 123 45 67</li>
-                                        <li><strong>Manzil:</strong> Toshkent sh., Amir Temur ko‘chasi, 123</li>
+                                        <li><strong>{% trans "Email:" %}</strong> {% trans "info@example.com" %}</li>
+                                        <li><strong>{% trans "Telefon:" %}</strong> +998 90 123 45 67</li>
+                                        <li><strong>{% trans "Manzil:" %}</strong> {% trans "Toshkent sh., Amir Temur ko‘chasi, 123" %}</li>
                                     </ul>
                                 </div>
     
                                 <!-- Kontakt formasi -->
                                 <div class="contact-form">
-                                    <h3>Xabar yuborish</h3>
+                                    <h3>{% trans "Xabar yuborish" %}</h3>
                                     <form action="/" method="POST">
                                         {% csrf_token %}
                                         <div class="form-group">
-                                            <label for="name">Ismingiz:</label>
+                                            <label for="name">{% trans "Ismingiz:" %}</label>
                                             <input type="text" id="name" name="name" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="email">Email:</label>
+                                            <label for="email">{% trans "Email:" %}</label>
                                             <input type="email" id="email" name="email" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="message">Xabar:</label>
+                                            <label for="message">{% trans "Xabar:" %}</label>
                                             <textarea id="message" name="message" rows="5" required></textarea>
                                         </div>
-                                        <button type="submit" class="submit-btn">Yuborish</button>
+                                        <button type="submit" class="submit-btn">{% trans "Yuborish" %}</button>
                                     </form>
                                 </div>
                             </div>

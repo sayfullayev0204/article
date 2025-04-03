@@ -1,8 +1,8 @@
+{% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Ro‘yxatdan o‘tish</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,7 +29,7 @@
 
 					<div class="container pattern-overlay" style="max-width: 400px;">
 							<div class="banner-content">   
-                            <h1 class="text-center">Ro‘yxatdan o‘tish</h1>
+                            <h1 class="text-center">{% trans "Ro‘yxatdan o‘tish" %}</h1>
                             {% if form.errors %}
                                 <div class="alert alert-danger" role="alert">
                                     {% for field in form %}
@@ -44,28 +44,28 @@
                             {% endif %}
                             <form method="post">
                                 {% csrf_token %}
-                                    <label for="id_given_name" class="form-label">Name</label>
+                                    <label for="id_given_name" class="form-label">{% trans "Name" %}</label>
                                     <input type="text" name="given_name" class="form-control" id="id_given_name">
 
-                                    <label for="id_family_name" class="form-label">Lastname</label>
+                                    <label for="id_family_name" class="form-label">{% trans "Lastname" %}</label>
                                     <input type="text" name="family_name" class="form-control" id="id_family_name">
 
                                     <label for="id_email" class="form-label">Email</label>
                                     <input type="text" name="email" class="form-control" id="id_email">
 
-                                    <label for="id_country" class="form-label">Country</label>
+                                    <label for="id_country" class="form-label">{% trans "Country" %}</label>
                                     <input type="text" name="country" class="form-control" id="id_country">
 
-                                    <label for="id_password" class="form-label">Password</label>
+                                    <label for="id_password" class="form-label">{% trans "Password" %}</label>
                                     <input type="text" name="password" class="form-control" id="id_password">
 
-                                    <label for="id_password_confirm" class="form-label">Confirm Password</label>
+                                    <label for="id_password_confirm" class="form-label">{% trans "Confirm Password" %}</label>
                                    <input type="text" name="password_confirm" class="form-control" id="id_password_confirm">
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100">Register</button>
+                                <button type="submit" class="btn btn-primary w-100">{% trans "Register" %}</button>
                             </form>
                             <p class="text-center mt-3">
-                                <a href="{% url 'login' %}" style="color: blue;">Login</a>
+                                <a href="{% url 'login' %}" style="color: blue;">{% trans "Login" %}</a>
                             </p>
                         </div><!--banner-content-->
                     </div><!--slider-item-->

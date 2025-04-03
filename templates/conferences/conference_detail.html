@@ -1,9 +1,9 @@
+{% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<title>Articles</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,7 +38,7 @@
         <div class="col-md-8">
             <div class="card mb-4">
                 <div class="card-header">
-                    <h5 class="mb-0">Konferensiya haqida</h5>
+                    <h5 class="mb-0">{% trans "Konferensiya haqida" %}</h5>
                 </div>
                 {% if conference.image %}
                     <img src="{{ conference.image.url }}" class="card-img-top" style="border-radius: 0px;" alt="{{ conference.title }}">
@@ -50,23 +50,23 @@
     
             <div class="card mb-4">
                 <div class="card-header">
-                    <h5 class="mb-0">Konferensiya ma’lumotlari</h5>
+                    <h5 class="mb-0">{% trans "Konferensiya ma’lumotlari" %}</h5>
                 </div>
                 <div class="card-body">
-                    <p><strong>O‘tkaziladigan joy:</strong> {{ conference.location }}</p>
-                    <p><strong>O‘tkazilish sanalari:</strong> {{ conference.start_date|date:"d.m.Y" }} - {{ conference.end_date|date:"d.m.Y" }}</p>
-                    <p><strong>Maqola yuborishning oxirgi muddati:</strong> {{ conference.submission_deadline|date:"d.m.Y" }}</p>
-                    <p><strong>Holati:</strong> 
+                    <p><strong>{% trans "O‘tkaziladigan joy:" %}</strong> {{ conference.location }}</p>
+                    <p><strong>{% trans "O‘tkazilish sanalari:" %}</strong> {{ conference.start_date|date:"d.m.Y" }} - {{ conference.end_date|date:"d.m.Y" }}</p>
+                    <p><strong>{% trans "Maqola yuborishning oxirgi muddati:" %}</strong> {{ conference.submission_deadline|date:"d.m.Y" }}</p>
+                    <p><strong>{% trans "Holati:" %}</strong> 
                         {% if conference.is_active %}
-                            <span class="badge bg-success">Faol</span>
+                            <span class="badge bg-success">{% trans "Faol" %}</span>
                         {% else %}
-                            <span class="badge bg-secondary">Faol emas</span>
+                            <span class="badge bg-secondary">{% trans "Faol emas" %}</span>
                         {% endif %}
                         
                         {% if conference.is_open_for_submission %}
-                            <span class="badge bg-primary">Maqola yuborish uchun ochiq</span>
+                            <span class="badge bg-primary">{% trans "Maqola yuborish uchun ochiq" %}</span>
                         {% else %}
-                            <span class="badge bg-warning text-dark">Maqola yuborish uchun yopiq</span>
+                            <span class="badge bg-warning text-dark">{% trans "Maqola yuborish uchun yopiq" %}</span>
                         {% endif %}
                     </p>
                 </div>
@@ -77,7 +77,7 @@
             {% if user.is_authenticated %}
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h5 class="mb-0">Ushbu konferensiya uchun sizning maqolalaringiz</h5>
+                        <h5 class="mb-0">{% trans "Ushbu konferensiya uchun sizning maqolalaringiz" %}</h5>
                     </div>
                     <div class="card-body">
                         {% if user_articles %}
@@ -87,17 +87,17 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <a href="{% url 'article_detail' article.pk %}">{{ article.title }}</a>
                                             <span class="badge {% if article.status == 'draft' %}bg-primary{% elif article.status == 'submitted' %}bg-info{% elif article.status == 'under_review' %}bg-warning{% elif article.status == 'accepted' %}bg-success{% elif article.status == 'rejected' %}bg-danger{% elif article.status == 'published' %}bg-primary{% endif %}">
-                                                {% if article.status == 'draft' %}Qoralama{% elif article.status == 'submitted' %}Yuborilgan{% elif article.status == 'under_review' %}Ko‘rib chiqilmoqda{% elif article.status == 'accepted' %}Qabul qilingan{% elif article.status == 'rejected' %}Rad etilgan{% elif article.status == 'published' %}Nashr qilingan{% endif %}
+                                                {% if article.status == 'draft' %}{% trans "Qoralama" %}{% elif article.status == 'submitted' %}{% trans "Yuborilgan" %}{% elif article.status == 'under_review' %}{% trans "Ko‘rib chiqilmoqda" %}{% elif article.status == 'accepted' %}{% trans "Qabul qilingan" %}{% elif article.status == 'rejected' %}{% trans "Rad etilgan" %}{% elif article.status == 'published' %}{% trans "Nashr qilingan" %}{% endif %}
                                             </span>
                                         </div>
-                                        <small class="text-muted">Yaratilgan: {{ article.created_at|date:"d.m.Y" }}</small>
+                                        <small class="text-muted">{% trans "Yaratilgan:" %} {{ article.created_at|date:"d.m.Y" }}</small>
                                     </li>
                                 {% endfor %}
                             </ul>
                         {% else %}
-                            <p class="text-muted">Sizda hali ushbu konferensiya uchun maqolalar yo‘q.</p>
+                            <p class="text-muted">{% trans "Sizda hali ushbu konferensiya uchun maqolalar yo‘q." %}</p>
                             {% if conference.is_open_for_submission %}
-                                <a href="{% url 'submit_to_conference' conference.pk %}" class="btn btn-primary">Maqola yuborish</a>
+                                <a href="{% url 'submit_to_conference' conference.pk %}" class="btn btn-primary">{% trans "Maqola yuborish" %}</a>
                             {% endif %}
                         {% endif %}
                     </div>
@@ -105,32 +105,32 @@
             {% else %}
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h5 class="mb-0">Maqola yuborish</h5>
+                        <h5 class="mb-0">{% trans "Maqola yuborish" %}</h5>
                     </div>
                     <div class="card-body">
-                        <p>Ushbu konferensiyaga maqola yuborish uchun avtorizatsiyadan o‘tish kerak.</p>
-                        <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary">Kirish</a>
-                        <a href="{% url 'register' %}" class="btn btn-outline-primary">Ro‘yxatdan o‘tish</a>
+                        <p>{% trans "Ushbu konferensiyaga maqola yuborish uchun avtorizatsiyadan o‘tish kerak." %}</p>
+                        <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary">{% trans "Kirish" %}</a>
+                        <a href="{% url 'register' %}" class="btn btn-outline-primary">{% trans "Ro‘yxatdan o‘tish" %}</a>
                     </div>
                 </div>
             {% endif %}
     
             <div class="card">
                 <div class="card-header">
-                    <h5 class="mb-0">Muhim sanalar</h5>
+                    <h5 class="mb-0">{% trans "Muhim sanalar" %}</h5>
                 </div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Maqola yuborishning oxirgi muddati
+                            {% trans "Maqola yuborishning oxirgi muddati" %}
                             <span class="badge bg-primary rounded-pill">{{ conference.submission_deadline|date:"d.m.Y" }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Konferensiya boshlanishi
+                            {% trans "Konferensiya boshlanishi" %}
                             <span class="badge bg-primary rounded-pill">{{ conference.start_date|date:"d.m.Y" }}</span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Konferensiya tugashi
+                            {% trans "Konferensiya tugashi" %}
                             <span class="badge bg-primary rounded-pill">{{ conference.end_date|date:"d.m.Y" }}</span>
                         </li>
                     </ul>

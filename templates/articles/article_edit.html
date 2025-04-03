@@ -1,9 +1,9 @@
+{% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<title>Articles</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -560,10 +560,10 @@
     <section class="py-5 my-=0">
         <div class="container">
             <div class="header">
-                <h1>Maqola yaratish: <span id="current-step-title">Tafsilotlar</span></h1>
+                <h1>{% trans "Maqola yaratish:" %} <span id="current-step-title">{% trans "Tafsilotlar" %}</span></h1>
                 <div class="header-buttons">
-                    <a href="{% url 'profile' %}?tab=business" class="save-later-btn">Mening maqolalarim</a>
-                    <button id="save-later-top" class="save-later-btn">Keyinroq saqlash</button>
+                    <a href="{% url 'profile' %}?tab=business" class="save-later-btn">{% trans "Mening maqolalarim" %}</a>
+                    <button id="save-later-top" class="save-later-btn">{% trans "Keyinroq saqlash" %}</button>
                 </div>
             </div>
 
@@ -573,35 +573,35 @@
                         <span class="checkmark">✓</span>
                         <span class="step-number">1</span>
                     </div>
-                    <div class="step-text">Tafsilotlar</div>
+                    <div class="step-text">{% trans "Tafsilotlar" %}</div>
                 </div>
                 <div class="step" data-step="2">
                     <div class="step-circle">
                         <span class="checkmark">✓</span>
                         <span class="step-number">2</span>
                     </div>
-                    <div class="step-text">Fayllar</div>
+                    <div class="step-text">{% trans "Fayllar" %}</div>
                 </div>
                 <div class="step" data-step="3">
                     <div class="step-circle">
                         <span class="checkmark">✓</span>
                         <span class="step-number">3</span>
                     </div>
-                    <div class="step-text">Mualliflar</div>
+                    <div class="step-text">{% trans "Mualliflar" %}</div>
                 </div>
                 <div class="step" data-step="4">
                     <div class="step-circle">
                         <span class="checkmark">✓</span>
                         <span class="step-number">4</span>
                     </div>
-                    <div class="step-text">Tahrirchilar uchun</div>
+                    <div class="step-text">{% trans "Tahrirchilar uchun" %}</div>
                 </div>
                 <div class="step" data-step="5">
                     <div class="step-circle">
                         <span class="checkmark">✓</span>
                         <span class="step-number">5</span>
                     </div>
-                    <div class="step-text">Ko‘rib chiqish</div>
+                    <div class="step-text">{% trans "Ko‘rib chiqish" %}</div>
                 </div>
             </div>
 
@@ -611,13 +611,13 @@
                 <div class="form-container">
                     <!-- Шаг 1: Детали -->
                     <div class="form-step active" id="step-1">
-                        <h2>Tafsilotlar</h2>
+                        <h2>{% trans "Tafsilotlar" %}</h2>
                         
                         {% if not conference %}
                         <div class="form-group">
-                            <label for="id_conference">Konferensiya*</label>
+                            <label for="id_conference">{% trans "Konferensiya*" %}</label>
                             <select name="conference" id="id_conference" class="form-control">
-                                <option value="">-- Konferensiyani tanlang --</option>
+                                <option value="">{% trans "-- Konferensiyani tanlang --" %}</option>
                                 {% for conference in article_form.fields.conference.queryset %}
                                     <option value="{{ conference.id }}">{{ conference.title }}</option>
                                 {% endfor %}
@@ -625,11 +625,11 @@
                             {% if article_form.conference.errors %}
                                 <div class="invalid-feedback d-block">{{ article_form.conference.errors }}</div>
                             {% endif %}
-                            <div class="form-text">Maqola topshirishni xohlagan konferensiyani tanlang.</div>
+                            <div class="form-text">{% trans "Maqola topshirishni xohlagan konferensiyani tanlang." %}</div>
                         </div>
                         
                         <div id="conference_detail_link" class="mt-2">
-                            <a href="#" id="detail_link" class="btn btn-info" style="display: none;">Konferensiya haqida →</a>
+                            <a href="#" id="detail_link" class="btn btn-info" style="display: none;">{% trans "Konferensiya haqida →" %}</a>
                         </div>
                         
                         <script>
@@ -649,13 +649,13 @@
                         {% else %}
                             <input type="hidden" name="conference" value="{{ conference.id }}">
                             <div class="form-group">
-                                <label>Konferensiya</label>
+                                <label>{% trans "Konferensiya" %}</label>
                                 <p>{{ conference.title }}</p>
                             </div>
                         {% endif %}
                         
                         <div class="form-group">
-                            <label for="id_title">Sarlavha*</label>
+                            <label for="id_title">{% trans "Sarlavha*" %}</label>
                             {{ article_form.title }}
                             {% if article_form.title.errors %}
                                 <div class="invalid-feedback d-block">{{ article_form.title.errors }}</div>
@@ -663,7 +663,7 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="id_abstract">Annotatsiya*</label>
+                            <label for="id_abstract">{% trans "Annotatsiya*" %}</label>
                             {{ article_form.abstract }}
                             {% if article_form.abstract.errors %}
                                 <div class="invalid-feedback d-block">{{ article_form.abstract.errors }}</div>
@@ -671,7 +671,7 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="id_keywords">Kalit so‘zlar (vergul bilan ajratilgan)</label>
+                            <label for="id_keywords">{% trans "Kalit so‘zlar (vergul bilan ajratilgan)" %}</label>
                             {{ article_form.keywords }}
                             {% if article_form.keywords.errors %}
                                 <div class="invalid-feedback d-block">{{ article_form.keywords.errors }}</div>
@@ -679,7 +679,7 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="id_references">Havolalar</label>
+                            <label for="id_references">{% trans "Havolalar" %}</label>
                             {{ article_form.references }}
                             {% if article_form.references.errors %}
                                 <div class="invalid-feedback d-block">{{ article_form.references.errors }}</div>
@@ -688,7 +688,7 @@
                         
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <label for="id_start_date">Boshlanish sanasi*</label>
+                                <label for="id_start_date">{% trans "Boshlanish sanasi*" %}</label>
                                 {{ article_form.start_date }}
                                 {% if article_form.start_date.errors %}
                                     <div class="invalid-feedback d-block">{{ article_form.start_date.errors }}</div>
@@ -696,7 +696,7 @@
                             </div>
                             
                             <div class="col-md-6 form-group">
-                                <label for="id_end_date">Tugash sanasi</label>
+                                <label for="id_end_date">{% trans "Tugash sanasi" %}</label>
                                 {{ article_form.end_date }}
                                 {% if article_form.end_date.errors %}
                                     <div class="invalid-feedback d-block">{{ article_form.end_date.errors }}</div>
@@ -709,16 +709,16 @@
                     <div class="form-step" id="step-2">
                         <div class="upload-section">
                             <div class="upload-info">
-                                <h2>Fayllarni yuklash</h2>
-                                <p>Maqolangiz bilan bog‘liq fayllarni yuklang. Siz maqola matnini, ma’lumotlarni, rasmlarni va tahrirchilarga ishni baholashda yordam beradigan boshqa materiallarni yuklashingiz mumkin.</p>
+                                <h2>{% trans "Fayllarni yuklash" %}</h2>
+                                <p>{% trans "Maqolangiz bilan bog‘liq fayllarni yuklang. Siz maqola matnini, ma’lumotlarni, rasmlarni va tahrirchilarga ishni baholashda yordam beradigan boshqa materiallarni yuklashingiz mumkin." %}</p>
                             </div>
                             <div class="upload-area">
-                                <h3>Fayllar</h3>
+                                <h3>{% trans "Fayllar" %}</h3>
                                 
                                 <!-- Существующие файлы (при редактировании) -->
                                 {% if article.files.all %}
                                 <div class="existing-files">
-                                    <h4>Yuklangan fayllar</h4>
+                                    <h4>{% trans "Yuklangan fayllar" %}</h4>
                                     {% for article_file in article.files.all %}
                                     <div class="existing-file-item" id="existing-file-{{ article_file.id }}">
                                         <div class="file-info">
@@ -726,11 +726,11 @@
                                             {% if article_file.description %}
                                             <p>{{ article_file.description }}</p>
                                             {% endif %}
-                                            <small>Turi: {{ article_file.get_file_type_display }}</small>
+                                            <small>{% trans "Turi:" %} {{ article_file.get_file_type_display }}</small>
                                         </div>
                                         <div class="file-actions">
-                                            <a href="{{ article_file.file.url }}" class="download-file-btn" style="align-items: center; justify-content: center;" target="_blank">Yuklab olish</a>
-                                            <button type="button" class="remove-file-btn" data-file-id="{{ article_file.id }}">O‘chirish</button>
+                                            <a href="{{ article_file.file.url }}" class="download-file-btn" style="align-items: center; justify-content: center;" target="_blank">{% trans "Yuklab olish" %}</a>
+                                            <button type="button" class="remove-file-btn" data-file-id="{{ article_file.id }}">{% trans "O‘chirish" %}</button>
                                         </div>
                                     </div>
                                     {% endfor %}
@@ -741,7 +741,7 @@
                                     <!-- Fayllar shu yerda ko‘rsatiladi -->
                                 </div>
                                 <input type="file" name="files" id="id_files" style="display: none;" multiple>
-                                <button type="button" id="add-file-btn" class="add-file-btn">Fayl qo‘shish</button>
+                                <button type="button" id="add-file-btn" class="add-file-btn">{% trans "Fayl qo‘shish" %}</button>
                                 
                                 <!-- O‘chirilgan fayllar IDlarini saqlash uchun yashirin maydon -->
                                 <input type="hidden" name="deleted_files" id="deleted_files" value="">
@@ -753,24 +753,24 @@
                     <div class="form-step" id="step-3">
                         <div class="contributors-section">
                             <div class="contributors-info">
-                                <h2>Mualliflar</h2>
-                                <p>Ushbu maqolaga katta hissa qo‘shgan barcha mualliflarni qo‘shing. Agar muallif ko‘rsatilmagan bo‘lsa, yuboruvchi ular nomidan maqola uchun to‘liq javobgarlikni o‘z zimmasiga oladi. Barcha mualliflar maqola yuborilishiga va ular muallif sifatida ko‘rsatilganiga rozilik berishlari kerak.</p>
+                                <h2>{% trans "Mualliflar" %}</h2>
+                                <p>{% trans "Ushbu maqolaga katta hissa qo‘shgan barcha mualliflarni qo‘shing. Agar muallif ko‘rsatilmagan bo‘lsa, yuboruvchi ular nomidan maqola uchun to‘liq javobgarlikni o‘z zimmasiga oladi. Barcha mualliflar maqola yuborilishiga va ular muallif sifatida ko‘rsatilganiga rozilik berishlari kerak." %}</p>
                             </div>
                             <div class="contributors-area">
                                 <div id="contributors-list">
                                     <!-- Mualliflar shu yerda ko‘rsatiladi -->
                                 </div>
-                                <button type="button" id="add-contributor-btn" class="add-contributor-btn">Muallif qo‘shish</button>
+                                <button type="button" id="add-contributor-btn" class="add-contributor-btn">{% trans "Muallif qo‘shish" %}</button>
                             </div>
                         </div>
                     </div>
                     
                     <!-- Шаг 4: Для редакторов -->
                     <div class="form-step" id="step-4">
-                        <h2>Tahrirchilar uchun</h2>
+                        <h2>{% trans "Tahrirchilar uchun" %}</h2>
                         <div class="form-group">
-                            <label for="id_cover_letter">Mavzu</label>
-                            <p>Maqolangiz mavzusini tasvirlaydigan kalit so‘zlar, iboralar yoki tasnif kodlarini ko‘rsating.</p>
+                            <label for="id_cover_letter">{% trans "Mavzu" %}</label>
+                            <p>{% trans "Maqolangiz mavzusini tasvirlaydigan kalit so‘zlar, iboralar yoki tasnif kodlarini ko‘rsating." %}</p>
                             {{ article_form.cover_letter }}
                             {% if article_form.cover_letter.errors %}
                                 <div class="invalid-feedback d-block">{{ article_form.cover_letter.errors }}</div>
@@ -778,8 +778,8 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="id_special_instructions">Tahrirchi uchun izohlar</label>
-                            <p>Maqolangizni baholashda tahrirchilar bilishi kerak deb hisoblagan har qanday ma’lumotni qo‘shing.</p>
+                            <label for="id_special_instructions">{% trans "Tahrirchi uchun izohlar" %}</label>
+                            <p>{% trans "Maqolangizni baholashda tahrirchilar bilishi kerak deb hisoblagan har qanday ma’lumotni qo‘shing." %}</p>
                             {{ article_form.special_instructions }}
                             {% if article_form.special_instructions.errors %}
                                 <div class="invalid-feedback d-block">{{ article_form.special_instructions.errors }}</div>
@@ -789,22 +789,22 @@
                     
                     <!-- Шаг 5: Обзор -->
                     <div class="form-step" id="step-5">
-                        <h2>Ko‘rib chiqish va yuborish</h2>
+                        <h2>{% trans "Ko‘rib chiqish va yuborish" %}</h2>
                         <p class="review-intro">
-                            Bu yuborishni yakunlashdan oldin kiritgan ma’lumotlaringizning qisqacha ko‘rinishi. Bu yerda ko‘rsatilgan har qanday tafsilotni har bir bo‘limning yuqori qismidagi "Tahrirlash" tugmasini bosish orqali o‘zgartirishingiz mumkin.
+                            {% trans "Bu yuborishni yakunlashdan oldin kiritgan ma’lumotlaringizning qisqacha ko‘rinishi. Bu yerda ko‘rsatilgan har qanday tafsilotni har bir bo‘limning yuqori qismidagi 'Tahrirlash' tugmasini bosish orqali o‘zgartirishingiz mumkin." %}
                         </p>
                         <p class="review-intro">
-                            Yuborish tugallangandan so‘ng, bizning tahririyat jamoamiz a’zolaridan biri uni ko‘rib chiqish uchun tayinlanadi. Iltimos, kiritgan ma’lumotlaringiz iloji boricha aniq ekanligiga ishonch hosil qiling.
+                            {% trans "Yuborish tugallangandan so‘ng, bizning tahririyat jamoamiz a’zolaridan biri uni ko‘rib chiqish uchun tayinlanadi. Iltimos, kiritgan ma’lumotlaringiz iloji boricha aniq ekanligiga ishonch hosil qiling." %}
                         </p>
 
                         <div id="review-errors" class="error-message" style="display: none;">
-                            <span class="error-icon">⚠</span> Yuborishdan oldin tuzatilishi kerak bo‘lgan bir yoki bir nechta muammolar mavjud. Iltimos, quyidagi ma’lumotlarni ko‘rib chiqing va so‘ralgan o‘zgartirishlarni kiriting.
+                            <span class="error-icon">⚠</span> {% trans "Yuborishdan oldin tuzatilishi kerak bo‘lgan bir yoki bir nechta muammolar mavjud. Iltimos, quyidagi ma’lumotlarni ko‘rib chiqing va so‘ralgan o‘zgartirishlarni kiriting." %}
                         </div>
 
                         <div class="review-section">
                             <div class="review-header">
-                                <h3>Tafsilotlar</h3>
-                                <button type="button" class="edit-btn" data-section="1">Tahrirlash</button>
+                                <h3>{% trans "Tafsilotlar" %}</h3>
+                                <button type="button" class="edit-btn" data-section="1">{% trans "Tahrirlash" %}</button>
                             </div>
                             <div class="review-content" id="review-details">
                                 <!-- JavaScript bilan to‘ldiriladi -->
@@ -813,8 +813,8 @@
 
                         <div class="review-section">
                             <div class="review-header">
-                                <h3>Fayllar</h3>
-                                <button type="button" class="edit-btn" data-section="2">Tahrirlash</button>
+                                <h3>{% trans "Fayllar" %}</h3>
+                                <button type="button" class="edit-btn" data-section="2">{% trans "Tahrirlash" %}</button>
                             </div>
                             <div class="review-content" id="review-files">
                                 <!-- JavaScript bilan to‘ldiriladi -->
@@ -823,8 +823,8 @@
 
                         <div class="review-section">
                             <div class="review-header">
-                                <h3>Mualliflar</h3>
-                                <button type="button" class="edit-btn" data-section="3">Tahrirlash</button>
+                                <h3>{% trans "Mualliflar" %}</h3>
+                                <button type="button" class="edit-btn" data-section="3">{% trans "Tahrirlash" %}</button>
                             </div>
                             <div class="review-content" id="review-contributors">
                                 <!-- JavaScript bilan to‘ldiriladi -->
@@ -833,8 +833,8 @@
 
                         <div class="review-section">
                             <div class="review-header">
-                                <h3>Tahrirchilar uchun</h3>
-                                <button type="button" class="edit-btn" data-section="4">Tahrirlash</button>
+                                <h3>{% trans "Tahrirchilar uchun" %}</h3>
+                                <button type="button" class="edit-btn" data-section="4">{% trans "Tahrirlash" %}</button>
                             </div>
                             <div class="review-content" id="review-editors">
                                 <!-- JavaScript bilan to‘ldiriladi -->
@@ -844,12 +844,12 @@
                 </div>
 
                 <div class="form-navigation">
-                    <button type="button" id="back-btn" class="back-btn">Orqaga</button>
+                    <button type="button" id="back-btn" class="back-btn">{% trans "Orqaga" %}</button>
                     <div class="right-buttons">
-                        <span id="last-saved">Oxirgi saqlash: Hech qachon</span>
-                        <button type="button" id="save-later-bottom" class="save-later-btn">Keyinroq saqlash</button>
-                        <button type="button" id="continue-btn" class="continue-btn">Davom etish</button>
-                        <button type="submit" id="submit-btn" style="display: none;">Yuborish</button>
+                        <span id="last-saved">{% trans "Oxirgi saqlash: Hech qachon" %}</span>
+                        <button type="button" id="save-later-bottom" class="save-later-btn">{% trans "Keyinroq saqlash" %}</button>
+                        <button type="button" id="continue-btn" class="continue-btn">{% trans "Davom etish" %}</button>
+                        <button type="submit" id="submit-btn" style="display: none;">{% trans "Yuborish" %}</button>
                     </div>
                 </div>
             </form>
@@ -861,57 +861,57 @@
         <div id="contributor-modal" class="modal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>Muallif qo‘shish</h2>
+                    <h2>{% trans "Muallif qo‘shish" %}</h2>
                     <span class="close-modal">×</span>
                 </div>
                 <div class="modal-body">
                     <form id="contributor-form">
                         <div class="form-group">
-                            <label for="given-name">Ism <span class="required">*</span></label>
+                            <label for="given-name">{% trans "Ism" %} <span class="required">*</span></label>
                             <input type="text" id="given-name" name="given-name" class="form-control" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="family-name">Familiya</label>
+                            <label for="family-name">{% trans "Familiya" %}</label>
                             <input type="text" id="family-name" name="family-name" class="form-control">
                         </div>
                         
                         <div class="form-group">
-                            <label for="preferred-name">Afzal ism</label>
-                            <p class="field-description">Muallif nashr qilingan ishda ko‘rsatilishi kerak bo‘lgan to‘liq ismini kiriting. Masalan: Prof. Ivan P. Sidorov</p>
+                            <label for="preferred-name">{% trans "Afzal ism" %}</label>
+                            <p class="field-description">{% trans "Muallif nashr qilingan ishda ko‘rsatilishi kerak bo‘lgan to‘liq ismini kiriting. Masalan: Prof. Ivan P. Sidorov" %}</p>
                             <input type="text" id="preferred-name" name="preferred-name" class="form-control">
                         </div>
                         
                         <div class="form-group">
-                            <label for="contributor-email">Email <span class="required">*</span></label>
+                            <label for="contributor-email">{% trans "Email" %} <span class="required">*</span></label>
                             <input type="email" id="contributor-email" name="contributor-email" class="form-control" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="country">Davlat <span class="required">*</span></label>
+                            <label for="country">{% trans "Davlat" %} <span class="required">*</span></label>
                             <select id="country" name="country" class="form-control" required>
-                                <option value="">Davlatni tanlang</option>
-                                <option value="RU">Rossiya</option>
-                                <option value="UZ">O‘zbekiston</option>
-                                <option value="KZ">Qozog‘iston</option>
-                                <option value="US">AQSh</option>
-                                <option value="GB">Buyuk Britaniya</option>
+                                <option value="">{% trans "Davlatni tanlang" %}</option>
+                                <option value="RU">{% trans "Rossiya" %}</option>
+                                <option value="UZ">{% trans "O‘zbekiston" %}</option>
+                                <option value="KZ">{% trans "Qozog‘iston" %}</option>
+                                <option value="US">{% trans "AQSh" %}</option>
+                                <option value="GB">{% trans "Buyuk Britaniya" %}</option>
                                 <!-- Qo‘shimcha davlatlarni kerak bo‘lsa qo‘shing -->
                             </select>
                         </div>
                         
                         <div class="form-group">
-                            <label for="homepage">Shaxsiy sahifa URL</label>
+                            <label for="homepage">{% trans "Shaxsiy sahifa URL" %}</label>
                             <input type="url" id="homepage" name="homepage" class="form-control">
                         </div>
                         
                         <div class="form-group">
-                            <label for="orcid">ORCID ID</label>
+                            <label for="orcid">{% trans "ORCID ID" %}</label>
                             <input type="text" id="orcid" name="orcid" class="form-control">
                         </div>
                         
                         <div class="form-group">
-                            <label for="bio">Biografiya (masalan, kafedra va lavozim)</label>
+                            <label for="bio">{% trans "Biografiya (masalan, kafedra va lavozim)" %}</label>
                             <div class="text-editor-toolbar">
                                 <button type="button" class="toolbar-btn bold-btn">B</button>
                                 <button type="button" class="toolbar-btn italic-btn">I</button>
@@ -923,33 +923,33 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="affiliation">Tashkilot (muassasa)</label>
+                            <label for="affiliation">{% trans "Tashkilot (muassasa)" %}</label>
                             <input type="text" id="affiliation" name="affiliation" class="form-control">
                         </div>
                         
                         <div class="form-group">
-                            <label>Muallifning roli</label>
+                            <label>{% trans "Muallifning roli" %}</label>
                             <div class="radio-group">
                                 <label class="radio-label">
-                                    <input type="radio" name="role" value="author" checked> Muallif
+                                    <input type="radio" name="role" value="author" checked> {% trans "Muallif" %}
                                 </label>
                                 <label class="radio-label">
-                                    <input type="radio" name="role" value="translator"> Tarjimon
+                                    <input type="radio" name="role" value="translator"> {% trans "Tarjimon" %}
                                 </label>
                             </div>
                         </div>
                         
                         <div class="form-group">
-                            <label>Nashrlar ro‘yxati</label>
+                            <label>{% trans "Nashrlar ro‘yxati" %}</label>
                             <label class="checkbox-label">
                                 <input type="checkbox" id="include-in-lists" name="include-in-lists" checked>
-                                Ushbu muallifni nashrlar ro‘yxatida mualliflar identifikatsiyasida kiritish.
+                                {% trans "Ushbu muallifni nashrlar ro‘yxatida mualliflar identifikatsiyasida kiritish." %}
                             </label>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="save-contributor-btn" class="save-btn">Saqlash</button>
+                    <button type="button" id="save-contributor-btn" class="save-btn">{% trans "Saqlash" %}</button>
                 </div>
             </div>
         </div>
@@ -1051,7 +1051,7 @@
         document.querySelectorAll('.remove-file-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const fileId = this.getAttribute('data-file-id');
-                if (confirm('Haqiqatan ham bu faylni oʻchirib tashlamoqchimisiz?')) {
+                if (confirm("{% trans 'Haqiqatan ham bu faylni oʻchirib tashlamoqchimisiz?' %}")) {
                     // Добавляем ID файла в массив удаленных файлов
                     deletedFiles.push(fileId);
                     deletedFilesInput.value = deletedFiles.join(',');
@@ -1122,11 +1122,8 @@
             const stepTitles = ["Tafsilotlar", "Fayllarni yuklash", "Mualliflar", "Muharrirlar uchun", "Umumiy ko'rinish"];
             currentStepTitle.textContent = stepTitles[currentStep - 1];
 
-            // Обновление видимости кнопки "Назад"
+            continueBtn.textContent = currentStep === 5 ? "{% trans 'Yuborish' %}" : "{% trans 'Davom etish' %}";
             backBtn.style.visibility = currentStep === 1 ? "hidden" : "visible";
-
-            // Обновление текста кнопки "Продолжить"
-            continueBtn.textContent = currentStep === 5 ?"Yuborish": "Davom etish";
 
             // Заполнение полей формы сохраненными данными
             populateFormFields();
@@ -1169,7 +1166,7 @@
             fileList.innerHTML = "";
             if (!formData.files || formData.files.length === 0) {
                 const emptyMessage = document.createElement("p");
-                emptyMessage.textContent = "Yangi fayllar hali yuklanmagan.";
+                emptyMessage.textContent = "{% trans 'Yangi fayllar hali yuklanmagan.' %}";
                 fileList.appendChild(emptyMessage);
             } else {
                 formData.files.forEach((file, index) => {
@@ -1183,7 +1180,7 @@
 
                     const removeButton = document.createElement("button");
                     removeButton.type = "button";
-                    removeButton.textContent = "Oʻchirish";
+                    removeButton.textContent = "{% trans 'Oʻchirish' %}";
                     removeButton.className = "remove-file-btn";
                     removeButton.dataset.index = index;
                     removeButton.addEventListener("click", function() {
@@ -1195,7 +1192,6 @@
                 });
             }
         }
-
         function handleFileSelection() {
             if (this.files.length > 0) {
                 for (let i = 0; i < this.files.length; i++) {
@@ -1220,13 +1216,10 @@
         }
 
         function renderContributorsList() {
-            // Очистка существующего списка авторов
             contributorsList.innerHTML = "";
-
-            // Добавление сохраненных авторов
             if (!formData.contributors || formData.contributors.length === 0) {
                 const emptyMessage = document.createElement("p");
-                emptyMessage.textContent = "Mualliflar hali qo'shilmagan. Muallifni qo'shish uchun 'Muallif qo'shish' tugmasini bosing.";
+                emptyMessage.textContent = "{% trans 'Mualliflar hali qoshilmagan. Muallifni qoshish uchun Muallif qoshish tugmasini bosing.' %}";
                 contributorsList.appendChild(emptyMessage);
             } else {
                 formData.contributors.forEach((contributor, index) => {
@@ -1237,12 +1230,12 @@
                     const displayName = contributor.preferredName || name;
 
                     const heading = document.createElement("h3");
-                    heading.textContent = index === 0 ? "Bosh muallif: " + displayName : displayName;
+                    heading.textContent = index === 0 ? "{% trans 'Bosh muallif' %}: " + displayName : displayName;
 
                     const removeBtn = document.createElement("button");
                     removeBtn.type = "button";
                     removeBtn.className = "remove-contributor";
-                    removeBtn.textContent = "Oʻchirish";
+                    removeBtn.textContent = "{% trans 'Oʻchirish' %}";
                     removeBtn.dataset.index = index;
                     removeBtn.addEventListener("click", function() {
                         removeContributor(parseInt(this.dataset.index));
@@ -1250,20 +1243,20 @@
 
                     const emailInfo = document.createElement("div");
                     emailInfo.className = "contributor-info";
-                    emailInfo.innerHTML = '<span class="contributor-label">Email:</span> ' + contributor.email;
+                    emailInfo.innerHTML = '<span class="contributor-label">{% trans "Email" %}:</span> ' + contributor.email;
 
                     const affiliationInfo = document.createElement("div");
                     affiliationInfo.className = "contributor-info";
-                    affiliationInfo.innerHTML = '<span class="contributor-label">Tashkilot:</span> ' + (contributor.affiliation || "Belgilanmagan");
+                    affiliationInfo.innerHTML = '<span class="contributor-label">{% trans "Tashkilot" %}:</span> ' + (contributor.affiliation || "{% trans 'Belgilanmagan' %}");
 
                     const roleInfo = document.createElement("div");
                     roleInfo.className = "contributor-info";
-                    roleInfo.innerHTML = '<span class="contributor-label">Rol:</span> ' + (contributor.role === "translator" ? "Tarjimon": "Muallif");
+                    roleInfo.innerHTML = '<span class="contributor-label">{% trans "Rol" %}:</span> ' + (contributor.role === "translator" ? "{% trans 'Tarjimon' %}" : "{% trans 'Muallif' %}");
 
                     const editBtn = document.createElement("button");
                     editBtn.type = "button";
                     editBtn.className = "edit-contributor-btn";
-                    editBtn.textContent = "Tahrirlash";
+                    editBtn.textContent = "{% trans 'Tahrirlash' %}";
                     editBtn.dataset.index = index;
                     editBtn.addEventListener("click", function() {
                         editContributor(parseInt(this.dataset.index));
@@ -1335,22 +1328,22 @@
             const country = document.getElementById("country").value;
 
             if (!givenName) {
-                alert("Ism talab qilinadi.");
+                alert("{% trans 'Ism talab qilinadi.' %}");
                 return;
             }
 
             if (!email) {
-                alert("Elektron pochta kerak.");
+                alert("{% trans 'Elektron pochta kerak.' %}");
                 return;
             }
 
             if (!validateEmail(email)) {
-                alert("Yaroqli elektron pochta manzilini kiriting.");
+                alert("{% trans 'Yaroqli elektron pochta manzilini kiriting.' %}");
                 return;
             }
 
             if (!country) {
-                alert("Mamlakat talab qilinadi.");
+                alert("{% trans 'Mamlakat talab qilinadi.' %}");
                 return;
             }
 
@@ -1391,7 +1384,7 @@
             closeContributorModal();
 
             // Показ подтверждения
-            alert("Muallif muvaffaqiyatli saqlandi!");
+            alert("{% trans 'Muallif muvaffaqiyatli saqlandi!' %}");
         }
 
         function editContributor(index) {
@@ -1399,7 +1392,7 @@
         }
 
         function removeContributor(index) {
-            if (confirm("Haqiqatan ham bu muallifni olib tashlamoqchimisiz?")) {
+            if (confirm("{% trans 'Haqiqatan ham bu muallifni olib tashlamoqchimisiz?' %}")) {
                 formData.contributors.splice(index, 1);
                 renderContributorsList();
                 saveFormData(false);
@@ -1407,35 +1400,29 @@
         }
 
         function generateReviewContent() {
-            // Проверка на ошибки
-            let hasErrors = false;
-
-            // Раздел деталей
             reviewDetailsSection.innerHTML = "";
-
             if (!formData.details.title) {
-                addReviewError(reviewDetailsSection, "Sarlavha kerak.");
+                addReviewError(reviewDetailsSection, "{% trans 'Sarlavha kerak.' %}");
                 hasErrors = true;
             } else {
-                addReviewItem(reviewDetailsSection, "Sarlavha", formData.details.title);
+                addReviewItem(reviewDetailsSection, "{% trans 'Sarlavha' %}", formData.details.title);
             }
 
             if (!formData.details.abstract) {
-                addReviewError(reviewDetailsSection, "Izoh", "Bu maydon shart.");
+                addReviewError(reviewDetailsSection, "{% trans 'Bu maydon shart.' %}", "{% trans 'Izoh' %}");
                 hasErrors = true;
             } else {
-                addReviewItem(reviewDetailsSection, "Izoh", formData.details.abstract);
+                addReviewItem(reviewDetailsSection, "{% trans 'Izoh' %}", formData.details.abstract);
             }
 
             if (!formData.details.keywords) {
-                addReviewItem(reviewDetailsSection, "Kalit so'zlar", "belgilanmagan");
+                addReviewItem(reviewDetailsSection, "{% trans 'Kalit sozlar' %}", "{% trans 'belgilanmagan' %}");
             } else {
-                addReviewItem(reviewDetailsSection, "Kalit so'zlar", formData.details.keywords);
+                addReviewItem(reviewDetailsSection, "{% trans 'Kalit sozlar' %}", formData.details.keywords);
             }
-
-            addReviewItem(reviewDetailsSection, "Ссылки", formData.details.references || "belgilanmagan");
-            addReviewItem(reviewDetailsSection, "boshlanish sanasi", formData.details.startDate || "Belgilanmagan");
-            addReviewItem(reviewDetailsSection, "Tugash sanasi", formData.details.endDate || "Belgilanmagan");
+            addReviewItem(reviewDetailsSection, "{% trans 'Ssilka' %}", formData.details.references || "{% trans 'belgilanmagan' %}");
+            addReviewItem(reviewDetailsSection, "{% trans 'boshlanish sanasi' %}", formData.details.startDate || "{% trans 'Belgilanmagan' %}");
+            addReviewItem(reviewDetailsSection, "{% trans 'Tugash sanasi' %}", formData.details.endDate || "{% trans 'Belgilanmagan' %}");
 
             // Раздел файлов
             reviewFilesSection.innerHTML = "";
@@ -1445,7 +1432,7 @@
             const hasNewFiles = formData.files && formData.files.length > 0;
 
             if (!hasExistingFiles && !hasNewFiles) {
-                addReviewError(reviewFilesSection, "Siz kamida bitta maqola faylini yuklashingiz kerak.");
+                addReviewError(reviewFilesSection, "{% trans 'Siz kamida bitta maqola faylini yuklashingiz kerak.' %}");
                 hasErrors = true;
             } else {
                 // Существующие файлы
@@ -1455,7 +1442,7 @@
                     
                     const existingFilesLabel = document.createElement("div");
                     existingFilesLabel.className = "review-label";
-                    existingFilesLabel.textContent = "Mavjud fayllar";
+                    existingFilesLabel.textContent = "{% trans 'Mavjud fayllar' %}";
                     
                     const existingFilesValue = document.createElement("div");
                     existingFilesValue.className = "review-value";
@@ -1483,7 +1470,7 @@
                     
                     const newFilesLabel = document.createElement("div");
                     newFilesLabel.className = "review-label";
-                    newFilesLabel.textContent = "Yangi fayllar";
+                    newFilesLabel.textContent ="{% trans 'Yangi fayllar' %}";
                     
                     const newFilesValue = document.createElement("div");
                     newFilesValue.className = "review-value";
@@ -1506,11 +1493,11 @@
             reviewContributorsSection.innerHTML = "";
 
             if (!formData.contributors || formData.contributors.length === 0) {
-                addReviewError(reviewContributorsSection, "Ushbu maqola uchun mualliflar qo'shilmagan.");
+                addReviewError(reviewContributorsSection,"{% trans 'Ushbu maqola uchun mualliflar qoshilmagan.' %}");
                 hasErrors = true;
             } else {
                 formData.contributors.forEach((contributor, index) => {
-                    const contributorTitle = index === 0 ? "Birlamchi muallif": `Qo'shimcha muallif ${index}`;
+                    const contributorTitle = index === 0 ? "{% trans 'Birlamchi muallif' %}" : `{% trans "Qo'shimcha muallif" %} ${index}`;
                     const name = contributor.givenName + (contributor.familyName ? " " + contributor.familyName : "");
                     const displayName = contributor.preferredName || name;
 
@@ -1542,8 +1529,8 @@
             // Раздел для редакторов
             reviewEditorsSection.innerHTML = "";
 
-            addReviewItem(reviewEditorsSection, "Mavzu", formData.editors.coverLetter || "Belgilanmagan");
-            addReviewItem(reviewEditorsSection, "Muharrir uchun sharhlar", formData.editors.specialInstructions || "belgilanmagan");
+            addReviewItem(reviewEditorsSection, "{% trans 'Mavzu' %}", formData.editors.coverLetter || "{% trans 'Belgilanmagan' %}");
+            addReviewItem(reviewEditorsSection, "{% trans 'Muharrir uchun sharhlar' %}", formData.editors.specialInstructions || "{% trans 'belgilanmagan' %}");
 
             // Показ/скрытие сообщения об ошибке
             if (hasErrors) {
@@ -1648,34 +1635,30 @@
         }
 
         function validateCurrentStep() {
-            // Простая валидация для обязательных полей
-            if (currentStep === 1) {
-                const title = document.getElementById("id_title").value.trim();
-                const abstract = document.getElementById("id_abstract").value.trim();
-                const startDate = document.getElementById("id_start_date").value;
-                const conference = document.getElementById("id_conference") ? document.getElementById("id_conference").value : formData.details.conference;
+        if (currentStep === 1) {
+            const title = document.getElementById("id_title").value.trim();
+            const abstract = document.getElementById("id_abstract").value.trim();
+            const startDate = document.getElementById("id_start_date").value;
+            const conference = document.getElementById("id_conference") ? document.getElementById("id_conference").value : formData.details.conference;
 
-                if (!title || !abstract || !startDate || !conference) {
-                    alert("Barcha kerakli maydonlarni toʻldiring.");
-                    return false;
-                }
-            } else if (currentStep === 2) {
-                // Проверяем как существующие файлы, так и новые
-                const hasExistingFiles = document.querySelectorAll('.existing-file-item').length > 0;
-                const hasNewFiles = formData.files && formData.files.length > 0;
-                
-                if (!hasExistingFiles && !hasNewFiles) {
-                    alert("Iltimos, kamida bitta fayl yuklang.");
-                    return false;
-                }
-            } else if (currentStep === 3) {
-                if (!formData.contributors || formData.contributors.length === 0) {
-                    alert("Iltimos, kamida bitta muallif qo'shing.");
-                    return false;
-                }
+            if (!title || !abstract || !startDate || !conference) {
+                alert("{% trans 'Barcha kerakli maydonlarni toʻldiring.' %}");
+                return false;
             }
-
-            return true;
+        } else if (currentStep === 2) {
+            const hasExistingFiles = document.querySelectorAll('.existing-file-item').length > 0;
+            const hasNewFiles = formData.files && formData.files.length > 0;
+            if (!hasExistingFiles && !hasNewFiles) {
+                alert("{% trans 'Iltimos, kamida bitta fayl yuklang.' %}");
+                return false;
+            }
+        } else if (currentStep === 3) {
+            if (!formData.contributors || formData.contributors.length === 0) {
+                alert("{% trans 'Iltimos, kamida bitta muallif qoshing.' %}");
+                return false;
+            }
+        }
+        return true;
         }
 
         function validateEmail(email) {
@@ -1719,7 +1702,7 @@
             lastSavedSpan.textContent = `Oxirgi saqlangan: ${timeString}`;
 
             if (showAlert) {
-                alert("Jarayoningiz saqlandi. Davom etish uchun keyinroq bu shaklga qaytishingiz mumkin.");
+                alert("{% trans 'Jarayoningiz saqlandi. Davom etish uchun keyinroq bu shaklga qaytishingiz mumkin.' %}");
             }
         }
 
